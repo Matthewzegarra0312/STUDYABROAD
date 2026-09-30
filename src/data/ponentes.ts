@@ -81,6 +81,7 @@ const ponentesRaw: Ponente[] = [
     // Presenta el bloque de Berkeley Haas, en persona. No está en el
     // panel de exbecarios de las 15:45.
     grupo: "panel",
+    imagen: "Diego-Mendoza.png",
     estado: "confirmado",
   },
   {
