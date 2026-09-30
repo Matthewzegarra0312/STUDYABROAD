@@ -5,28 +5,16 @@ import {
   type CarrilParalelo,
 } from "./schema";
 
-// Datos confirmados según el documento "STUDY ABROAD FEST 2026", con la
-// corrección de horario: el evento vuelve a ser 2:00 p.m. a 6:00 p.m.
-// (no 9:00 a.m. a 1:31 p.m., como se había indicado antes). Mismo
-// contenido y orden; solo cambian las horas, y se agrega el bloque de
-// "Networking y mesas de consulta" antes del cierre (16 bloques en
-// total).
-//
-// El documento fuente no da "espacio" por bloque, así que queda en
-// null: no se inventa "auditorio" para todos.
-//
-// Un solo bloque queda "por-confirmar": la cápsula de Erasmus+, porque
-// el nombre del ponente todavía se está reconfirmando ("Guillermo
-// Gonzalo" frente a "Guillermo Alfaro". PLAN.md, sección 8.
-//
-// La fuente ya no da un nombre de persona para el bloque de Fulbright
-// (antes decía "EducationUSA · Nikole Meza"): queda solo la
-// institución hasta que se confirme.
+// Cronograma confirmado (documento del equipo, 30 sep 2026), de 2:00 p.m.
+// a 6:00 p.m. El documento no da "espacio" por bloque, así que queda en
+// null. "vlog-zoom" es cápsula en video. La Beca MEXT la presenta
+// APEBEMO (CLAUDE.md, regla 4). Fulbright queda a cargo de EducationUSA:
+// la fuente no da un nombre de persona.
 const bloquesRaw: CronogramaBloque[] = [
   {
     orden: 1,
     titulo: "Bienvenida",
-    quien: "LEAD UTP",
+    quien: "Shay Guzman y Carlos Gamonal, LEAD UTP",
     espacio: null,
     modalidad: "presencial",
     horaInicio: "14:00",
@@ -35,8 +23,8 @@ const bloquesRaw: CronogramaBloque[] = [
   },
   {
     orden: 2,
-    titulo: "Cápsula",
-    quien: "Fernando Injoque (Purdue)",
+    titulo: "Cápsula internacional",
+    quien: "Fernando Injoque, Purdue University",
     espacio: null,
     modalidad: "vlog-zoom",
     horaInicio: "14:10",
@@ -45,17 +33,17 @@ const bloquesRaw: CronogramaBloque[] = [
   },
   {
     orden: 3,
-    titulo: "Ponencia",
-    quien: "Ivanna (Purdue)",
+    titulo: "Experiencia de intercambio en Purdue University",
+    quien: "Ivanna Yllahuaman",
     espacio: null,
-    modalidad: "vlog-zoom",
+    modalidad: "presencial",
     horaInicio: "14:15",
     horaFin: "14:35",
     estado: "confirmado",
   },
   {
     orden: 4,
-    titulo: "Conferencia: convenios, requisitos y movilidad",
+    titulo: "Convenios, requisitos y movilidad internacional",
     quien: "UTP Internacional",
     espacio: null,
     modalidad: "presencial",
@@ -65,8 +53,8 @@ const bloquesRaw: CronogramaBloque[] = [
   },
   {
     orden: 5,
-    titulo: "Panel de ex-becarios",
-    quien: "Leslie Sánchez (UC Berkeley), Diego Mendoza (UC Berkeley)",
+    titulo: "Berkeley Haas Global Access Program",
+    quien: "Leslie Sánchez y Diego Mendoza, UC Berkeley · conexión internacional",
     espacio: null,
     modalidad: "presencial",
     horaInicio: "14:55",
@@ -76,8 +64,6 @@ const bloquesRaw: CronogramaBloque[] = [
   {
     orden: 6,
     titulo: "Beca Fulbright",
-    // Sin nombre de persona: la fuente ya no lo da (antes decía
-    // "EducationUSA · Nikole Meza").
     quien: "EducationUSA",
     espacio: null,
     modalidad: "presencial",
@@ -87,98 +73,97 @@ const bloquesRaw: CronogramaBloque[] = [
   },
   {
     orden: 7,
-    titulo: "Intermedio y networking",
-    quien: null,
+    titulo: "Panel de exbecarios",
+    quien: "Marlon Hugas (ELAP), Gresly Ruiz (Berkeley), Leslie Sánchez (Berkeley), Diego River (Harvard) y Joshua Eduardo Valentino Galvez Peña (Tecnológico de Monterrey)",
     espacio: null,
-    modalidad: "receso",
+    modalidad: "presencial",
     horaInicio: "15:45",
-    horaFin: "15:55",
+    horaFin: "16:05",
     estado: "confirmado",
   },
   {
     orden: 8,
-    titulo: "Cápsula",
-    quien: "Mila (Japón)",
+    titulo: "Cápsula: estudiar en Japón",
+    quien: "Milagros Virhuez, Mila en Japón",
     espacio: null,
     modalidad: "vlog-zoom",
-    horaInicio: "15:55",
-    horaFin: "16:00",
+    horaInicio: "16:05",
+    horaFin: "16:10",
     estado: "confirmado",
   },
   {
     orden: 9,
-    titulo: "Beca MEXT",
-    quien: "APEBEMO",
+    titulo: "Study in Japan",
+    quien: "Giancarlo Carmelino",
     espacio: null,
-    modalidad: "presencial",
-    horaInicio: "16:00",
-    horaFin: "16:20",
+    modalidad: "zoom-vivo",
+    horaInicio: "16:10",
+    horaFin: "16:30",
     estado: "confirmado",
   },
   {
     orden: 10,
-    titulo: "Stand/ponencia",
+    titulo: "Beca MEXT: experiencia de un exbecario",
     quien: "APEBEMO",
     espacio: null,
     modalidad: "presencial",
-    horaInicio: "16:20",
-    horaFin: "16:40",
+    horaInicio: "16:30",
+    horaFin: "16:50",
     estado: "confirmado",
   },
   {
     orden: 11,
-    titulo: "Cápsula",
-    // Pendiente de reconfirmar (ver comentario arriba y PLAN.md sección 8).
-    quien: "Guillermo Gonzalo (Erasmus+)",
+    titulo: "Intermedio y networking",
+    quien: null,
     espacio: null,
-    modalidad: "vlog-zoom",
-    horaInicio: "16:40",
-    horaFin: "16:45",
-    estado: "por-confirmar",
+    modalidad: "receso",
+    horaInicio: "16:50",
+    horaFin: "17:00",
+    estado: "confirmado",
   },
   {
     orden: 12,
-    titulo: "Erasmus Mundus",
-    quien: "EMA Perú",
+    titulo: "Cápsula Erasmus+",
+    quien: "Guillermo Gonzalo",
     espacio: null,
-    modalidad: "presencial",
-    horaInicio: "16:45",
+    modalidad: "vlog-zoom",
+    horaInicio: "17:00",
     horaFin: "17:05",
     estado: "confirmado",
   },
   {
     orden: 13,
-    titulo: "Ponencia",
-    quien: "Raquel Sánchez (conexión Erasmus Mundus)",
+    titulo: "Erasmus Mundus",
+    quien: "Erasmus Mundus Association Perú",
     espacio: null,
-    modalidad: "zoom-vivo",
+    modalidad: "presencial",
     horaInicio: "17:05",
-    horaFin: "17:20",
+    horaFin: "17:30",
     estado: "confirmado",
   },
   {
     orden: 14,
-    titulo: "Migajeando Becas",
-    quien: "Raúl Jauregui",
+    titulo: "Experiencia Erasmus Mundus",
+    quien: "Raquel Sánchez, exbecaria Erasmus Mundus",
     espacio: null,
-    modalidad: "presencial",
-    horaInicio: "17:20",
-    horaFin: "17:40",
+    modalidad: "zoom-vivo",
+    horaInicio: "17:30",
+    horaFin: "17:45",
     estado: "confirmado",
   },
   {
     orden: 15,
-    titulo: "Networking y mesas de consulta",
-    quien: null,
+    titulo: "Migajeando Becas",
+    quien: "Raúl Jáuregui",
     espacio: null,
-    modalidad: "receso",
-    horaInicio: "17:40",
+    modalidad: "presencial",
+    horaInicio: "17:45",
     horaFin: "17:55",
     estado: "confirmado",
   },
   {
     orden: 16,
-    titulo: "Cierre",
+    titulo: "Palabras de cierre",
     quien: "LEAD UTP",
     espacio: null,
     modalidad: "presencial",

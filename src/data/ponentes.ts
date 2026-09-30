@@ -26,7 +26,7 @@ const ponentesRaw: Ponente[] = [
   },
   {
     id: "ivanna",
-    nombre: "Ivanna",
+    nombre: "Ivanna Yllahuaman",
     institucion: "Purdue University",
     codigoPais: "US",
     meta: "Estados Unidos",
@@ -36,18 +36,15 @@ const ponentesRaw: Ponente[] = [
   },
   {
     id: "mila",
-    nombre: "Mila",
-    // Solo se da el nombre y el país en la fuente (PLAN.md).
+    nombre: "Milagros Virhuez",
     institucion: null,
     codigoPais: "JP",
-    meta: "Japón",
+    meta: "Mila en Japón",
     grupo: "internacional",
     estado: "confirmado",
   },
   {
     id: "guillermo-gonzalo",
-    // Reemplaza a "Guillermo Alfaro" (PLAN.md, sección 8: pendiente de
-    // reconfirmar cuál de los dos nombres es correcto).
     nombre: "Guillermo Gonzalo",
     institucion: "Erasmus+",
     codigoPais: "EU",
@@ -59,10 +56,9 @@ const ponentesRaw: Ponente[] = [
   {
     id: "raquel-sanchez",
     nombre: "Raquel Sánchez",
-    // Ni institución ni país se dan en la fuente.
-    institucion: null,
-    codigoPais: null,
-    meta: null,
+    institucion: "Erasmus Mundus",
+    codigoPais: "EU",
+    meta: "Europa",
     grupo: "internacional",
     estado: "confirmado",
   },
@@ -82,8 +78,53 @@ const ponentesRaw: Ponente[] = [
     institucion: "UC Berkeley",
     codigoPais: "US",
     meta: "Estados Unidos",
-    // Pasó del grupo "internacional" al panel de ex-becarios en el
-    // cronograma confirmado.
+    // Presenta el bloque de Berkeley Haas, en persona. No está en el
+    // panel de exbecarios de las 15:45.
+    grupo: "panel",
+    estado: "confirmado",
+  },
+  {
+    id: "giancarlo-carmelino",
+    nombre: "Giancarlo Carmelino",
+    institucion: "Study in Japan",
+    codigoPais: "JP",
+    meta: "Japón",
+    grupo: "internacional",
+    estado: "confirmado",
+  },
+  {
+    id: "marlon-hugas",
+    nombre: "Marlon Hugas",
+    institucion: "Beca ELAP",
+    codigoPais: null,
+    meta: null,
+    grupo: "panel",
+    estado: "confirmado",
+  },
+  {
+    id: "gresly-ruiz",
+    nombre: "Gresly Ruiz",
+    institucion: "Berkeley",
+    codigoPais: "US",
+    meta: "Estados Unidos",
+    grupo: "panel",
+    estado: "confirmado",
+  },
+  {
+    id: "diego-river",
+    nombre: "Diego River",
+    institucion: "Harvard",
+    codigoPais: "US",
+    meta: "Estados Unidos",
+    grupo: "panel",
+    estado: "confirmado",
+  },
+  {
+    id: "joshua-galvez",
+    nombre: "Joshua Eduardo Valentino Galvez Peña",
+    institucion: "Tecnológico de Monterrey",
+    codigoPais: "MX",
+    meta: "México",
     grupo: "panel",
     estado: "confirmado",
   },

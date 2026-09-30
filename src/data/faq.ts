@@ -15,7 +15,7 @@ const faqRaw: FaqItem[] = [
   },
   {
     pregunta: "¿Los ponentes internacionales van en persona?",
-    respuesta: "No. Comparten un vlog pregrabado y responden preguntas en vivo por Zoom.",
+    respuesta: "Depende del bloque. El cronograma marca si es presencial, un video o una conexión por Zoom.",
     estado: "confirmado",
   },
   {

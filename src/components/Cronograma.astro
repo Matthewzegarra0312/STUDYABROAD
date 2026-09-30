@@ -1,12 +1,10 @@
 ---
 // Cronograma (design/canvas/Main.dc.html / Mobile.dc.html): camino de
 // papel con paradas y un avión que lo recorre (animación 2b). Ahora hay
-// 16 bloques con hora (2:00 a 6:00 p.m.), así que se agrupan en paradas
-// temáticas compactas en vez de una tarjeta gigante por bloque: cada
-// bloque real conserva su hora exacta dentro de la lista compacta. Los
-// dos bloques "receso" (Intermedio y networking / Networking y mesas
-// de consulta) se muestran como divisores delgados entre paradas, no
-// como una parada más.
+// 16 bloques con hora (2:00 a 6:00 p.m.), agrupados en paradas temáticas.
+// El bloque "receso" (Intermedio y networking) se muestra como divisor,
+// no como una parada más. Las mesas de consulta corren en el carril
+// paralelo durante todo el evento.
 import { bloques, carrilParalelo } from "../data/cronograma";
 import type { CronogramaBloque } from "../data/schema";
 import { formatoHora12 } from "../lib/fechas";
@@ -24,13 +22,12 @@ type Entrada = { titulo: string; ordenes: number[] } | { receso: number };
 
 const definicion: Entrada[] = [
   { titulo: "Bienvenida y voces internacionales", ordenes: [1, 2, 3] },
-  { titulo: "Conferencia, panel y Fulbright", ordenes: [4, 5, 6] },
-  { receso: 7 },
-  { titulo: "Japón: Beca MEXT con APEBEMO", ordenes: [8, 9, 10] },
-  { titulo: "Europa: Erasmus+ y Erasmus Mundus", ordenes: [11, 12] },
-  { titulo: "Últimas ponencias", ordenes: [13, 14] },
-  { receso: 15 },
-  { titulo: "Cierre", ordenes: [16] },
+  { titulo: "Oportunidades internacionales y becas", ordenes: [4, 5, 6] },
+  { titulo: "Panel de exbecarios", ordenes: [7] },
+  { titulo: "Japón: Study in Japan y Beca MEXT", ordenes: [8, 9, 10] },
+  { receso: 11 },
+  { titulo: "Europa: Erasmus+ y Erasmus Mundus", ordenes: [12, 13, 14] },
+  { titulo: "Migajeando Becas y cierre", ordenes: [15, 16] },
 ];
 
 const paradas: Parada[] = definicion
@@ -52,8 +49,8 @@ const paradas: Parada[] = definicion
 
 const MODALIDAD_LABEL: Record<CronogramaBloque["modalidad"], string> = {
   presencial: "Presencial",
-  "vlog-zoom": "Vlog + Zoom",
-  "zoom-vivo": "Vía Zoom",
+  "vlog-zoom": "Video",
+  "zoom-vivo": "Zoom en vivo",
   receso: "",
 };
 const MODALIDAD_ES_ZOOM = (m: CronogramaBloque["modalidad"]) => m === "vlog-zoom" || m === "zoom-vivo";
@@ -80,7 +77,7 @@ const rangoHoras = (inicio: string | null, fin: string | null) =>
         <span class="h-2.5 w-2.5 rounded-full bg-magenta" aria-hidden="true"></span>Presencial
       </span>
       <span class="inline-flex items-center gap-2 rounded-full bg-paper-2 px-3.5 py-2">
-        <span class="h-2.5 w-2.5 rounded-full bg-sky-deep" aria-hidden="true"></span>Vía Zoom
+        <span class="h-2.5 w-2.5 rounded-full bg-sky-deep" aria-hidden="true"></span>Video o Zoom en vivo
       </span>
     </div>
   </div>

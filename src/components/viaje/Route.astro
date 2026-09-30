@@ -4,7 +4,7 @@
 // y, en escritorio, un carril sticky con los stands abiertos.
 // Semántica: <ol> de paradas, <ul> de filas, <time> en cada hora.
 import evento from "../../data/evento";
-import { gates, groups, intermission } from "../../data/schedule";
+import { gates, groups, intermission, notaCronograma } from "../../data/schedule";
 import type { ScheduleMode } from "../../data/schema";
 import { hora12 } from "../../lib/viaje";
 import PaperEdge from "./PaperEdge.astro";
@@ -13,8 +13,8 @@ import Plane from "./Plane.astro";
 const MODOS: Record<ScheduleMode, { label: string; cls: string }> = {
   presencial: { label: "Presencial", cls: "bg-magenta text-paper" },
   // AA: el sky-deep de marca (#2F86C4) da 3.9:1 con texto blanco de 12 px; este tono da 5.4:1.
-  "vlog-zoom": { label: "Vlog + Zoom", cls: "bg-[#22709F] text-paper" },
-  zoom: { label: "Zoom", cls: "bg-violet text-paper" },
+  "vlog-zoom": { label: "Video", cls: "bg-[#22709F] text-paper" },
+  zoom: { label: "Zoom en vivo", cls: "bg-violet text-paper" },
   libre: { label: "Libre", cls: "border-[1.5px] border-dashed border-lav text-ink-2" },
 };
 const chipBase = "shrink-0 self-center whitespace-nowrap rounded-full px-3 py-1 font-sans text-xs font-extrabold";
@@ -50,7 +50,7 @@ const itemGrid = "grid grid-cols-[56px_minmax(0,1fr)] gap-2 lg:grid-cols-[120px_
         <span class="font-mono text-xs font-semibold tracking-[.16em] text-violet uppercase lg:text-[13px]">02 · Ruta de vuelo</span>
         <h2 id="cronograma-title" class="m-0 font-display text-[56px] leading-[.98] font-normal text-ink lg:text-[80px]">Del despegue<br />al atardecer</h2>
         <p class="m-0 max-w-[44ch] text-[17px] leading-[1.45] font-semibold text-ink-2 lg:text-[21px]">
-          Cuatro horas, un solo recorrido. Las cápsulas llegan en vlog y se responden preguntas en vivo por Zoom.
+          Cuatro horas, un solo recorrido. Cápsulas en video, conexiones por Zoom y charlas presenciales.
         </p>
         <ul class="m-0 flex list-none flex-wrap items-center gap-2 p-0 text-xs font-extrabold text-paper lg:hidden" aria-label="Modalidades">
           {(["presencial", "vlog-zoom", "zoom"] as const).map((m) => <li class={`rounded-full px-2.5 py-1 ${MODOS[m].cls}`}>{MODOS[m].label}</li>)}
@@ -59,8 +59,8 @@ const itemGrid = "grid grid-cols-[56px_minmax(0,1fr)] gap-2 lg:grid-cols-[120px_
       <div class="hidden flex-col gap-3 rounded-[18px] border border-[#E1E4F2] bg-paper-2 px-[22px] py-5 text-[15px] font-bold text-ink lg:flex" data-motion-stop data-motion-delay="120">
         <span class="font-mono text-xs tracking-[.14em] text-violet uppercase">Cómo leer el tablero</span>
         <div class="flex items-center gap-2.5"><span class={`rounded-full px-[11px] py-1 text-xs font-extrabold ${MODOS.presencial.cls}`}>Presencial</span>En el {evento.lugar}</div>
-        <div class="flex items-center gap-2.5"><span class={`rounded-full px-[11px] py-1 text-xs font-extrabold ${MODOS["vlog-zoom"].cls}`}>Vlog + Zoom</span>Video pregrabado y preguntas en vivo</div>
-        <div class="flex items-center gap-2.5"><span class={`rounded-full px-[11px] py-1 text-xs font-extrabold ${MODOS.zoom.cls}`}>Zoom</span>Ponencia conectada por Zoom</div>
+        <div class="flex items-center gap-2.5"><span class={`rounded-full px-[11px] py-1 text-xs font-extrabold ${MODOS["vlog-zoom"].cls}`}>Video</span>Cápsula pregrabada</div>
+        <div class="flex items-center gap-2.5"><span class={`rounded-full px-[11px] py-1 text-xs font-extrabold ${MODOS.zoom.cls}`}>Zoom en vivo</span>Conexión en vivo por Zoom</div>
       </div>
     </div>
 
@@ -156,6 +156,7 @@ const itemGrid = "grid grid-cols-[56px_minmax(0,1fr)] gap-2 lg:grid-cols-[120px_
             </div>
           </li>
         </ol>
+        <p class="m-0 mt-4 pl-[64px] text-sm font-semibold leading-snug text-ink-2 lg:mt-6 lg:pl-[136px]">{notaCronograma}</p>
       </div>
 
       <aside class="sticky top-6 hidden flex-col gap-4 rounded-3xl border-[6px] border-paper bg-[linear-gradient(170deg,#9C3BAA,#6258BB)] px-[26px] py-7 text-paper shadow-[0_8px_0_rgb(29_33_82/0.16)] outline-2 outline-lav lg:flex" aria-labelledby="carril-title" data-motion-stop data-motion-delay="260">

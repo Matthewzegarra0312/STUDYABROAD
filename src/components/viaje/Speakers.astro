@@ -11,9 +11,9 @@ const publicos = speakers.filter((s) => s.estado === "confirmado");
 const rot = ["-rotate-[1.4deg]", "rotate-[1.2deg]", "-rotate-[.8deg]", "rotate-[1.4deg]"];
 
 const CHIP: Record<SpeakerMode, { label: string; cls: string }> = {
-  "vlog-zoom": { label: "Vlog + Q&A", cls: "bg-[#F6E3F6] text-magenta" },
+  "vlog-zoom": { label: "Video", cls: "bg-[#F6E3F6] text-magenta" },
   // AA: texto blanco de 11 px necesita un azul más oscuro que sky-deep.
-  zoom: { label: "Zoom", cls: "bg-[#22709F] text-paper" },
+  zoom: { label: "Zoom en vivo", cls: "bg-[#22709F] text-paper" },
   experiencia: { label: "Experiencia personal", cls: "bg-[#E4E7F5] text-ink-2" },
 };
 
