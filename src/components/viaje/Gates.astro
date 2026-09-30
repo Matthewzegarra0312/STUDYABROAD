@@ -46,10 +46,16 @@ const abiertas = gates.filter((g) => g.estado === "confirmado");
             </div>
             <div class="flex min-h-[132px] flex-col gap-3 p-3.5 lg:min-h-[172px] lg:gap-4 lg:p-[22px]">
               <h3 class="m-0 text-[17px] leading-[1.15] font-extrabold lg:text-[23px]">{g.name}</h3>
-              {logo && (
-                <span class="inline-flex w-fit overflow-hidden rounded-xl bg-black px-2 py-1">
-                  <Image src={logo} alt="" class="h-16 w-auto max-w-full object-contain" />
-                </span>
+              {logo && sitio && (
+                <a
+                  href={sitio}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${g.name} (se abre en una pestaña nueva)`}
+                  class="isolate inline-flex w-fit max-w-full overflow-hidden rounded-xl bg-ink px-2 py-1"
+                >
+                  <Image src={logo} alt="" class="h-16 w-auto max-w-full object-contain mix-blend-screen" />
+                </a>
               )}
               {sitio && (
                 <a href={sitio} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center self-start text-sm font-extrabold text-violet underline decoration-violet/40 underline-offset-2">
