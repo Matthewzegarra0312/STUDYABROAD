@@ -127,6 +127,8 @@ export const StandSchema = z.object({
   descripcion: z.string().nullable(),
   /** Ruta relativa dentro de src/assets/aliados/. Ausente = placeholder. */
   logo: z.string().optional(),
+  /** Fondo de la cabecera de la puerta. Archivo en src/assets/aliados/. */
+  fondo: z.string().optional(),
   /** Sitio o red confirmados. Ausente = sin enlace. */
   url: z.url().optional(),
   estado: EstadoSchema,

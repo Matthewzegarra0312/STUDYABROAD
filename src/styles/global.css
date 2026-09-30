@@ -226,7 +226,11 @@
 .v-btn { position: relative; overflow: hidden; transition: transform .18s ease, box-shadow .18s ease; }
 .v-btn:hover { transform: translateY(-3px) rotate(-1deg); box-shadow: 0 9px 0 rgb(29 33 82 / 22%), 0 18px 30px -12px rgb(29 33 82 / 50%); }
 .v-btn::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 36%; background: rgb(255 255 255 / 28%); transform: translateX(-140%) skewX(-18deg); animation: v-shine 4.5s ease-in-out infinite; }
-.v-nav-cta, .v-nav-link, .v-social, .v-flink, .v-stop, .v-row, .v-tag, .v-gate { transition: transform .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.v-nav-cta, .v-nav-link, .v-social, .v-flink, .v-stop, .v-row, .v-tag, .v-gate, .v-card, .v-ally, .v-code, .v-carril { transition: transform .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease; }
+@keyframes v-letra { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+.v-letra { animation: v-letra 2.4s ease-in-out infinite; }
+.v-carril:hover,
+.v-carril:focus-visible { transform: translateX(4px); background-color: rgb(253 254 252 / 28%); }
 .v-nav-cta:hover { background: var(--color-magenta); color: white; }
 .v-nav-link:hover { background: rgb(255 255 255 / 6%); color: white; }
 .v-social:hover { transform: translateY(-2px); background: var(--color-magenta); border-color: rgb(172 11 173 / 60%); box-shadow: 0 10px 20px -8px rgb(172 11 173 / 50%); color: white; }
@@ -234,7 +238,40 @@
 .v-stop:hover { transform: translateX(6px); }
 .v-row:hover { background: rgb(255 255 255 / 9%) !important; }
 .v-tag:hover { transform: rotate(0deg) translateY(-10px) !important; }
-.v-gate:hover { transform: translateY(-8px); }
+.v-gate:hover,
+.v-gate:focus-within { transform: translateY(-8px) rotate(-0.4deg); }
+.v-card:hover,
+.v-card:focus-within { transform: translateY(-5px) rotate(-0.3deg); }
+.v-ally:hover,
+.v-ally:focus-visible { transform: translateY(-3px); }
+.v-pass:hover .v-code { transform: translateY(-6px) rotate(5deg); }
+
+/* Detalles al pasar el cursor. Solo transform, para no repintar la página. */
+.v-gate > div:first-child > svg,
+.v-gate > div:first-child > img,
+.v-gate a img,
+.v-gate .v-seal,
+.v-tag img,
+.v-tag .v-sello,
+.v-stop > span:last-child,
+li:has(> .v-card) > div:first-child {
+  transition: transform .28s ease;
+}
+.v-gate:hover > div:first-child > svg,
+.v-gate:focus-within > div:first-child > svg { transform: translateX(6px); }
+.v-gate:hover > div:first-child > img,
+.v-gate:focus-within > div:first-child > img { transform: scale(1.06); }
+.v-gate:hover a img,
+.v-gate:focus-within a img { transform: scale(1.05); }
+.v-gate:hover .v-seal,
+.v-gate:focus-within .v-seal { transform: rotate(-8deg) scale(1.05); }
+.v-tag:hover img,
+.v-tag:focus-within img { transform: scale(1.07); }
+.v-tag:hover .v-sello,
+.v-tag:focus-within .v-sello { transform: rotate(-14deg) scale(1.06); }
+.v-stop:hover > span:last-child { transform: scale(1.06); }
+li:has(> .v-card:hover) > div:first-child,
+li:has(> .v-card:focus-within) > div:first-child { transform: scale(1.08) rotate(-4deg); }
 
 /*
   Header flotante en escritorio (Nav.astro): al bajar más de su propia

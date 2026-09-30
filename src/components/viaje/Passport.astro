@@ -46,7 +46,7 @@ const sellos = gates.map((g) => g.standId);
       </div>
     </div>
 
-    <div class="relative h-[430px] lg:h-[600px]" aria-hidden="true" data-motion-stop data-motion-delay="180">
+    <div class="v-pass relative h-[430px] lg:h-[600px]" aria-hidden="true" data-motion-stop data-motion-delay="180">
       <div class="absolute top-0 left-1 flex h-[350px] w-[min(342px,calc(100vw-40px))] -rotate-3 flex-col gap-2.5 rounded-[20px] bg-paper p-[18px] text-ink shadow-[0_8px_0_rgb(8_10_45/0.3),0_24px_36px_-14px_rgb(8_10_45/0.6)] lg:top-5 lg:left-5 lg:h-[420px] lg:w-[520px] lg:-rotate-4 lg:gap-3.5 lg:rounded-[22px] lg:p-[26px] lg:shadow-[0_10px_0_rgb(8_10_45/0.3),0_30px_48px_-16px_rgb(8_10_45/0.6)]">
         <div class="flex items-end justify-between"><span class="font-display text-2xl lg:text-[30px]">Pasaporte</span><span class="font-mono text-[10px] text-ink-2 lg:text-[11px]">SAF 2026 · {gates.length} SELLOS</span></div>
         <div class="grid grow grid-cols-2 grid-rows-2 gap-2.5 lg:gap-3.5">
@@ -64,7 +64,7 @@ const sellos = gates.map((g) => g.standId);
           )}
         </div>
       </div>
-      <div class="absolute right-0.5 bottom-1.5 flex w-[250px] rotate-3 flex-col gap-1.5 rounded-2xl border-4 border-paper bg-brand-gradient px-4 py-3.5 text-paper shadow-[0_7px_0_rgb(8_10_45/0.3)] lg:right-0 lg:bottom-6 lg:w-[300px] lg:gap-2 lg:rounded-[18px] lg:border-[5px] lg:px-5 lg:py-[18px] lg:shadow-[0_8px_0_rgb(8_10_45/0.3)]">
+      <div class="v-code absolute right-0.5 bottom-1.5 flex w-[250px] rotate-3 flex-col gap-1.5 rounded-2xl border-4 border-paper bg-brand-gradient px-4 py-3.5 text-paper shadow-[0_7px_0_rgb(8_10_45/0.3)] lg:right-0 lg:bottom-6 lg:w-[300px] lg:gap-2 lg:rounded-[18px] lg:border-[5px] lg:px-5 lg:py-[18px] lg:shadow-[0_8px_0_rgb(8_10_45/0.3)]">
         <span class="font-mono text-[10px] tracking-[.14em] uppercase lg:text-[11px]">Tu código</span>
         <span class="font-mono text-[22px] font-semibold tracking-[.06em] lg:text-[26px]">SAF-····-····</span>
         <span class="text-xs font-bold lg:text-[13px]">Calendario y tips desbloqueados</span>

@@ -34,18 +34,29 @@ const abiertas = gates.filter((g) => g.estado === "confirmado");
         const stand = stands.find((s) => s.id === g.standId);
         const sitio = stand?.url;
         const logo = stand?.logo?.endsWith(".png") ? logoAliado(stand.logo) : undefined;
+        const fondo = logoAliado(stand?.fondo);
+        const etiqueta = sitio ? etiquetaEnlace(sitio) : null;
+        const textoEnlace = etiqueta === "Sitio web" ? null : etiqueta;
         return (
         <li>
-          <article class="v-gate h-full overflow-hidden rounded-[18px] bg-paper text-ink shadow-[0_6px_0_rgb(29_33_82/0.24),0_14px_24px_-12px_rgb(8_10_45/0.6)] lg:rounded-[22px] lg:shadow-[0_8px_0_rgb(29_33_82/0.24),0_20px_34px_-14px_rgb(8_10_45/0.6)]" data-motion-stop data-motion-delay={`${140 + g.n * 90}`}>
-            <div class="flex items-end justify-between bg-[#12164A] px-3.5 pt-3 pb-3.5 text-paper lg:px-[22px] lg:pt-[18px] lg:pb-5">
-              <div>
+          <article id={`puerta-${g.standId}`} class="v-gate h-full scroll-mt-28 overflow-hidden rounded-[18px] bg-paper text-ink shadow-[0_6px_0_rgb(29_33_82/0.24),0_14px_24px_-12px_rgb(8_10_45/0.6)] lg:rounded-[22px] lg:shadow-[0_8px_0_rgb(29_33_82/0.24),0_20px_34px_-14px_rgb(8_10_45/0.6)]" data-motion-stop data-motion-delay={`${140 + g.n * 90}`}>
+            <div class="relative flex items-end justify-between overflow-hidden bg-[#12164A] px-3.5 pt-3 pb-3.5 text-paper lg:px-[22px] lg:pt-[18px] lg:pb-5">
+              {fondo && <Image src={fondo} alt="" class="absolute inset-0 h-full w-full object-cover object-[center_78%]" />}
+              {fondo && <span class="absolute inset-0 bg-ink/35" aria-hidden="true"></span>}
+              <div class="relative">
                 <div class="font-mono text-[10px] font-semibold tracking-[.16em] text-paper/65 uppercase lg:text-xs lg:tracking-[.18em]">Puerta</div>
                 <div class="font-display text-[58px] leading-[.9] text-yellow lg:text-[84px]">{g.n}</div>
               </div>
-              <svg class="mb-1.5 size-7 lg:size-11" viewBox="0 0 24 24" fill="none" stroke="#FDFEFC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
+              <svg class="relative mb-1.5 size-7 lg:size-11" viewBox="0 0 24 24" fill="none" stroke="#FDFEFC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
             </div>
             <div class="flex min-h-[132px] flex-col gap-3 p-3.5 lg:min-h-[172px] lg:gap-4 lg:p-[22px]">
-              <h3 class="m-0 text-[17px] leading-[1.15] font-extrabold lg:text-[23px]">{g.name}</h3>
+              <h3 class="m-0 text-[17px] leading-[1.15] font-extrabold lg:text-[23px]">
+                {sitio && !logo ? (
+                  <a href={sitio} target="_blank" rel="noopener noreferrer" class="text-inherit no-underline">
+                    {g.name}<span class="sr-only"> (se abre en una pestaña nueva)</span>
+                  </a>
+                ) : g.name}
+              </h3>
               {logo && sitio && (
                 <a
                   href={sitio}
@@ -57,13 +68,13 @@ const abiertas = gates.filter((g) => g.estado === "confirmado");
                   <Image src={logo} alt="" class="h-16 w-auto max-w-full object-contain mix-blend-screen" />
                 </a>
               )}
-              {sitio && (
+              {sitio && textoEnlace && (
                 <a href={sitio} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center self-start text-sm font-extrabold text-violet underline decoration-violet/40 underline-offset-2">
-                  {etiquetaEnlace(sitio)}<span class="sr-only"> de {g.name} (se abre en una pestaña nueva)</span>
+                  {textoEnlace}<span class="sr-only"> de {g.name} (se abre en una pestaña nueva)</span>
                 </a>
               )}
               <div class="mt-auto flex items-center gap-2 lg:gap-3">
-                <svg class="size-[34px] shrink-0 lg:size-[54px]" viewBox="0 0 54 54" aria-hidden="true">
+                <svg class="v-seal size-[34px] shrink-0 lg:size-[54px]" viewBox="0 0 54 54" aria-hidden="true">
                   <circle cx="27" cy="27" r="24" fill="none" stroke={COLOR[g.color]} stroke-width="3" stroke-dasharray="5 4"></circle>
                   <path d="M17 28l7 7 13-15" fill="none" stroke={COLOR[g.color]} stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
@@ -81,7 +92,7 @@ const abiertas = gates.filter((g) => g.estado === "confirmado");
       <ul class="m-0 flex list-none flex-wrap gap-2 p-0 lg:gap-4">
         {allies.map((a) => {
           const logo = logoAliado(a.logo);
-          const chip = "inline-flex min-h-11 items-center rounded-full border-[1.5px] border-paper/40 px-3.5 text-sm font-extrabold lg:px-[18px] lg:text-base";
+          const chip = "v-ally inline-flex min-h-11 items-center rounded-full border-[1.5px] border-paper/40 px-3.5 text-sm font-extrabold lg:px-[18px] lg:text-base";
           return (
           <li>
             {a.url ? (
