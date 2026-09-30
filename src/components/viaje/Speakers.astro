@@ -5,6 +5,7 @@
 // comparten experiencia personal: lo oficial se atiende en los stands (regla 5).
 import { speakers } from "../../data/schedule";
 import type { SpeakerMode } from "../../data/schema";
+import { etiquetaEnlace } from "../../lib/enlace";
 import { Image } from "astro:assets";
 
 const publicos = speakers.filter((s) => s.estado === "confirmado");
@@ -56,6 +57,11 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../assets/ponent
               </div>
               <h3 class="m-0 text-[19px] leading-[1.15] font-extrabold lg:text-[21px]">{p.name}</h3>
               {p.institution && <p class="m-0 text-sm font-bold text-violet lg:text-base">{p.institution}</p>}
+              {p.url && (
+                <a href={p.url} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center self-start text-sm font-extrabold text-violet underline decoration-violet/40 underline-offset-2">
+                  {etiquetaEnlace(p.url)}<span class="sr-only"> de {p.name} (se abre en una pestaña nueva)</span>
+                </a>
+              )}
               <span class={`self-start rounded-full px-2.5 py-1 font-mono text-[11px] font-semibold tracking-[.08em] ${CHIP[p.mode].cls}`}>{CHIP[p.mode].label}</span>
             </div>
             <div class="relative mt-auto flex items-center justify-between border-t-2 border-dashed border-lav px-[15px] pt-2.5 pb-3 lg:px-[18px] lg:pt-3 lg:pb-3.5">

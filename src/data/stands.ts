@@ -10,18 +10,21 @@ const standsRaw: Stand[] = [
     nombre: "UTP Internacional",
     descripcion: "Convenios, promedios requeridos, convalidación de cursos y visados.",
     logo: "Utplogonuevo.svg.webp",
+    url: "https://www.utp.edu.pe/internacional-utp",
     estado: "confirmado",
   },
   {
     id: "educationusa",
     nombre: "EducationUSA",
     descripcion: "Universidades, admisiones y becas para estudiar en Estados Unidos.",
+    url: "https://educationusa.state.gov/",
     estado: "confirmado",
   },
   {
     id: "apebemo",
     nombre: "APEBEMO",
     descripcion: "Asociación Peruana de Becarios del Gobierno de Japón. A cargo de la Beca MEXT.",
+    url: "https://apebemo.org/",
     estado: "confirmado",
   },
   {

@@ -2,6 +2,7 @@ import {
   FaqItemSchema,
   GateSchema,
   ScheduleBreakSchema,
+  AllyLinkSchema,
   ScheduleGroupSchema,
   SpeakerSchema,
   type FaqItem,
@@ -108,19 +109,19 @@ export const notaCronograma =
 // (CLAUDE.md, regla 5): eso queda en los stands.
 // ---------------------------------------------------------------------------
 const speakersRaw: Speaker[] = [
-  { id: "fernando-injoque", initials: "FI", code: "US", name: "Fernando Injoque", institution: "Purdue University", mode: "vlog-zoom", time: "14:10", estado: "confirmado", imagen: "fernando-injoque.jpg" },
-  { id: "ivanna", initials: "IY", code: "US", name: "Ivanna Yllahuaman", institution: "Purdue University", mode: "experiencia", time: "14:15", estado: "confirmado", imagen: "ivanna.png" },
-  { id: "leslie-sanchez", initials: "LS", code: "US", name: "Leslie Sánchez", institution: "UC Berkeley", mode: "experiencia", time: "14:55", estado: "confirmado", imagen: "leslie-sanchez.png" },
-  { id: "diego-mendoza", initials: "DM", code: "US", name: "Diego Mendoza", institution: "UC Berkeley", mode: "experiencia", time: "14:55", estado: "confirmado" },
-  { id: "marlon-hugas", initials: "MH", code: null, name: "Marlon Hugas", institution: "Beca ELAP", mode: "experiencia", time: "15:45", estado: "confirmado" },
-  { id: "gresly-ruiz", initials: "GR", code: "US", name: "Gresly Ruiz", institution: "Berkeley", mode: "experiencia", time: "15:45", estado: "confirmado" },
-  { id: "diego-river", initials: "DR", code: "US", name: "Diego River", institution: "Harvard", mode: "experiencia", time: "15:45", estado: "confirmado" },
-  { id: "joshua-galvez", initials: "JG", code: "MX", name: "Joshua Eduardo Valentino Galvez Peña", institution: "Tecnológico de Monterrey", mode: "experiencia", time: "15:45", estado: "confirmado" },
+  { id: "fernando-injoque", initials: "FI", code: "US", name: "Fernando Injoque", institution: "Purdue University", mode: "vlog-zoom", time: "14:10", estado: "confirmado", imagen: "fernando-injoque.jpg", url: "https://www.linkedin.com/in/ferinjoque/" },
+  { id: "ivanna", initials: "IY", code: "US", name: "Ivanna Yllahuaman", institution: "Purdue University", mode: "experiencia", time: "14:15", estado: "confirmado", imagen: "ivanna.png", url: "https://www.linkedin.com/in/ivanna-yllahuaman/" },
+  { id: "leslie-sanchez", initials: "LS", code: "US", name: "Leslie Sánchez", institution: "UC Berkeley", mode: "experiencia", time: "14:55", estado: "confirmado", imagen: "leslie-sanchez.png", url: "https://www.instagram.com/leslie_sanchezm14/" },
+  { id: "diego-mendoza", initials: "DM", code: "US", name: "Diego Mendoza", institution: "UC Berkeley", mode: "experiencia", time: "14:55", estado: "confirmado", url: "https://www.linkedin.com/in/diegomendozaflores/" },
+  { id: "marlon-hugas", initials: "MH", code: null, name: "Marlon Hugas", institution: "Beca ELAP", mode: "experiencia", time: "15:45", estado: "confirmado", url: "https://www.linkedin.com/in/marlon-ugaz" },
+  { id: "gresly-ruiz", initials: "GR", code: "US", name: "Gresly Ruiz", institution: "Berkeley", mode: "experiencia", time: "15:45", estado: "confirmado", url: "https://www.linkedin.com/in/gresly/" },
+  { id: "diego-river", initials: "DR", code: "US", name: "Diego River", institution: "Harvard", mode: "experiencia", time: "15:45", estado: "confirmado", url: "https://www.linkedin.com/in/diego-rivera-balarezo" },
+  { id: "joshua-galvez", initials: "JG", code: "MX", name: "Joshua Eduardo Valentino Galvez Peña", institution: "Tecnológico de Monterrey", mode: "experiencia", time: "15:45", estado: "confirmado", url: "https://www.linkedin.com/in/joshua-eduardo-valentino-galvez" },
   { id: "mila", initials: "MV", code: "JP", name: "Milagros Virhuez", institution: "Mila en Japón", mode: "vlog-zoom", time: "16:05", estado: "confirmado" },
   { id: "giancarlo-carmelino", initials: "GC", code: "JP", name: "Giancarlo Carmelino", institution: "Study in Japan", mode: "zoom", time: "16:10", estado: "confirmado" },
-  { id: "guillermo-gonzalo", initials: "GG", code: "EU", name: "Guillermo Gonzalo", institution: "Erasmus+", mode: "vlog-zoom", time: "17:00", estado: "confirmado", imagen: "guillermo-gonzalo.png" },
-  { id: "raquel-sanchez", initials: "RS", code: "EU", name: "Raquel Sánchez", institution: "Erasmus Mundus", mode: "zoom", time: "17:30", estado: "confirmado" },
-  { id: "raul-jauregui", initials: "RJ", code: null, name: "Raúl Jáuregui", institution: "Migajeando Becas", mode: "experiencia", time: "17:45", estado: "confirmado" },
+  { id: "guillermo-gonzalo", initials: "GG", code: "EU", name: "Guillermo Gonzalo", institution: "Erasmus+", mode: "vlog-zoom", time: "17:00", estado: "confirmado", imagen: "guillermo-gonzalo.png", url: "https://www.instagram.com/gonzalfarooo/" },
+  { id: "raquel-sanchez", initials: "RS", code: "EU", name: "Raquel Sánchez", institution: "Erasmus Mundus", mode: "zoom", time: "17:30", estado: "confirmado", url: "https://www.instagram.com/raquel.powerade/" },
+  { id: "raul-jauregui", initials: "RJ", code: null, name: "Raúl Jáuregui", institution: "Migajeando Becas", mode: "experiencia", time: "17:45", estado: "confirmado", url: "https://www.instagram.com/rauenciencia/" },
   // No está en el cronograma confirmado. No se publica hasta reconfirmarla.
   { id: "lizbeth-davila", initials: "LD", code: "CN", name: "Lizbeth Dávila", institution: "ELAP · SIAS", mode: "experiencia", time: "14:00", estado: "por-confirmar", imagen: "lizbeth-davila.JPG" },
 ];
@@ -146,7 +147,11 @@ export const gates = gatesRaw.map((g) => {
 });
 
 /** Aliados del programa que se muestran bajo las puertas (sin logo ni descripción). */
-export const allies = ["Study in Japan", "Erasmus+", "Erasmus Mundus Association Perú"] as const;
+export const allies = [
+  { name: "Study in Japan", url: "https://www.estudenojapao.com/es" },
+  { name: "Erasmus+", url: null },
+  { name: "Erasmus Mundus Association Perú", url: "https://www.instagram.com/erasmusmundus.peru/" },
+].map((a) => AllyLinkSchema.parse(a));
 
 // ---------------------------------------------------------------------------
 // FAQ de "Pase de abordaje": las 4 preguntas del diseño más la del Calendario

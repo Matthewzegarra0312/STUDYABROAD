@@ -2,6 +2,8 @@
 // 04 · Puertas de embarque: los 4 stands que sellan el pasaporte, más los
 // aliados del programa. La Embajada de Japón no aparece (CLAUDE.md, regla 4).
 import { allies, gates } from "../../data/schedule";
+import stands from "../../data/stands";
+import { etiquetaEnlace } from "../../lib/enlace";
 
 const COLOR = { violet: "#6258BB", magenta: "#AC0BAD", road: "#525F97", "sky-deep": "#2F86C4" } as const;
 const abiertas = gates.filter((g) => g.estado === "confirmado");
@@ -18,7 +20,9 @@ const abiertas = gates.filter((g) => g.estado === "confirmado");
     </div>
 
     <ul class="m-0 grid list-none grid-cols-2 gap-3.5 p-0 lg:grid-cols-4 lg:gap-6">
-      {abiertas.map((g) => (
+      {abiertas.map((g) => {
+        const sitio = stands.find((s) => s.id === g.standId)?.url;
+        return (
         <li>
           <article class="v-gate h-full overflow-hidden rounded-[18px] bg-paper text-ink shadow-[0_6px_0_rgb(29_33_82/0.24),0_14px_24px_-12px_rgb(8_10_45/0.6)] lg:rounded-[22px] lg:shadow-[0_8px_0_rgb(29_33_82/0.24),0_20px_34px_-14px_rgb(8_10_45/0.6)]" data-motion-stop data-motion-delay={`${140 + g.n * 90}`}>
             <div class="flex items-end justify-between bg-[#12164A] px-3.5 pt-3 pb-3.5 text-paper lg:px-[22px] lg:pt-[18px] lg:pb-5">
@@ -30,6 +34,11 @@ const abiertas = gates.filter((g) => g.estado === "confirmado");
             </div>
             <div class="flex min-h-[132px] flex-col gap-3 p-3.5 lg:min-h-[172px] lg:gap-4 lg:p-[22px]">
               <h3 class="m-0 text-[17px] leading-[1.15] font-extrabold lg:text-[23px]">{g.name}</h3>
+              {sitio && (
+                <a href={sitio} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center self-start text-sm font-extrabold text-violet underline decoration-violet/40 underline-offset-2">
+                  {etiquetaEnlace(sitio)}<span class="sr-only"> de {g.name} (se abre en una pestaña nueva)</span>
+                </a>
+              )}
               <div class="mt-auto flex items-center gap-2 lg:gap-3">
                 <svg class="size-[34px] shrink-0 lg:size-[54px]" viewBox="0 0 54 54" aria-hidden="true">
                   <circle cx="27" cy="27" r="24" fill="none" stroke={COLOR[g.color]} stroke-width="3" stroke-dasharray="5 4"></circle>
@@ -40,13 +49,24 @@ const abiertas = gates.filter((g) => g.estado === "confirmado");
             </div>
           </article>
         </li>
-      ))}
+        );
+      })}
     </ul>
 
     <div class="mt-[26px] flex flex-col gap-2.5 lg:mt-[34px] lg:flex-row lg:flex-wrap lg:items-center lg:gap-4">
       <span class="font-mono text-[11px] font-semibold tracking-[.16em] text-paper/70 uppercase lg:text-xs">Con aliados del programa</span>
       <ul class="m-0 flex list-none flex-wrap gap-2 p-0 lg:gap-4">
-        {allies.map((a) => <li class="rounded-full border-[1.5px] border-paper/40 bg-paper/14 px-3.5 py-[7px] text-sm font-extrabold lg:px-[18px] lg:py-2 lg:text-base">{a}</li>)}
+        {allies.map((a) => (
+          <li>
+            {a.url ? (
+              <a href={a.url} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center rounded-full border-[1.5px] border-paper/40 bg-paper/14 px-3.5 text-sm font-extrabold underline decoration-paper/50 underline-offset-2 lg:px-[18px] lg:text-base">
+                {a.name}<span class="sr-only"> (se abre en una pestaña nueva)</span>
+              </a>
+            ) : (
+              <span class="inline-flex min-h-11 items-center rounded-full border-[1.5px] border-paper/40 bg-paper/14 px-3.5 text-sm font-extrabold lg:px-[18px] lg:text-base">{a.name}</span>
+            )}
+          </li>
+        ))}
       </ul>
     </div>
   </div>

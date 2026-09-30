@@ -127,6 +127,8 @@ export const StandSchema = z.object({
   descripcion: z.string().nullable(),
   /** Ruta relativa dentro de src/assets/aliados/. Ausente = placeholder. */
   logo: z.string().optional(),
+  /** Sitio o red confirmados. Ausente = sin enlace. */
+  url: z.url().optional(),
   estado: EstadoSchema,
 });
 export type Stand = z.infer<typeof StandSchema>;
@@ -268,9 +270,18 @@ export const SpeakerSchema = z.object({
   time: HoraSchema,
   /** Ruta relativa dentro de src/assets/ponentes/. Ausente = placeholder. */
   imagen: z.string().optional(),
+  /** Perfil confirmado (Instagram, LinkedIn o sitio). Ausente = sin enlace. */
+  url: z.url().optional(),
   estado: EstadoSchema,
 });
 export type Speaker = z.infer<typeof SpeakerSchema>;
+
+export const AllyLinkSchema = z.object({
+  name: z.string(),
+  /** null = el aliado se muestra, pero todavía sin URL confirmada. */
+  url: z.url().nullable(),
+});
+export type AllyLink = z.infer<typeof AllyLinkSchema>;
 
 export const GateColorSchema = z.enum(["violet", "magenta", "road", "sky-deep"]);
 export const GateSchema = z.object({

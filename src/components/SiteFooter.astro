@@ -31,7 +31,7 @@ const columns = [
         <ul class="mt-[18px] flex items-center gap-2.5 lg:mt-5" aria-label="Redes sociales de LEAD UTP">
           {socialLinks.map((s) => (
             <li>
-              <a href={s.href} aria-label={`${s.label} de LEAD UTP`} class="v-social inline-flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/6 text-white/80">
+              <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`${s.label} de LEAD UTP (se abre en una pestaña nueva)`} class="v-social inline-flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/6 text-white/80">
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   {s.id === "instagram" && (<><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z" /><path d="M17.5 6.5h.01" /></>)}
                   {s.id === "linkedin" && (<><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z" /><path d="M2 9h4v12H2z" /><circle cx="4" cy="4" r="2" /></>)}
@@ -51,7 +51,9 @@ const columns = [
               {c.items.map((item) => (
                 <li>
                   {item.href ? (
-                    <a href={item.href} class={linkClass}>{item.label}</a>
+                    <a href={item.href} class={linkClass} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}>
+                      {item.label}{item.href.startsWith("http") && <span class="sr-only"> (se abre en una pestaña nueva)</span>}
+                    </a>
                   ) : (
                     <span class="inline-flex min-h-11 items-center font-inter text-sm text-white/72 lg:min-h-9">{item.label}</span>
                   )}

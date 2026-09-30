@@ -34,7 +34,7 @@ export const navLinks = z.array(NavLinkSchema).parse([
 ]);
 
 export const socialLinks = z.array(SocialSchema).parse([
-  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/lead_utp" },
+  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/lead_utp/" },
   { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/company/lead-utp" },
   { id: "discord", label: "Discord", href: "https://discord.gg/EYXFUfYHbF" },
 ]);
@@ -56,11 +56,11 @@ export const footerColumns = z.array(FooterColumnSchema).parse([
   {
     id: "organizan",
     title: "Organizan",
-    // TODO(confirmar): URLs reales de LEAD UTP, del Pilar y de UTP Internacional.
+    // El Pilar todavía no tiene URL confirmada.
     items: [
-      { label: "LEAD UTP", href: null },
+      { label: "LEAD UTP", href: "https://www.instagram.com/lead_utp/" },
       { label: "Pilar de Excelencia Académica", href: null },
-      { label: "UTP Internacional", href: null },
+      { label: "UTP Internacional", href: "https://www.utp.edu.pe/internacional-utp" },
     ],
   },
 ]);
