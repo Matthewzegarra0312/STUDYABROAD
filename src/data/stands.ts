@@ -1,9 +1,8 @@
 import { StandSchema, type Stand } from "./schema";
 
-// Confirmado: 4 stands sellan el pasaporte (PLAN.md, sección 4 y sección 8
-// "Confirmar que son 4 stands..."). La Embajada de Japón no participa como
-// institución; la Beca MEXT se presenta a través de APEBEMO (CLAUDE.md,
-// regla 4).
+// Los 4 stands que sellan el pasaporte. La Embajada de Japón no aparece
+// (CLAUDE.md, regla 4). APEBEMO sigue en el cronograma con la Beca MEXT,
+// pero ya no es stand.
 const standsRaw: Stand[] = [
   {
     id: "utp-internacional",
@@ -17,21 +16,24 @@ const standsRaw: Stand[] = [
     id: "educationusa",
     nombre: "EducationUSA",
     descripcion: "Universidades, admisiones y becas para estudiar en Estados Unidos.",
+    logo: "Education-USA-Star-Torch-Logo.png",
     url: "https://educationusa.state.gov/",
     estado: "confirmado",
   },
   {
-    id: "apebemo",
-    nombre: "APEBEMO",
-    descripcion: "Asociación Peruana de Becarios del Gobierno de Japón. A cargo de la Beca MEXT.",
-    url: "https://apebemo.org/",
+    id: "study-in-japan",
+    nombre: "Study in Japan",
+    descripcion: null,
+    logo: "Japanese-Brush-Study-in-Japan.png",
+    url: "https://www.estudenojapao.com/es",
     estado: "confirmado",
   },
   {
-    id: "migajeando-becas",
-    nombre: "Migajeando Becas",
-    // Sin descripción propia en la fuente todavía; se muestra "Por anunciar".
+    id: "erasmus-mundus",
+    nombre: "Erasmus Mundus",
     descripcion: null,
+    logo: "Erasmus-Mundus-Association-Perú-Logo.png",
+    url: "https://www.instagram.com/erasmusmundus.peru/",
     estado: "confirmado",
   },
 ];

@@ -181,7 +181,7 @@ const carrilParaleloRaw: CarrilParalelo = {
   titulo: "Stands abiertos",
   horaInicio: "14:00",
   horaFin: "18:00",
-  quienes: ["UTP Internacional", "EducationUSA", "APEBEMO", "Migajeando Becas"],
+  quienes: ["UTP Internacional", "EducationUSA", "Study in Japan", "Erasmus Mundus"],
   nota: "Requisitos, promedios, convalidación, visados y fechas de postulación. Aquí se resuelve lo oficial.",
   estado: "confirmado",
 };

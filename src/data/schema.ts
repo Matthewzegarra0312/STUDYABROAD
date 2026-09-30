@@ -280,6 +280,8 @@ export const AllyLinkSchema = z.object({
   name: z.string(),
   /** null = el aliado se muestra, pero todavía sin URL confirmada. */
   url: z.url().nullable(),
+  /** Archivo en src/assets/aliados/. Ausente = solo el nombre. */
+  logo: z.string().optional(),
 });
 export type AllyLink = z.infer<typeof AllyLinkSchema>;
 

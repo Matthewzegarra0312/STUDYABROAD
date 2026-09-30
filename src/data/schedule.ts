@@ -134,8 +134,8 @@ export const speakers = speakersRaw.map((s) => SpeakerSchema.parse(s));
 const gatesRaw: Gate[] = [
   { n: 1, standId: "utp-internacional", name: "UTP Internacional", color: "violet", estado: "confirmado" },
   { n: 2, standId: "educationusa", name: "EducationUSA", color: "magenta", estado: "confirmado" },
-  { n: 3, standId: "apebemo", name: "APEBEMO", color: "road", estado: "confirmado" },
-  { n: 4, standId: "migajeando-becas", name: "Migajeando Becas", color: "sky-deep", estado: "confirmado" },
+  { n: 3, standId: "study-in-japan", name: "Study in Japan", color: "road", estado: "confirmado" },
+  { n: 4, standId: "erasmus-mundus", name: "Erasmus Mundus", color: "sky-deep", estado: "confirmado" },
 ];
 
 export const gates = gatesRaw.map((g) => {
@@ -146,11 +146,9 @@ export const gates = gatesRaw.map((g) => {
   return gate;
 });
 
-/** Aliados del programa que se muestran bajo las puertas (sin logo ni descripción). */
+/** Aliados del programa que se muestran bajo las puertas. */
 export const allies = [
-  { name: "Study in Japan", url: "https://www.estudenojapao.com/es" },
   { name: "Erasmus+", url: null },
-  { name: "Erasmus Mundus Association Perú", url: "https://www.instagram.com/erasmusmundus.peru/" },
 ].map((a) => AllyLinkSchema.parse(a));
 
 // ---------------------------------------------------------------------------

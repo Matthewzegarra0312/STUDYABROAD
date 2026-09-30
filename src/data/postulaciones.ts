@@ -55,7 +55,8 @@ const postulacionesRaw: Postulacion[] = [
     apertura: null,
     cierre: null,
     urlOficial: null,
-    dondePreguntar: "Stand APEBEMO",
+    // APEBEMO ya no es stand. No se inventa otro lugar hasta confirmarlo.
+    dondePreguntar: null,
     estado: "por-confirmar",
     verificadoEl: null,
   },

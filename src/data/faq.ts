@@ -21,7 +21,7 @@ const faqRaw: FaqItem[] = [
   {
     pregunta: "¿Dónde pregunto por requisitos de una beca?",
     respuesta:
-      "En los stands de UTP Internacional, EducationUSA, APEBEMO y Migajeando Becas, abiertos durante todo el evento.",
+      "En los stands de UTP Internacional, EducationUSA, Study in Japan y Erasmus Mundus, abiertos durante todo el evento.",
     estado: "confirmado",
   },
   {
