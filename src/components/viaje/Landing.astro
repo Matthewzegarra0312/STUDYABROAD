@@ -1,39 +1,42 @@
 ---
 // 07 · Aterrizaje: CTA final al atardecer, con montañas, pista y un avión
 // que aterriza. Todo el fondo es decorativo.
+import { getImage } from "astro:assets";
 import { lumaUrl } from "../../lib/luma";
+import cieloMobile from "../../assets/marca/aterrizaje-cielo-mobile.jpg";
+import cieloDesktop from "../../assets/marca/aterrizaje-cielo-desktop.jpg";
 import Plane from "./Plane.astro";
 import Cta from "./Cta.astro";
 
+const cieloM = await getImage({ src: cieloMobile, format: "webp", quality: 90 });
+const cieloD = await getImage({ src: cieloDesktop, format: "webp", quality: 90 });
 const PATH_D = "M-60 60 C 300 40, 700 130, 1000 300 S 1300 372, 1500 372";
 const PATH_M = "M-40 50 C 80 40, 180 100, 250 240 S 340 292, 430 292";
 ---
 
-<section class="relative h-[560px] overflow-hidden bg-[linear-gradient(180deg,#2A2468_0%,#5B2A86_38%,#AC0BAD_72%,#F27BB5_100%)] text-center text-paper lg:h-[600px]" aria-labelledby="aterrizaje-title">
-  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
-    <div class="v-star absolute top-[50px] left-10 size-[5px] rounded-full bg-paper lg:top-[60px] lg:left-40"></div>
-    <div class="v-star absolute top-[90px] left-[300px] size-1 rounded-full bg-paper [animation-delay:1s] lg:top-[110px] lg:left-[420px] lg:[animation-delay:1.2s]"></div>
-    <div class="v-star absolute top-[70px] left-[980px] hidden size-1.5 rounded-full bg-paper [animation-delay:.6s] lg:block"></div>
-    <div class="v-star absolute top-[130px] left-[1250px] hidden size-1 rounded-full bg-paper [animation-delay:2s] lg:block"></div>
-    <div class="v-sun absolute bottom-14 left-1/2 -ml-20 size-40 rounded-full bg-yellow shadow-[0_0_70px_24px_rgb(255_227_107/0.5)] lg:bottom-[76px] lg:-ml-[110px] lg:size-[220px] lg:shadow-[0_0_90px_30px_rgb(255_227_107/0.5)]"></div>
+<section class="relative h-[560px] overflow-hidden text-center text-paper lg:h-[600px]" aria-labelledby="aterrizaje-title">
+  <div class="pointer-events-none absolute inset-0 [mask-image:linear-gradient(180deg,transparent_0,rgb(0_0_0/0.6)_90px,#000_220px)]" aria-hidden="true">
+    <!-- cielo de atardecer -->
+    <div
+      class="absolute inset-0 bg-cover bg-[position:50%_35%] bg-no-repeat [background-image:var(--cielo-m)] lg:[background-image:var(--cielo-d)]"
+      style={`--cielo-m:url(${cieloM.src});--cielo-d:url(${cieloD.src})`}
+    ></div>
+    <!-- velo violeta: contraste para el título y el botón -->
+    <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(42_36_104/0.5)_0%,rgb(91_42_134/0.3)_50%,rgb(91_42_134/0)_100%)]"></div>
   </div>
 
   <div class="relative z-10 flex flex-col items-center gap-4 px-5 pt-[70px] lg:gap-[22px] lg:pt-24" data-motion-stop data-motion-delay="0">
     <h2 id="aterrizaje-title" class="m-0 max-w-[16ch] font-display text-[44px] leading-none font-normal [text-shadow:0_4px_0_rgb(29_33_82/0.28)] lg:text-[76px] lg:[text-shadow:0_6px_0_rgb(29_33_82/0.28)]">Tu camino empieza el 10 de octubre</h2>
-    <p class="m-0 max-w-[40ch] text-[17px] font-bold lg:text-[22px]">Ven con curiosidad y sal con una oportunidad concreta a la que postular.</p>
+    <p class="m-0 max-w-[40ch] text-[17px] font-bold [text-shadow:0_2px_10px_rgb(42_36_104/0.7)] lg:text-[22px]">Ven con curiosidad y sal con una oportunidad concreta a la que postular.</p>
     <Cta href={lumaUrl("cta-final")} class="min-h-14 px-7 text-[21px] shadow-[0_5px_0_rgb(29_33_82/0.3)] lg:px-[34px] lg:pt-[18px] lg:pb-4 lg:text-2xl">Inscríbete gratis</Cta>
   </div>
 
   <div class="pointer-events-none absolute inset-x-0 bottom-0" aria-hidden="true">
     <svg class="block h-[150px] w-full lg:hidden" viewBox="0 0 390 150" preserveAspectRatio="xMidYMax slice">
-      <path d="M0 80 L40 34 L80 74 L120 28 L170 82 L210 46 L250 86 L290 30 L330 76 L390 44 V150 H0 Z" fill="#3B2A78" opacity=".85"></path>
-      <path d="M0 112 L50 74 L100 108 L160 68 L220 112 L280 76 L340 112 L390 80 V150 H0 Z" fill="#1D2152"></path>
       <rect x="0" y="124" width="390" height="26" fill="#525F97"></rect>
       <path class="v-dash" d="M0 137 H390" stroke="#FDFEFC" stroke-width="2.5" stroke-linecap="round"></path>
     </svg>
     <svg class="hidden h-[200px] w-full lg:block" viewBox="0 0 1440 200" preserveAspectRatio="xMidYMax slice">
-      <path d="M0 110 L140 40 L260 100 L400 30 L560 110 L700 60 L860 118 L1010 36 L1160 104 L1300 52 L1440 110 V200 H0 Z" fill="#3B2A78" opacity=".85"></path>
-      <path d="M0 150 L180 96 L320 146 L520 90 L700 150 L900 100 L1100 152 L1280 96 L1440 146 V200 H0 Z" fill="#1D2152"></path>
       <rect x="0" y="168" width="1440" height="32" fill="#525F97"></rect>
       <path class="v-dash" d="M0 184 H1440" stroke="#FDFEFC" stroke-width="3" stroke-linecap="round"></path>
     </svg>
