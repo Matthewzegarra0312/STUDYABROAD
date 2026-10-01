@@ -1,4 +1,7 @@
 ---
+// Navbar de canje y mi-calendario: misma pastilla flotante de la landing
+// (SiteNav), con el logo a la izquierda, la etiqueta de la página al centro y
+// el regreso al evento a la derecha.
 import { Image } from "astro:assets";
 import logoLead from "../../assets/marca/logo-lead.png";
 import logoEvento from "../../assets/marca/logo study.png";
@@ -11,18 +14,24 @@ const { current = "canje" } = Astro.props;
 const currentLabel = current === "calendario" ? "Mi calendario" : "Canje · SAF 2026";
 ---
 
-<header class="sticky top-0 z-40 border-b border-white/20 bg-ink/95 px-3 py-2.5 text-paper shadow-[0_8px_24px_-14px_rgba(29,33,82,.65)] backdrop-blur-md sm:px-6 lg:px-8">
-  <div class="mx-auto flex min-h-14 w-full max-w-[1120px] items-center justify-between gap-3">
-    <a href="/#hero" class="inline-flex min-h-11 min-w-0 items-center gap-2 rounded-xl no-underline transition-transform hover:-rotate-1" aria-label="Ir al inicio de Study Abroad Fest">
-      <Image src={logoEvento} alt="Study Abroad Fest" width={1080} height={1350} class="block h-12 w-auto object-contain" loading="eager" />
-      <span class="hidden h-8 w-px bg-paper/35 sm:block" aria-hidden="true"></span>
-      <Image src={logoLead} alt="LEAD UTP" width={206} height={80} class="hidden h-8 w-auto sm:block" loading="eager" />
+<header class="pointer-events-none sticky top-3 z-50 mt-3 px-3 lg:top-5 lg:mt-5 lg:px-6">
+  <div
+    class="pointer-events-auto relative mx-auto flex h-[60px] w-full max-w-[1120px] items-center justify-between rounded-xl border border-border-light bg-[rgb(2_12_62/0.78)] pr-2 pl-3.5 text-white shadow-[0_8px_30px_-12px_rgb(2_12_62/0.6)] backdrop-blur-[8px] backdrop-saturate-[1.3] lg:grid lg:grid-cols-[1fr_auto_1fr] lg:pr-3 lg:pl-5"
+  >
+    <a href="/#hero" aria-label="LEAD UTP, Study Abroad Fest, inicio" class="inline-flex min-h-11 items-center gap-[7px] rounded-md max-[374px]:gap-1.5 lg:gap-3 lg:justify-self-start">
+      <Image src={logoLead} alt="" width={102} height={40} widths={[84, 102, 204]} sizes="(min-width: 1024px) 102px, 84px" class="block h-auto w-[84px] max-[374px]:w-[62px] lg:w-[102px]" loading="eager" />
+      <span class="h-[22px] w-px bg-white/22 lg:h-[26px]" aria-hidden="true"></span>
+      <Image src={logoEvento} alt="Study Abroad Fest" width={1080} height={1350} class="block h-[46px] w-auto object-contain max-[374px]:h-10 lg:h-[50px]" loading="eager" />
     </a>
-    <div class="flex items-center gap-2">
-      <span class="hidden rounded-full border border-paper/30 bg-paper/10 px-3 py-2 font-mono text-[10px] font-semibold uppercase tracking-[.12em] text-paper sm:inline-flex">{currentLabel}</span>
-      <a href="/#hero" class="inline-flex min-h-11 items-center rounded-full border-2 border-paper px-3.5 text-xs font-extrabold text-paper no-underline transition-colors hover:bg-paper hover:text-ink sm:px-4 sm:text-sm">
-        <span class="sm:hidden">Volver</span>
-        <span class="hidden sm:inline">Volver al evento</span>
+
+    <span class="hidden rounded-full border border-white/20 bg-white/8 px-3.5 py-1.5 font-mono text-[11px] font-semibold tracking-[.12em] text-white uppercase sm:max-lg:inline-flex lg:inline-flex">{currentLabel}</span>
+
+    <div class="flex items-center gap-1 lg:justify-self-end">
+      <a
+        href="/#hero"
+        class="inline-flex min-h-11 items-center justify-center rounded-md bg-white px-3 font-archivo text-[12.5px] font-extrabold tracking-[.005em] whitespace-nowrap text-navy transition-colors duration-200 hover:bg-magenta hover:text-white lg:px-4 lg:text-[13px]"
+      >
+        <span class="lg:hidden">Volver</span><span class="hidden lg:inline">Volver al evento</span>
       </a>
     </div>
   </div>
