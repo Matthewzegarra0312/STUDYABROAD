@@ -22,7 +22,7 @@ const PATH_D = "M-40 866 C 260 886, 560 866, 760 786 S 1100 520, 1300 300 S 1440
 const PATH_M = "M-20 1000 C 100 1010, 220 990, 280 900 S 340 700, 420 640";
 ---
 
-<section id="hero" class="relative z-[2] h-[1100px] scroll-mt-0 bg-[linear-gradient(180deg,#3B99D8_0%,#66B3EA_82%,#63A3E2_100%)] lg:h-[900px] lg:bg-[linear-gradient(180deg,#3B99D8_0%,#66B3EA_87%,#64ABE0_100%)]" aria-labelledby="hero-title">
+<section id="hero" class="relative z-[2] min-h-[1100px] scroll-mt-0 bg-[linear-gradient(180deg,#3B99D8_0%,#66B3EA_82%,#63A3E2_100%)] lg:h-[900px] lg:min-h-0 lg:bg-[linear-gradient(180deg,#3B99D8_0%,#66B3EA_87%,#64ABE0_100%)]" aria-labelledby="hero-title">
   <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
     <!-- cielo fotográfico visto desde el avión -->
     <div
@@ -50,18 +50,11 @@ const PATH_M = "M-20 1000 C 100 1010, 220 990, 280 900 S 340 700, 420 640";
     </svg>
   </div>
 
-  <div class="relative mx-auto flex size-full max-w-[1200px] flex-col gap-[18px] px-5 pt-[100px] md:px-8 lg:grid lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:px-10 lg:pt-[150px] lg:pb-[100px] xl:px-0">
+  <div class="relative mx-auto flex w-full max-w-[1200px] flex-col gap-[18px] px-5 pt-[100px] pb-28 lg:h-full md:px-8 lg:grid lg:grid-cols-[1.05fr_.95fr] lg:items-center lg:gap-14 lg:px-10 lg:pt-[150px] lg:pb-[100px] xl:px-0">
     <div class="flex flex-col gap-[18px] lg:gap-6">
-      <span
-        class="inline-flex items-center gap-2 self-start rounded-full bg-[rgb(29_33_82/0.26)] px-[13px] py-[7px] font-mono text-[11px] font-semibold tracking-[.12em] text-paper uppercase lg:gap-2.5 lg:px-4 lg:py-2 lg:text-[13px] lg:tracking-[.14em]"
-      >
-        <span class="v-live size-2 rounded-full bg-yellow lg:size-[9px]" aria-hidden="true"></span>
-        <span data-live-badge>Vuelo SAF 2026 · Salida {fecha.corta.split(" ").slice(1).join(" ").toUpperCase()}</span>
-      </span>
-
-      <h1 id="hero-title" class="m-0 font-display text-[clamp(3.5rem,16vw,4.125rem)] leading-[.96] font-normal text-paper [text-shadow:0_4px_0_rgb(29_33_82/0.22)] lg:text-[100px] lg:whitespace-nowrap lg:[text-shadow:0_6px_0_rgb(29_33_82/0.22)]">
+      <h1 id="hero-title" class="m-0 font-display text-[clamp(3.5rem,16vw,4.125rem)] leading-[.96] font-normal text-paper [text-shadow:0_4px_0_rgb(29_33_82/0.22)] lg:text-[clamp(64px,7.1vw,100px)] lg:whitespace-nowrap lg:[text-shadow:0_6px_0_rgb(29_33_82/0.22)]">
         Study Abroad<br />
-        <span class="mt-2.5 inline-block -rotate-[2.5deg] rounded-xl border-4 border-paper bg-brand-gradient px-[22px] pt-[3px] text-[42px] tracking-[.08em] shadow-[0_5px_0_rgb(29_33_82/0.16)] [text-shadow:none] lg:mt-3.5 lg:rounded-2xl lg:border-[6px] lg:px-9 lg:pt-1 lg:text-[70px] lg:shadow-[0_6px_0_rgb(29_33_82/0.16),0_14px_28px_-12px_rgb(29_33_82/0.35)]">FEST</span>
+        <span class="mt-2.5 inline-block -rotate-[2.5deg] rounded-xl border-4 border-paper bg-brand-gradient px-[22px] pt-[3px] text-[42px] tracking-[.08em] shadow-[0_5px_0_rgb(29_33_82/0.16)] [text-shadow:none] lg:mt-3.5 lg:rounded-2xl lg:border-[6px] lg:px-9 lg:pt-1 lg:text-[clamp(46px,4.9vw,70px)] lg:shadow-[0_6px_0_rgb(29_33_82/0.16),0_14px_28px_-12px_rgb(29_33_82/0.35)]">FEST</span>
       </h1>
 
       <p class="m-0 max-w-[30ch] text-[19px] leading-[1.35] font-bold text-paper lg:text-2xl">
@@ -75,16 +68,16 @@ const PATH_M = "M-20 1000 C 100 1010, 220 990, 280 900 S 340 700, 420 640";
         <li class={`${chip} rotate-[1.2deg]`}>{evento.gratuito && <span class="text-violet">Gratis</span>}{evento.inscripcionPrevia && " con inscripción"}</li>
       </ul>
 
-      <div class="mt-1 flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-3.5">
-        <Cta href={lumaUrl("hero")} class="min-h-14 text-[21px] lg:min-h-0 lg:px-[30px] lg:pt-4 lg:pb-3.5 lg:text-[22px] lg:tracking-[.02em]">
+      <div class="mt-1 flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-center lg:gap-3.5">
+        <Cta href={lumaUrl("hero")} class="min-h-14 lg:whitespace-nowrap text-[21px] lg:min-h-0 lg:px-[30px] lg:pt-4 lg:pb-3.5 lg:text-[22px] lg:tracking-[.02em]">
           Inscríbete gratis
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"></path></svg>
         </Cta>
-        <Cta href="#cronograma" variant="outline" class="min-h-[52px] text-base lg:min-h-0 lg:px-[22px] lg:py-3.5 lg:text-[17px]">Ver la ruta de vuelo</Cta>
+        <Cta href="#cronograma" variant="outline" class="min-h-[52px] lg:whitespace-nowrap text-base lg:min-h-0 lg:px-[22px] lg:py-3.5 lg:text-[17px]">Ver la ruta de vuelo</Cta>
       </div>
     </div>
 
-    <div class="relative mt-[30px] w-[300px] self-center lg:mt-0 lg:w-[460px] lg:justify-self-center">
+    <div class="relative mt-[30px] w-[min(300px,100%)] self-center lg:mt-0 lg:w-[clamp(340px,36vw,460px)] lg:justify-self-center">
       <div class="v-float overflow-hidden rounded-[20px] border-8 border-paper bg-paper shadow-[0_6px_0_rgb(29_33_82/0.16),0_18px_32px_-12px_rgb(29_33_82/0.5)] lg:rounded-3xl lg:border-[10px] lg:shadow-[0_8px_0_rgb(29_33_82/0.16),0_24px_44px_-14px_rgb(29_33_82/0.5)]">
         <Image
           src={keyVisual}
@@ -93,7 +86,7 @@ const PATH_M = "M-20 1000 C 100 1010, 220 990, 280 900 S 340 700, 420 640";
           height={550}
           widths={[284, 440, 819]}
           sizes="(min-width: 1024px) 440px, 284px"
-          class="block aspect-[819/1024] w-[284px] object-cover lg:w-[440px]"
+          class="block aspect-[819/1024] w-full object-cover"
           loading="eager"
           fetchpriority="high"
         />
