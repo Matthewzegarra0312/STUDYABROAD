@@ -1,0 +1,24 @@
+---
+// Nube de papel recortado en tres capas (sombra, cuerpo y luz), con los azules
+// del cielo del hero. Decorativa: el contenedor que la usa pone aria-hidden.
+interface Props {
+  class?: string;
+  id: string;
+}
+const { class: cls, id } = Astro.props;
+---
+
+<svg class={cls} viewBox="0 0 300 160" fill="none" aria-hidden="true">
+  <defs>
+    <g id={`${id}-f`}>
+      <circle cx="72" cy="104" r="38"></circle>
+      <circle cx="128" cy="80" r="54"></circle>
+      <circle cx="196" cy="94" r="44"></circle>
+      <circle cx="246" cy="110" r="30"></circle>
+      <rect x="36" y="104" width="240" height="40" rx="20"></rect>
+    </g>
+  </defs>
+  <g fill="#A9CDEE"><use href={`#${id}-f`} transform="translate(0 8)"></use></g>
+  <g fill="#CFE6F6"><use href={`#${id}-f`}></use></g>
+  <g fill="#F6FAFE" opacity=".95"><use href={`#${id}-f`} transform="translate(8 -8) scale(.9)" style="transform-origin:150px 90px"></use></g>
+</svg>

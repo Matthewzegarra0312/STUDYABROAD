@@ -1,0 +1,26 @@
+---
+// Cielo nocturno con estrellas y un destello de Vía Láctea detrás de las
+// secciones de ponentes a calendario. Decorativo (aria-hidden), siempre bajo el
+// contenido. Se desvanece arriba y abajo para unirse con el fondo de la página.
+import { getImage } from "astro:assets";
+import estrellas from "../../assets/marca/estrellas.png";
+
+const img = await getImage({ src: estrellas, format: "webp", quality: 85 });
+const titilan = [
+  "top-[4%] left-[8%]",
+  "top-[9%] right-[12%] [animation-delay:.8s]",
+  "top-[22%] left-[46%] [animation-delay:1.6s]",
+  "top-[31%] right-[6%] [animation-delay:.4s]",
+  "top-[44%] left-[4%] [animation-delay:2.2s]",
+  "top-[56%] right-[20%] [animation-delay:1.2s]",
+  "top-[67%] left-[30%] [animation-delay:2.6s]",
+  "top-[78%] right-[8%] [animation-delay:.2s]",
+  "top-[88%] left-[14%] [animation-delay:1.9s]",
+];
+---
+
+<div class="pointer-events-none absolute inset-0 overflow-hidden [mask-image:linear-gradient(180deg,transparent_0,#000_240px,#000_calc(100%-260px),transparent_100%)]" aria-hidden="true">
+  <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(29_33_82/0.1)_0%,rgb(29_33_82/0.42)_45%,rgb(29_33_82/0.3)_100%)]"></div>
+  <div class="absolute inset-0 bg-repeat-y [background-position:50%_0] [background-size:max(100%,1400px)_auto]" style={`background-image:url(${img.src})`}></div>
+  {titilan.map((pos) => <span class={`v-star absolute size-[3px] rounded-full bg-paper shadow-[0_0_8px_2px_rgb(255_255_255/0.6)] ${pos}`}></span>)}
+</div>

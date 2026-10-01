@@ -5,6 +5,7 @@ import Hero from "../components/viaje/Hero.astro";
 import Cronograma from "../components/viaje/Route.astro";
 import Ponentes from "../components/viaje/Speakers.astro";
 import Stands from "../components/viaje/Gates.astro";
+import Estrellas from "../components/viaje/Estrellas.astro";
 import Pasaporte from "../components/viaje/Passport.astro";
 import Llegar from "../components/viaje/Arrive.astro";
 import CtaFinal from "../components/viaje/Landing.astro";
@@ -20,10 +21,13 @@ import DockMovil from "../components/DockMovil.astro";
   <main class="bg-[linear-gradient(180deg,#64ABE0_0%,#625EAA_37%,#8C55A5_62%,#2A2468_100%)]">
     <Hero />
     <Cronograma />
-    <Ponentes />
-    <Stands />
-    <Pasaporte />
-    <Llegar />
+    <div class="relative">
+      <Estrellas />
+      <Ponentes />
+      <Stands />
+      <Pasaporte />
+      <Llegar />
+    </div>
     <CtaFinal />
   </main>
   <SiteFooter />

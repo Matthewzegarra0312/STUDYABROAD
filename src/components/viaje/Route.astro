@@ -7,6 +7,7 @@ import evento from "../../data/evento";
 import { gates, groups, intermission, notaCronograma } from "../../data/schedule";
 import type { ScheduleMode } from "../../data/schema";
 import { hora12 } from "../../lib/viaje";
+import Nube from "./Nube.astro";
 import PaperEdge from "./PaperEdge.astro";
 import Plane from "./Plane.astro";
 
@@ -51,7 +52,16 @@ const RITMO = ["2.4s", "1.8s", "2.8s", "2.1s"];
   <PaperEdge edge="top" id="edge-cron-top" />
   <PaperEdge edge="bottom" id="edge-cron-bottom" />
 
-  <div class="mx-auto w-full max-w-[1200px]">
+  <!-- nubes de papel recortado que se asoman por los costados, detrás del contenido -->
+  <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+    <Nube id="cn1" class="v-drift absolute top-[70px] -right-12 w-[150px] opacity-90 lg:top-[90px] lg:-right-16 lg:w-[300px]" />
+    <Nube id="cn2" class="v-drift-b absolute top-[640px] -left-16 hidden w-[240px] lg:block" />
+    <Nube id="cn3" class="v-drift absolute top-[880px] -right-10 w-[120px] opacity-80 lg:top-[1150px] lg:-right-20 lg:w-[280px]" />
+    <Nube id="cn4" class="v-drift-b absolute top-[1500px] -left-10 w-[130px] opacity-80 lg:top-[1780px] lg:-left-20 lg:w-[290px]" />
+    <Nube id="cn5" class="v-drift absolute top-[1980px] -right-12 w-[140px] opacity-80 lg:top-[2050px] lg:-right-16 lg:w-[250px]" />
+  </div>
+
+  <div class="relative z-[1] mx-auto w-full max-w-[1200px]">
     <div class="flex flex-col gap-3 lg:grid lg:grid-cols-[minmax(0,1fr)_420px] lg:items-end lg:gap-[60px]">
       <div class="flex flex-col gap-3 lg:gap-4" data-motion-stop data-motion-delay="0">
         <h2 id="cronograma-title" class="m-0 font-display text-[56px] leading-[.98] font-normal text-ink lg:text-[80px]">Del despegue<br />al atardecer</h2>
