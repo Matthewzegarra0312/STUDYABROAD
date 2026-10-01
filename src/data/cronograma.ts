@@ -74,7 +74,7 @@ const bloquesRaw: CronogramaBloque[] = [
   {
     orden: 7,
     titulo: "Panel de exbecarios",
-    quien: "Marlon Hugas (ELAP), Gresly Ruiz (Berkeley), Leslie Sánchez (Berkeley), Diego River (Harvard) y Joshua Eduardo Valentino Galvez Peña (Tecnológico de Monterrey)",
+    quien: "Marlon Ugaz (ELAP), Gresly Ruiz (Berkeley), Leslie Sánchez (Berkeley), Diego River (Harvard) y Joshua Eduardo Valentino Galvez Peña (Tecnológico de Monterrey)",
     espacio: null,
     modalidad: "presencial",
     horaInicio: "15:45",

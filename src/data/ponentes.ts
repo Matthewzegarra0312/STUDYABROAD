@@ -95,7 +95,7 @@ const ponentesRaw: Ponente[] = [
   },
   {
     id: "marlon-hugas",
-    nombre: "Marlon Hugas",
+    nombre: "Marlon Ugaz",
     institucion: "Beca ELAP",
     codigoPais: null,
     meta: null,
