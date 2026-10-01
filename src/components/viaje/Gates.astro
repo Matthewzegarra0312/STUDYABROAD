@@ -33,6 +33,7 @@ const abiertas = gates.filter((g) => g.estado === "confirmado");
         const stand = stands.find((s) => s.id === g.standId);
         const sitio = stand?.url;
         const logo = stand?.logo?.endsWith(".png") ? logoAliado(stand.logo) : undefined;
+        const claro = stand?.logoClaro === true;
         const fondo = logoAliado(stand?.fondo);
         const etiqueta = sitio ? etiquetaEnlace(sitio) : null;
         const textoEnlace = etiqueta === "Sitio web" ? null : etiqueta;
@@ -62,9 +63,9 @@ const abiertas = gates.filter((g) => g.estado === "confirmado");
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${g.name} (se abre en una pestaña nueva)`}
-                  class="isolate inline-flex w-fit max-w-full overflow-hidden rounded-xl bg-ink px-2 py-1"
+                  class:list={["isolate inline-flex w-fit max-w-full overflow-hidden rounded-xl", claro ? "border-2 border-lav/60 bg-paper px-3 py-2" : "bg-ink px-2 py-1"]}
                 >
-                  <Image src={logo} alt="" class="h-16 w-auto max-w-full object-contain mix-blend-screen" />
+                  <Image src={logo} alt="" class:list={["w-auto max-w-full object-contain", claro ? "h-11" : "h-16 mix-blend-screen"]} />
                 </a>
               )}
               {sitio && textoEnlace && (

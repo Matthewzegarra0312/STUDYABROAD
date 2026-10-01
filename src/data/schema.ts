@@ -127,6 +127,8 @@ export const StandSchema = z.object({
   descripcion: z.string().nullable(),
   /** Ruta relativa dentro de src/assets/aliados/. Ausente = placeholder. */
   logo: z.string().optional(),
+  /** true cuando el logo es a color y debe ir sobre fondo claro (por defecto va sobre fondo oscuro). */
+  logoClaro: z.boolean().optional(),
   /** Fondo de la cabecera de la puerta. Archivo en src/assets/aliados/. */
   fondo: z.string().optional(),
   /** Sitio o red confirmados. Ausente = sin enlace. */
