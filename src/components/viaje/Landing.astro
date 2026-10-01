@@ -39,10 +39,10 @@ const PATH_M = "M-40 50 C 80 40, 180 100, 250 240 S 340 292, 430 292";
     </svg>
   </div>
   <div class="pointer-events-none absolute inset-x-0 bottom-0" aria-hidden="true">
-    <svg class="block h-[330px] w-full lg:hidden" viewBox="0 0 390 330" preserveAspectRatio="xMidYMax slice">
+    <svg class="block h-[330px] w-full overflow-visible lg:hidden" viewBox="0 0 390 330" preserveAspectRatio="xMidYMax slice">
       <g class="motion-plane"><Plane scale={1.8} rotate={90} stroke="#1D2152" strokeWidth={0.7} /><animateMotion dur="9s" repeatCount="indefinite" rotate="auto" path={PATH_M}></animateMotion></g>
     </svg>
-    <svg class="hidden h-[420px] w-full lg:block" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice">
+    <svg class="hidden h-[420px] w-full overflow-visible lg:block" viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice">
       <g class="motion-plane"><Plane scale={2.4} rotate={90} stroke="#1D2152" strokeWidth={0.6} /><animateMotion dur="9s" repeatCount="indefinite" rotate="auto" path={PATH_D}></animateMotion></g>
     </svg>
   </div>
