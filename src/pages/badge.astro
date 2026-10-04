@@ -3,12 +3,13 @@
 // (BadgeStudio, tarea 5); la subida y /b/[id] son las únicas piezas de servidor.
 // Referencia visual: docs/badge-diseno/Main.dc.html y Mobile-Badge.dc.html.
 import "@fontsource/arvo/400.css";
+import { Image } from "astro:assets";
 import Base from "../layouts/Base.astro";
 import SiteNav from "../components/SiteNav.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import BadgeStudio from "../components/badge/BadgeStudio.astro";
 import { badgeHref } from "../data/site";
-import fondo from "../assets/badge/fondo-badge.png";
+import fondo from "../assets/badge/fondo-badge.jpg";
 ---
 
 <Base
@@ -17,9 +18,12 @@ import fondo from "../assets/badge/fondo-badge.png";
   image="/og-badge.jpg"
 >
   <SiteNav current={badgeHref} />
-  <main class="relative overflow-hidden bg-[#6258BB]">
-    <img src={fondo.src} alt="" width={fondo.width} height={fondo.height} class="pointer-events-none absolute inset-0 size-full object-cover" loading="eager" fetchpriority="low" aria-hidden="true" />
-    <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgb(42_36_104/0.45)_0%,rgb(42_36_104/0.2)_55%,rgb(42_36_104/0.1)_100%)]" aria-hidden="true"></div>
+  <main class="relative overflow-hidden bg-[linear-gradient(180deg,#2A3C9C_0%,#2A2468_900px,#1D2152_100%)]">
+    {/* El fondo original mide 1200x675: se limita a la franja superior para no ampliarlo de más y se funde con el color de abajo. */}
+    <div class="pointer-events-none absolute inset-x-0 top-0 h-[780px] overflow-hidden [mask-image:linear-gradient(to_bottom,#000_72%,transparent)] lg:h-[840px]" aria-hidden="true">
+      <Image src={fondo} alt="" widths={[828, 1440, 1920]} sizes="100vw" format="webp" quality={85} class="size-full object-cover object-[50%_30%]" loading="eager" fetchpriority="low" />
+      <div class="absolute inset-0 bg-[linear-gradient(180deg,rgb(20_16_60/0.35)_0%,rgb(20_16_60/0.3)_55%,rgb(20_16_60/0.45)_100%)]"></div>
+    </div>
 
     <section id="badge" class="relative mx-auto w-full max-w-[1200px] px-5 pt-28 pb-24 lg:px-10 lg:pt-[150px] lg:pb-[170px]">
       <BadgeStudio>
