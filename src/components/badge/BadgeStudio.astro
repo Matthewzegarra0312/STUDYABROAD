@@ -2,6 +2,8 @@
 // Creador del badge (UI + script del lado cliente). El render vive en
 // badge-canvas.ts; compartir en LinkedIn se conecta después (badge-share.ts).
 // Diseño: docs/badge-diseno/Main.dc.html (escritorio) y Mobile-Badge.dc.html.
+import { plantillaPost } from "../../data/badge";
+import { lumaUrl } from "../../lib/luma";
 import { MOODS, NAME_MAX_LENGTH } from "./badge-canvas";
 
 const stepNum = "font-display text-[26px] leading-none text-violet lg:text-[28px]";
@@ -10,7 +12,7 @@ const chipBase =
   "inline-flex min-h-11 cursor-pointer items-center rounded-full border-2 px-3.5 py-2.5 font-sans text-sm font-extrabold transition-colors";
 ---
 
-<div class="grid gap-x-14 gap-y-8 lg:grid-cols-2 lg:items-start" data-badge-studio>
+<div class="grid gap-x-14 gap-y-8 lg:grid-cols-2 lg:items-start" data-badge-studio data-post-template={plantillaPost} data-luma-url={lumaUrl("badge_linkedin")}>
   <div class="lg:col-start-1 lg:row-start-1">
     <slot />
   </div>
@@ -63,13 +65,14 @@ const chipBase =
           data-badge-download
           aria-disabled="true"
           aria-label="Descargar imagen"
-          class="v-btn inline-grid size-12 shrink-0 place-items-center rounded-full bg-white text-navy shadow-[0_6px_0_rgb(29_33_82/0.16)] aria-disabled:opacity-60 lg:flex lg:size-auto lg:min-h-12 lg:gap-2 lg:px-[22px] lg:text-[17px] lg:font-extrabold lg:text-ink"
+          class="v-btn inline-grid size-12 shrink-0 place-items-center rounded-full bg-white text-navy shadow-[0_6px_0_rgb(29_33_82/0.16)] data-[resaltar=true]:ring-4 data-[resaltar=true]:ring-yellow aria-disabled:opacity-60 lg:flex lg:size-auto lg:min-h-12 lg:gap-2 lg:px-[22px] lg:text-[17px] lg:font-extrabold lg:text-ink"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
           <span class="hidden lg:inline">Descargar imagen</span>
         </button>
       </div>
     </div>
+    <button type="button" data-badge-copy class="min-h-11 rounded-full px-4 text-sm font-extrabold text-paper underline decoration-2 underline-offset-4 [text-shadow:0_2px_8px_rgb(29_33_82/0.4)]">Copiar texto</button>
     <p class="m-0 text-center text-sm font-bold text-ink-2 lg:-mt-2 lg:text-paper lg:[text-shadow:0_2px_8px_rgb(29_33_82/0.4)]">Al publicar, etiqueta a LEAD UTP y UTP Internacional.</p>
   </div>
 
@@ -157,7 +160,8 @@ const chipBase =
 </noscript>
 
 <script>
-  import { MOODS, SLOTS, PhotoError, dibujarBadge, badgeABlob, leerFoto, normalizarNombre, type BadgePhoto, type BadgeState, type Mood } from "./badge-canvas";
+  import { MOODS, SLOTS, PhotoError, dibujarBadge, leerFoto, normalizarNombre, type BadgePhoto, type BadgeState, type Mood } from "./badge-canvas";
+  import { ErrorCompartir, MENSAJES, compartirEnLinkedIn, copiarTexto, descargarBadge, textoPost } from "./badge-share";
 
   const root = document.querySelector<HTMLElement>("[data-badge-studio]");
   const q = <T extends Element>(sel: string) => root?.querySelector<T>(sel) ?? null;
@@ -177,8 +181,12 @@ const chipBase =
   const shareBtn = q<HTMLButtonElement>("[data-badge-share]");
   const downloadBtn = q<HTMLButtonElement>("[data-badge-download]");
   const dragHint = q<HTMLElement>("[data-badge-drag-hint]");
+  const copyBtn = q<HTMLButtonElement>("[data-badge-copy]");
 
-  if (root && canvas && photoInput && photoLabel && drop && tools && zoomInput && removeBtn && nameInput && count && moodGroup && accept && status && shareBtn && downloadBtn) {
+  if (root && canvas && photoInput && photoLabel && drop && tools && zoomInput && removeBtn && nameInput && count && moodGroup && accept && status && shareBtn && downloadBtn && copyBtn) {
+    const plantilla = root!.dataset.postTemplate ?? "";
+    const lumaUrl = root!.dataset.lumaUrl ?? "";
+    let ocupado = false;
     const estado: BadgeState = { photo: null, zoom: 1, panX: 0, panY: 0, name: "", mood: MOODS[0] };
     const mensajeFalta = () =>
       !estado.photo
@@ -220,7 +228,7 @@ const chipBase =
       const falta = mensajeFalta();
       downloadBtn.setAttribute("aria-disabled", String(Boolean(falta)));
       // Compartir se conecta en badge-share.ts: hasta entonces queda inactivo.
-      shareBtn.setAttribute("aria-disabled", String(Boolean(falta) || !accept.checked || !shareBtn.dataset.listo));
+      shareBtn.setAttribute("aria-disabled", String(Boolean(falta) || !accept.checked || ocupado));
     };
 
     const actualizarFoto = () => {
@@ -367,24 +375,49 @@ const chipBase =
         return;
       }
       try {
-        const blob = await badgeABlob(estado);
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "mi-badge-study-abroad-fest-2026.png";
-        document.body.append(a);
-        a.click();
-        a.remove();
-        window.setTimeout(() => URL.revokeObjectURL(url), 10_000);
+        await descargarBadge(estado);
+        downloadBtn.dataset.resaltar = "false";
         decir("Badge guardado. Revisa tus descargas o tu galería.");
       } catch {
         decir("No pudimos generar la imagen. Inténtalo de nuevo.", "error");
       }
     });
 
-    shareBtn.addEventListener("click", () => {
-      if (shareBtn.dataset.listo) return;
-      decir("Compartir en LinkedIn estará disponible muy pronto. Mientras tanto, descarga tu imagen.", "error");
+    // Copiar texto: mismo post, pero con el enlace de inscripción de Luma. Sin peticiones.
+    copyBtn.addEventListener("click", async () => {
+      const ok = await copiarTexto(textoPost(plantilla, lumaUrl));
+      decir(ok ? "Texto copiado. Pégalo en tu publicación." : "Tu navegador no permitió copiar el texto.", ok ? "ok" : "error");
+    });
+
+    // Compartir en LinkedIn: sube solo el badge final y la vista previa, y abre el borrador.
+    shareBtn.addEventListener("click", async () => {
+      if (ocupado) return;
+      const falta = mensajeFalta();
+      if (falta) {
+        decir(falta, "error");
+        return;
+      }
+      if (!accept.checked) {
+        decir("Marca la casilla para poder compartir en LinkedIn.", "error");
+        accept.focus();
+        return;
+      }
+      ocupado = true;
+      downloadBtn.dataset.resaltar = "false";
+      shareBtn.setAttribute("aria-busy", "true");
+      actualizarBotones();
+      decir("Preparando tu borrador...");
+      try {
+        const { copiado } = await compartirEnLinkedIn(estado, plantilla);
+        decir(copiado ? "Abriendo LinkedIn. También copiamos el texto por si no aparece escrito." : "Abriendo LinkedIn con tu badge.");
+      } catch (e) {
+        decir(e instanceof ErrorCompartir ? e.message : MENSAJES.respaldo, "error");
+        downloadBtn.dataset.resaltar = "true";
+      } finally {
+        ocupado = false;
+        shareBtn.removeAttribute("aria-busy");
+        actualizarBotones();
+      }
     });
 
     actualizarBotones();
