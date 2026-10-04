@@ -58,6 +58,7 @@ export const footerColumns = z.array(FooterColumnSchema).parse([
       { label: "Ponentes", href: "#ponentes" },
       { label: "Stands", href: "#stands" },
       { label: "Calendario de becas", href: "#calendario" },
+      { label: "Mi badge", href: badgeHref },
     ],
   },
   {
