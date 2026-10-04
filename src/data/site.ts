@@ -3,8 +3,11 @@ import { z } from "zod";
 // Navegación y pie de página del concepto Viaje (VIAJE.md, sección 3).
 
 const NavLinkSchema = z.object({
-  href: z.string().startsWith("#"),
+  /** "#ancla" (sección de la home) o "/ruta" (página propia). */
+  href: z.string().regex(/^[#/]/, 'El href debe empezar con "#" o con "/"'),
   label: z.string(),
+  /** Marca corta junto a la etiqueta, p. ej. "NUEVO". */
+  tag: z.string().optional(),
 });
 
 const SocialSchema = z.object({
@@ -25,12 +28,16 @@ const FooterColumnSchema = z.object({
   items: z.array(FooterItemSchema).min(1),
 });
 
+/** Ruta del generador de badge para asistentes. */
+export const badgeHref = "/badge";
+
 export const navLinks = z.array(NavLinkSchema).parse([
   { href: "#cronograma", label: "Cronograma" },
   { href: "#ponentes", label: "Ponentes" },
   { href: "#stands", label: "Stands" },
   { href: "#calendario", label: "Calendario de becas" },
   { href: "#llegar", label: "Cómo llegar" },
+  { href: badgeHref, label: "Mi badge", tag: "NUEVO" },
 ]);
 
 export const socialLinks = z.array(SocialSchema).parse([

@@ -5,3 +5,11 @@ export function etiquetaEnlace(url: string): string {
   if (host === "linkedin.com") return "LinkedIn";
   return "Sitio web";
 }
+
+/**
+ * Enlace a un ancla de la home. En la home queda como "#ancla"; desde otra
+ * página (p. ej. "/badge") pasa a "/#ancla" para volver a la home.
+ */
+export function enlaceInicio(ancla: string, current?: string): string {
+  return current ? `/${ancla}` : ancla;
+}
