@@ -26,7 +26,8 @@ export const SLOTS = {
   foto: { x: 164, y: 721, w: 300, h: 396, radio: 18 },
   /** Borde magenta que se vuelve a trazar encima de la foto. */
   borde: { x: 163, y: 719, w: 303, h: 399, radio: 18, grosor: 6, color: MAGENTA },
-  nombre: { x1: 485, y1: 742, x2: 917, y2: 814, centroY: 793, margen: 10, tamano: 22, minimo: 12, espaciado: 0.04 },
+  /** Una línea de 22 a 20 px; si no cabe, dos líneas de 19 a 18 px. Nunca baja de 18 px. */
+  nombre: { x1: 485, y1: 742, x2: 917, y2: 814, centroY: 793, centrosDosLineas: [785, 803], dosLineasMaximo: 19, margen: 10, tamano: 22, unaLineaMinimo: 20, minimo: 18, espaciado: 0.04 },
   ocupacion: { x1: 485, y1: 814, x2: 917, y2: 887, centroY: 865, tamano: 22, espaciado: 0.1, texto: "ESTUDIANTE" },
   mood: { x1: 701, y1: 960, x2: 917, y2: 1033, centroY: 1010, margen: 6, tamano: 22, minimo: 14, espaciado: 0.1 },
 } as const;
@@ -164,6 +165,56 @@ function fijarFuente(ctx: CanvasRenderingContext2D, px: number, espaciado: numbe
   if ("letterSpacing" in ctx) ctx.letterSpacing = `${(px * espaciado).toFixed(2)}px`;
 }
 
+/** Parte `texto` en dos por el espacio más cercano al centro (o por la mitad si no hay espacios). */
+export function partirNombre(texto: string): [string, string] {
+  const medio = texto.length / 2;
+  let mejor = -1;
+  for (let i = 0; i < texto.length; i++) {
+    if (texto[i] === " " && (mejor < 0 || Math.abs(i - medio) < Math.abs(mejor - medio))) mejor = i;
+  }
+  if (mejor < 0) return [texto.slice(0, Math.ceil(medio)), texto.slice(Math.ceil(medio))];
+  return [texto.slice(0, mejor), texto.slice(mejor + 1)];
+}
+
+function anchoTexto(ctx: CanvasRenderingContext2D, texto: string, px: number, espaciado: number) {
+  fijarFuente(ctx, px, espaciado);
+  return ctx.measureText(texto).width;
+}
+
+/**
+ * Nombre en la casilla: una línea (22 a 20 px); si no cabe, dos líneas
+ * partidas por el espacio más cercano al centro (19 a 18 px). Nunca baja de
+ * 18 px; solo si aun así una línea no cabe se recorta con puntos suspensivos.
+ */
+function dibujarNombre(ctx: CanvasRenderingContext2D, texto: string) {
+  const n = SLOTS.nombre;
+  const cx = (n.x1 + n.x2) / 2;
+  const anchoMax = n.x2 - n.x1 - n.margen * 2;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  for (let px = n.tamano; px >= n.unaLineaMinimo; px -= 0.5) {
+    if (anchoTexto(ctx, texto, px, n.espaciado) <= anchoMax) {
+      fijarFuente(ctx, px, n.espaciado);
+      ctx.fillText(texto, cx, n.centroY);
+      return;
+    }
+  }
+
+  const lineas = partirNombre(texto);
+  let px = n.dosLineasMaximo;
+  while (px > n.minimo && lineas.some((l) => anchoTexto(ctx, l, px, n.espaciado) > anchoMax)) px -= 0.5;
+  fijarFuente(ctx, px, n.espaciado);
+  lineas.forEach((linea, i) => {
+    let t = linea;
+    if (ctx.measureText(t).width > anchoMax) {
+      while (t.length > 1 && ctx.measureText(`${t}…`).width > anchoMax) t = t.slice(0, -1);
+      t = `${t.trimEnd()}…`;
+    }
+    ctx.fillText(t, cx, n.centrosDosLineas[i] ?? n.centroY);
+  });
+}
+
 /** Dibuja `texto` centrado, bajando el tamaño hasta que quepa; si aun así no cabe, recorta con puntos suspensivos. */
 function textoAjustado(
   ctx: CanvasRenderingContext2D,
@@ -236,9 +287,7 @@ export async function dibujarBadge(canvas: HTMLCanvasElement, estado: BadgeState
 
   // Textos
   ctx.fillStyle = INK;
-  const n = SLOTS.nombre;
-  const nombre = normalizarNombre(estado.name) || "TU NOMBRE";
-  textoAjustado(ctx, nombre, (n.x1 + n.x2) / 2, n.centroY, n.x2 - n.x1 - n.margen * 2, n.tamano, n.minimo, n.espaciado);
+  dibujarNombre(ctx, normalizarNombre(estado.name) || "TU NOMBRE");
 
   const o = SLOTS.ocupacion;
   textoAjustado(ctx, o.texto, (o.x1 + o.x2) / 2, o.centroY, o.x2 - o.x1, o.tamano, o.tamano, o.espaciado);
