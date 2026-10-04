@@ -1,0 +1,103 @@
+---
+// Servidor (Vercel Functions): página pública de un badge compartido en
+// LinkedIn. LinkedIn arma la tarjeta con las metas og:* de esta página, así
+// que todas las URL son absolutas (con Astro.url.origin si no hay SITE_URL).
+export const prerender = false;
+
+import Base from "../../layouts/Base.astro";
+import SiteNav from "../../components/SiteNav.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import evento from "../../data/evento";
+import { badgeHref } from "../../data/site";
+import { formatoFechaCorta, formatoHora12 } from "../../lib/fechas";
+import { lumaUrl } from "../../lib/luma";
+import { obtenerBadge, type BadgeGuardado } from "../../server/badges";
+import cielo from "../../assets/marca/hero-cielo-desktop.jpg";
+
+const { id = "" } = Astro.params;
+
+let badge: BadgeGuardado | null = null;
+let fallo = false;
+try {
+  badge = await obtenerBadge(id);
+} catch (e) {
+  fallo = true;
+  console.error("[badge] No se pudo leer el badge de Blob:", e instanceof Error ? e.message : e);
+}
+
+if (badge) {
+  Astro.response.headers.set("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=86400");
+} else {
+  Astro.response.status = fallo ? 503 : 404;
+  Astro.response.headers.set("Cache-Control", fallo ? "no-store" : "public, s-maxage=60");
+}
+
+const origen = Astro.site?.origin ?? Astro.url.origin;
+const urlPagina = new URL(`/b/${id}`, origen).toString();
+
+const titulo = badge ? "Voy a Study Abroad Fest 2026" : fallo ? "Algo salió mal · Study Abroad Fest" : "No encontramos este badge · Study Abroad Fest";
+const descripcion = `Becas, intercambios y orientación directa con instituciones internacionales. ${formatoFechaCorta(evento.fecha)}, ${evento.lugar}, Lima. Ingreso gratuito con inscripción previa.`;
+const horario = `${formatoHora12(evento.horaInicio)} a ${formatoHora12(evento.horaFin)}`;
+
+const boton =
+  "v-btn inline-flex min-h-14 items-center justify-center rounded-full border-4 border-paper px-7 font-display text-xl text-paper shadow-[0_5px_0_rgb(29_33_82/0.3)]";
+---
+
+<Base
+  title={titulo}
+  description={descripcion}
+  noindex
+  url={urlPagina}
+  image={badge?.previewUrl}
+  imageWidth={1200}
+  imageHeight={627}
+  imageAlt="Badge de asistente a Study Abroad Fest 2026"
+>
+  <SiteNav current="/b" />
+  <main class="relative overflow-hidden bg-[linear-gradient(180deg,#3B99D8_0%,#66B3EA_87%,#64ABE0_100%)]">
+    <img src={cielo.src} alt="" width={cielo.width} height={cielo.height} class="pointer-events-none absolute inset-0 size-full object-cover" loading="eager" fetchpriority="low" aria-hidden="true" />
+    <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgb(47_134_196/0.62)_0%,rgb(47_134_196/0.4)_45%,rgb(47_134_196/0.12)_85%)]" aria-hidden="true"></div>
+
+    <section class="relative mx-auto flex w-full max-w-[1200px] flex-col gap-10 px-5 pt-28 pb-20 lg:flex-row lg:items-center lg:gap-14 lg:px-10 lg:pt-[140px] lg:pb-[120px]">
+      <div class="flex min-w-0 flex-1 flex-col gap-5 lg:gap-[22px]">
+        <span class="inline-flex items-center gap-2.5 self-start rounded-full bg-ink/28 px-3.5 py-2 font-mono text-[11px] font-semibold tracking-[.14em] text-paper uppercase lg:px-4 lg:text-[13px]">
+          <span class="v-live size-[9px] rounded-full bg-yellow" aria-hidden="true"></span>{badge ? "Asistente confirmado" : "Badge no disponible"}
+        </span>
+
+        {badge ? (
+          <h1 class="m-0 font-display text-[44px] leading-[.98] font-normal text-paper [text-shadow:0_6px_0_rgb(29_33_82/0.22)] sm:text-[60px] lg:text-[72px]">Voy a Study Abroad Fest 2026</h1>
+        ) : (
+          <h1 class="m-0 font-display text-[44px] leading-[.98] font-normal text-paper [text-shadow:0_6px_0_rgb(29_33_82/0.22)] sm:text-[60px] lg:text-[72px]">{fallo ? "Algo salió mal" : "No encontramos este badge"}</h1>
+        )}
+
+        <p class="m-0 max-w-[34ch] text-lg leading-snug font-bold text-paper [text-shadow:0_2px_10px_rgb(29_33_82/0.35)] lg:text-[22px]">
+          {badge
+            ? "Una tarde para convertir el interés por estudiar en el extranjero en un camino concreto."
+            : fallo
+              ? "No pudimos cargar este badge. Inténtalo de nuevo en unos minutos."
+              : "El enlace puede estar mal escrito o el badge ya no está disponible."}
+        </p>
+
+        <p class="m-0 font-mono text-[13px] leading-relaxed font-semibold tracking-[.06em] text-paper uppercase [text-shadow:0_2px_8px_rgb(29_33_82/0.4)] lg:text-sm">
+          {formatoFechaCorta(evento.fecha)} · {horario}<br />
+          {evento.lugar}<br />
+          {evento.direccion}
+        </p>
+
+        <div class="mt-2 flex flex-wrap items-center gap-3.5">
+          <a href={lumaUrl("badge_linkedin")} class={`${boton} bg-brand-gradient`}>Inscríbete gratis</a>
+          <a href={badgeHref} class="inline-flex min-h-14 items-center justify-center rounded-full bg-paper px-6 text-lg font-extrabold text-ink shadow-[0_5px_0_rgb(29_33_82/0.3)] transition-transform hover:-translate-y-0.5">Crea tu badge</a>
+        </div>
+      </div>
+
+      {badge && (
+        <div class="flex min-w-0 flex-1 justify-center">
+          <div class="v-float w-[min(100%,340px)] overflow-hidden rounded-3xl border-[10px] border-paper bg-paper shadow-[0_8px_0_rgb(29_33_82/0.16),0_24px_44px_-14px_rgb(29_33_82/0.5)] lg:w-[400px]">
+            <img src={badge.badgeUrl} alt="Badge de asistente a Study Abroad Fest 2026" width="1080" height="1350" class="block h-auto w-full" loading="eager" />
+          </div>
+        </div>
+      )}
+    </section>
+  </main>
+  <SiteFooter current="/b" />
+</Base>

@@ -19,19 +19,35 @@ interface Props {
   /** Páginas protegidas o de un solo estudiante (p. ej. /mi-calendario):
    *  no deben quedar indexadas ni enlazadas desde buscadores. */
   noindex?: boolean;
+  /** URL absoluta de la página, para las que se renderizan en el servidor sin
+   *  `site` configurado (p. ej. /b/<id>): LinkedIn exige URL absolutas. */
+  url?: string;
+  /** Medidas reales de `image` (por defecto 1200x630). */
+  imageWidth?: number;
+  imageHeight?: number;
+  imageAlt?: string;
 }
 
 const DESCRIPCION_POR_DEFECTO =
   "Becas, intercambios y universidades del mundo en una sola tarde. Sábado 10 de octubre, Centro de convenciones UTP, Lima.";
 
-const { title, description = DESCRIPCION_POR_DEFECTO, image = "/og-image.png", noindex = false } = Astro.props;
+const {
+  title,
+  description = DESCRIPCION_POR_DEFECTO,
+  image = "/og-image.png",
+  noindex = false,
+  url,
+  imageWidth = 1200,
+  imageHeight = 630,
+  imageAlt = "Study Abroad Fest 2026 · sábado 10 de octubre · Centro de convenciones UTP, Lima",
+} = Astro.props;
 
 // Astro.site depende de la variable de entorno SITE_URL (astro.config.mjs):
 // el dominio final todavía está pendiente (PLAN.md, sección 8), así que
 // sin ella estas URL quedan relativas en vez de inventar un dominio
 // (CLAUDE.md, regla 1). Se vuelven absolutas solas en cuanto se defina
 // SITE_URL en Vercel.
-const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.pathname;
+const canonicalURL = url ?? (Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : Astro.url.pathname);
 const imagenOgURL = Astro.site ? new URL(image, Astro.site).toString() : image;
 ---
 
@@ -64,9 +80,9 @@ const imagenOgURL = Astro.site ? new URL(image, Astro.site).toString() : image;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={imagenOgURL} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Study Abroad Fest 2026 · sábado 10 de octubre · Centro de convenciones UTP, Lima" />
+    <meta property="og:image:width" content={String(imageWidth)} />
+    <meta property="og:image:height" content={String(imageHeight)} />
+    <meta property="og:image:alt" content={imageAlt} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />

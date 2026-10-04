@@ -85,3 +85,20 @@ export async function totalCanjes(): Promise<number | null> {
   } while (cursor !== 0);
   return total;
 }
+
+/**
+ * Máximo `limite` subidas de badge por IP cada hora (/api/badge-upload).
+ * Sin Redis, nunca bloquea.
+ */
+export async function subidasBadgeSuperadas(ip: string, limite: number): Promise<boolean> {
+  if (!redis) {
+    avisarSinLimite();
+    return false;
+  }
+  const clave = `badge-subidas:${ip}`;
+  const total = await redis.incr(clave);
+  if (total === 1) {
+    await redis.expire(clave, 60 * 60);
+  }
+  return total > limite;
+}
