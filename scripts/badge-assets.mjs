@@ -1,10 +1,13 @@
-// Deriva de public/badge/plantilla.png dos piezas livianas para /badge:
+// Deriva de public/badge/plantilla.png tres piezas livianas para /badge:
+//  - public/badge/plantilla.jpg: la que dibuja el canvas (1080x1350, calidad 90)
 //  - public/badge/plantilla-vista.webp: vista del hero (540x675)
 //  - public/og-badge.jpg: imagen para compartir el enlace /badge (1200x630)
 // Uso: node scripts/badge-assets.mjs
 import sharp from "sharp";
 
 const plantilla = "public/badge/plantilla.png";
+
+await sharp(plantilla).jpeg({ quality: 90 }).toFile("public/badge/plantilla.jpg");
 
 await sharp(plantilla).resize(540, 675).webp({ quality: 82 }).toFile("public/badge/plantilla-vista.webp");
 
