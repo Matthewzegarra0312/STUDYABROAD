@@ -8,8 +8,7 @@ import SiteNav from "../components/SiteNav.astro";
 import SiteFooter from "../components/SiteFooter.astro";
 import BadgeStudio from "../components/badge/BadgeStudio.astro";
 import { badgeHref } from "../data/site";
-import cieloDesktop from "../assets/marca/hero-cielo-desktop.jpg";
-import cieloMobile from "../assets/marca/hero-cielo-mobile.jpg";
+import fondo from "../assets/badge/fondo-badge.png";
 ---
 
 <Base
@@ -18,12 +17,9 @@ import cieloMobile from "../assets/marca/hero-cielo-mobile.jpg";
   image="/og-badge.jpg"
 >
   <SiteNav current={badgeHref} />
-  <main class="relative overflow-hidden bg-[linear-gradient(180deg,#3B99D8_0%,#66B3EA_87%,#64ABE0_100%)]">
-    <picture class="pointer-events-none absolute inset-0 block" aria-hidden="true">
-      <source media="(min-width: 1024px)" srcset={cieloDesktop.src} />
-      <img src={cieloMobile.src} alt="" width={cieloMobile.width} height={cieloMobile.height} class="size-full object-cover" loading="eager" fetchpriority="low" />
-    </picture>
-    <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgb(47_134_196/0.62)_0%,rgb(47_134_196/0.4)_45%,rgb(47_134_196/0.12)_85%)]" aria-hidden="true"></div>
+  <main class="relative overflow-hidden bg-[#6258BB]">
+    <img src={fondo.src} alt="" width={fondo.width} height={fondo.height} class="pointer-events-none absolute inset-0 size-full object-cover" loading="eager" fetchpriority="low" aria-hidden="true" />
+    <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgb(42_36_104/0.45)_0%,rgb(42_36_104/0.2)_55%,rgb(42_36_104/0.1)_100%)]" aria-hidden="true"></div>
 
     <section id="badge" class="relative mx-auto w-full max-w-[1200px] px-5 pt-28 pb-24 lg:px-10 lg:pt-[150px] lg:pb-[170px]">
       <BadgeStudio>
