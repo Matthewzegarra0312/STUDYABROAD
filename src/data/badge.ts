@@ -12,3 +12,9 @@ Becas, intercambios y orientación directa con instituciones internacionales. Or
 
 #StudyAbroadFest #LEADUTP #UTPInternacional #Becas #EstudiarEnElExtranjero`,
 );
+
+// Pasos de la sección #badge de la home (docs/badge-diseno/Home-Seccion-*.dc.html).
+export const pasosBadge = z
+  .array(z.object({ title: z.string() }))
+  .length(3)
+  .parse([{ title: "Sube tu foto" }, { title: "Escribe tu nombre" }, { title: "Comparte en LinkedIn" }]);
