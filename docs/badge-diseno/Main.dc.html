@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Crea tu badge · Study Abroad Fest</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Figtree:wght@400;500;600;700;800&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Archivo:wght@700;800;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:"Figtree","Segoe UI",sans-serif;color:#1D2152;background:#3B99D8}
+a{color:#6258BB}a:hover{color:#AC0BAD}
+@keyframes v-drift{from{transform:translateX(0)}to{transform:translateX(46px)}}
+@keyframes v-float{0%,100%{transform:rotate(2.5deg) translateY(0)}50%{transform:rotate(1deg) translateY(-12px)}}
+@keyframes v-dash{to{stroke-dashoffset:-28}}
+@keyframes v-spin{to{transform:rotate(360deg)}}
+@keyframes v-live{0%,100%{box-shadow:0 0 0 0 rgba(255,227,107,.6)}50%{box-shadow:0 0 0 9px rgba(255,227,107,0)}}
+@keyframes v-twinkle{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes v-shine{0%{transform:translateX(-140%) skewX(-18deg)}60%,100%{transform:translateX(320%) skewX(-18deg)}}
+@keyframes v-pop{0%{opacity:.001;transform:translateY(14px)}100%{opacity:1;transform:none}}
+.v-drift{animation:v-drift 11s ease-in-out infinite alternate}
+.v-drift-b{animation:v-drift 15s ease-in-out infinite alternate-reverse}
+.v-float{animation:v-float 7s ease-in-out infinite}
+.v-dash{stroke-dasharray:14 14;animation:v-dash 1.4s linear infinite}
+.v-spin{transform-origin:75px 75px;animation:v-spin 26s linear infinite}
+.v-live{animation:v-live 2s ease-in-out infinite}
+.v-star{animation:v-twinkle 3s ease-in-out infinite}
+.v-pop{animation:v-pop .45s cubic-bezier(.2,.8,.2,1) both}
+.v-btn{position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+.v-btn:hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 9px 0 rgba(29,33,82,.22),0 18px 30px -12px rgba(29,33,82,.5)}
+.v-btn::before{content:"";position:absolute;top:0;bottom:0;left:0;width:36%;background:rgba(255,255,255,.28);transform:translateX(-140%) skewX(-18deg);animation:v-shine 4.5s ease-in-out infinite}
+.v-nav-link:hover{background:rgba(255,255,255,.06);color:#fff}
+.v-nav-cta:hover{background:#AC0BAD;color:#fff}
+.v-flink:hover{color:#fff}
+.v-social:hover{background:#AC0BAD;color:#fff}
+input:focus,button:focus-visible,a:focus-visible,label:focus-within{outline:none;box-shadow:0 0 0 3px #FDFEFC,0 0 0 6px #1D2152}
+input[type=range]{accent-color:#AC0BAD}
+@media (prefers-reduced-motion:reduce){.v-drift,.v-drift-b,.v-float,.v-dash,.v-spin,.v-live,.v-star,.v-pop,.v-btn::before{animation:none}}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 2660px; display: flex; flex-direction: column; position: relative; background: #2A2468; overflow: hidden">
+
+  <!-- NAVBAR flotante (SiteNav) + "Mi badge" -->
+  <header style="position: absolute; top: 20px; left: 0; right: 0; z-index: 50; padding: 0 24px">
+    <div style="max-width: 1120px; margin: 0 auto; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); background: rgba(2,12,62,.78); padding: 0 12px 0 20px; color: #FFFFFF; box-shadow: 0 8px 30px -12px rgba(2,12,62,.6); backdrop-filter: blur(8px) saturate(1.3)">
+      <a href="Home-Seccion-Desktop.dc.html" aria-label="LEAD UTP, Study Abroad Fest, inicio" style="display: inline-flex; align-items: center; gap: 12px; min-height: 44px">
+        <img src="assets/logo-lead.png" alt="" style="display: block; width: 102px; height: auto">
+        <span style="width: 1px; height: 26px; background: rgba(255,255,255,.22)"></span>
+        <img src="assets/logo-study.png" alt="Study Abroad Fest" style="display: block; height: 50px; width: auto">
+      </a>
+      <nav aria-label="Navegación principal" style="display: flex; align-items: center; gap: 2px; flex-wrap: wrap">
+        <a class="v-nav-link" href="#cronograma" style="display: inline-flex; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 500; color: rgba(255,255,255,.8); text-decoration: none">Cronograma</a>
+        <a class="v-nav-link" href="#ponentes" style="display: inline-flex; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 500; color: rgba(255,255,255,.8); text-decoration: none">Ponentes</a>
+        <a class="v-nav-link" href="#stands" style="display: inline-flex; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 500; color: rgba(255,255,255,.8); text-decoration: none">Stands</a>
+        <a class="v-nav-link" href="#calendario" style="display: inline-flex; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 500; color: rgba(255,255,255,.8); text-decoration: none">Calendario de becas</a>
+        <a class="v-nav-link" href="#llegar" style="display: inline-flex; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 500; color: rgba(255,255,255,.8); text-decoration: none">Cómo llegar</a>
+        <a href="Main.dc.html" aria-current="page" style="position: relative; display: inline-flex; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 600; color: #FFFFFF; background: rgba(255,255,255,.08); text-decoration: none">Mi badge<span style="position: absolute; left: 10px; right: 10px; bottom: 4px; height: 2px; border-radius: 999px; background: #D93340"></span></a>
+      </nav>
+      <a class="v-nav-cta" href="https://luma.com/txyuybq9?tk=pwCvrY" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 6px; background: #FFFFFF; color: #020C3E; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 13px; text-decoration: none; white-space: nowrap">Inscríbete gratis</a>
+    </div>
+  </header>
+
+  <!-- HERO · CREADOR DEL BADGE -->
+  <section style="position: relative; background: linear-gradient(180deg,#3B99D8 0%,#66B3EA 87%,#64ABE0 100%); min-height: 1000px">
+    <img src="assets/hero-cielo-desktop.jpg" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%">
+    <div style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(90deg,rgba(47,134,196,.62) 0%,rgba(47,134,196,.4) 45%,rgba(47,134,196,.12) 85%)"></div>
+    <svg width="100%" height="100%" viewBox="0 0 1440 1000" preserveAspectRatio="xMidYMax slice" style="position: absolute; left: 0; top: 0">
+      <path class="v-dash" d="M-40 940 C 260 960, 520 930, 700 860 S 1000 640, 1180 420 S 1400 180, 1500 120" fill="none" stroke="#FDFEFC" stroke-width="4" stroke-linecap="round" opacity=".7"></path>
+      <g>
+        <g transform="scale(2.6) translate(-12,-12)"><path transform="rotate(90 12 12)" fill="#FDFEFC" stroke="#1D2152" stroke-width=".6" stroke-linejoin="round" d="M21.5 15.2v-1.8L13.6 8.5V3.3a1.6 1.6 0 1 0-3.2 0v5.2l-7.9 4.9v1.8l7.9-2.4v5.1l-2 1.5V21l3.6-1 3.6 1v-1.6l-2-1.5v-5.1z"></path></g>
+        <animateMotion dur="14s" repeatCount="indefinite" rotate="auto" path="M-40 940 C 260 960, 520 930, 700 860 S 1000 640, 1180 420 S 1400 180, 1500 120"></animateMotion>
+      </g>
+    </svg>
+
+    <div style="position: relative; max-width: 1200px; margin: 0 auto; padding: 150px 40px 170px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start">
+      <div style="flex: 1 1 500px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
+        <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; background: rgba(29,33,82,.28); color: #FDFEFC; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; padding: 8px 16px; border-radius: 999px">
+          <span class="v-live" style="width: 9px; height: 9px; border-radius: 50%; background: #FFE36B"></span>Badge oficial de asistente
+        </span>
+        <h1 style="margin: 0; font-family: 'Lilita One', sans-serif; font-weight: 400; font-size: 92px; line-height: .96; color: #FDFEFC; text-shadow: 0 6px 0 rgba(29,33,82,.22)">Crea tu<br><span style="display: inline-block; margin-top: 14px; font-size: 64px; letter-spacing: .08em; background: linear-gradient(100deg,#AC0BAD,#6258BB); border: 6px solid #FDFEFC; border-radius: 16px; padding: 4px 34px 0; transform: rotate(-2.5deg); box-shadow: 0 6px 0 rgba(29,33,82,.16),0 14px 28px -12px rgba(29,33,82,.35); text-shadow: none">BADGE</span></h1>
+        <p style="margin: 0; color: #FDFEFC; font-size: 22px; font-weight: 700; line-height: 1.35; max-width: 32ch; text-shadow: 0 2px 10px rgba(29,33,82,.35)">Sube tu foto, escribe tu nombre y cuéntale a tu red en LinkedIn que vas a Study Abroad Fest.</p>
+
+        <div style="margin-top: 4px; background: #FDFEFC; border: 5px solid #FDFEFC; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 8px 0 rgba(29,33,82,.16),0 18px 30px -18px rgba(29,33,82,.55)">
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span style="font-family: 'Lilita One', sans-serif; font-size: 28px; line-height: 1; color: #6258BB">1</span>
+              <span style="font-weight: 800; font-size: 18px">Tu foto</span>
+            </div>
+            <label for="foto" style="position: relative; display: flex; align-items: center; gap: 14px; border: 2px dashed #ABAEC8; border-radius: 16px; padding: 14px 16px; background: #F1F3FA; cursor: pointer">
+              <span style="width: 48px; height: 48px; border-radius: 12px; background: #CFE6F6; display: grid; place-items: center; flex-shrink: 0">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6258BB" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>
+              </span>
+              <span style="display: flex; flex-direction: column; gap: 2px">
+                <span style="font-weight: 800; font-size: 16px; color: #6258BB">{{photoLabel}}</span>
+                <span style="font-size: 14px; color: #4A507C">JPG o PNG. Mejor de frente y con buena luz.</span>
+              </span>
+              <input id="foto" type="file" accept="image/*" onChange="{{onPhoto}}" style="position: absolute; width: 1px; height: 1px; opacity: 0">
+            </label>
+            <sc-if value="{{hasPhoto}}" hint-placeholder-val="{{false}}">
+              <div style="display: flex; align-items: center; gap: 14px">
+                <label for="zoom" style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #4A507C">Acercar</label>
+                <input id="zoom" type="range" min="1" max="2.5" step="0.05" value="{{zoom}}" onChange="{{onZoom}}" style="flex-grow: 1; height: 44px">
+                <button onClick="{{removePhoto}}" style="font-family: inherit; font-weight: 700; font-size: 14px; color: #6258BB; background: transparent; border: 0; padding: 12px 4px; cursor: pointer">Quitar</button>
+              </div>
+            </sc-if>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span style="font-family: 'Lilita One', sans-serif; font-size: 28px; line-height: 1; color: #6258BB">2</span>
+              <label for="nombre" style="font-weight: 800; font-size: 18px">Tu nombre</label>
+            </div>
+            <input id="nombre" type="text" value="{{name}}" onChange="{{onName}}" placeholder="Nombre y apellido" autocomplete="name" style="font-family: inherit; font-weight: 700; font-size: 20px; color: #1D2152; border: 2px solid #ABAEC8; border-radius: 12px; padding: 14px; box-sizing: border-box; width: 100%; background: #F1F3FA">
+            <div style="display: flex; justify-content: space-between; font-size: 14px; color: #4A507C"><span>Así aparecerá en tu badge.</span><span style="font-family: 'IBM Plex Mono', monospace">{{count}}/40</span></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; align-items: center; gap: 10px">
+              <span style="font-family: 'Lilita One', sans-serif; font-size: 28px; line-height: 1; color: #6258BB">3</span>
+              <span id="mood-label" style="font-weight: 800; font-size: 18px">Tu mood</span>
+            </div>
+            <div role="radiogroup" aria-labelledby="mood-label" style="display: flex; flex-wrap: wrap; gap: 8px">
+              <sc-for list="{{moods}}" as="m" hint-placeholder-count="5">
+                <button role="radio" aria-checked="{{m.on}}" onClick="{{m.pick}}" style="{{m.style}}">{{m.label}}</button>
+              </sc-for>
+            </div>
+          </div>
+          <label for="acepto" style="display: flex; align-items: flex-start; gap: 12px; border: 2px solid #ABAEC8; border-radius: 12px; padding: 12px 14px; font-size: 14px; font-weight: 600; line-height: 1.45; cursor: pointer">
+            <input id="acepto" type="checkbox" checked="{{accepted}}" onChange="{{onAccept}}" style="width: 22px; height: 22px; margin: 0; flex-shrink: 0; accent-color: #6258BB">
+            <span>Acepto que mi badge se guarde en el sitio del evento para mostrarlo en LinkedIn. Se borra después del evento.</span>
+          </label>
+          <div style="display: flex; align-items: center; gap: 10px; background: #CFE6F6; border-radius: 12px; padding: 12px 14px; font-size: 14px; font-weight: 600">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2771A5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+            Tu foto original no se sube. Solo se guarda el badge si eliges compartirlo.
+          </div>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 22px; padding-top: 40px">
+        <div style="position: relative">
+          <div class="v-float" style="width: 400px; height: 500px; border: 10px solid #FDFEFC; border-radius: 24px; overflow: hidden; background: #FDFEFC; box-shadow: 0 8px 0 rgba(29,33,82,.16),0 24px 44px -14px rgba(29,33,82,.5)">
+            <dc-import name="Badge" badge-name="{{name}}" photo="{{photo}}" zoom="{{zoom}}" mood="{{mood}}" hint-size="400px,500px"></dc-import>
+          </div>
+          <svg width="130" height="130" viewBox="0 0 150 150" style="position: absolute; top: -42px; right: -46px; filter: drop-shadow(0 6px 0 rgba(29,33,82,.16))">
+            <circle cx="75" cy="75" r="72" fill="#FDFEFC"></circle>
+            <g class="v-spin">
+              <defs><path id="badge-ring" d="M75 75 m-56 0 a56 56 0 1 1 112 0 a56 56 0 1 1 -112 0"></path></defs>
+              <text font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="600" fill="#AC0BAD" letter-spacing="1.8"><textPath href="#badge-ring">VISTA PREVIA · TU BADGE · SAF 2026 ·</textPath></text>
+            </g>
+            <circle cx="75" cy="75" r="38" fill="none" stroke="#AC0BAD" stroke-width="2"></circle>
+            <g transform="translate(75 75) scale(1.7) translate(-12 -12)"><path transform="rotate(45 12 12)" fill="#6258BB" d="M21.5 15.2v-1.8L13.6 8.5V3.3a1.6 1.6 0 1 0-3.2 0v5.2l-7.9 4.9v1.8l7.9-2.4v5.1l-2 1.5V21l3.6-1 3.6 1v-1.6l-2-1.5v-5.1z"></path></g>
+          </svg>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 18px">
+          <button class="v-btn" onClick="{{share}}" style="display: inline-flex; align-items: center; gap: 10px; font-family: 'Lilita One', sans-serif; font-size: 21px; color: #FDFEFC; background: linear-gradient(100deg,#AC0BAD,#6258BB); border: 4px solid #FDFEFC; border-radius: 999px; padding: 14px 26px 12px; cursor: pointer; box-shadow: 0 6px 0 rgba(29,33,82,.16),0 14px 28px -12px rgba(29,33,82,.35)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.5"></circle><circle cx="18" cy="6" r="2.5"></circle><circle cx="18" cy="18" r="2.5"></circle><path d="M8.2 10.8l7.6-3.6M8.2 13.2l7.6 3.6"></path></svg>Compartir en LinkedIn</button>
+          <button class="v-btn" onClick="{{download}}" style="display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-weight: 800; font-size: 17px; color: #1D2152; background: #FDFEFC; border: 0; border-radius: 999px; padding: 16px 22px; cursor: pointer; box-shadow: 0 6px 0 rgba(29,33,82,.16)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Descargar imagen</button>
+        </div>
+        <p style="margin: -8px 0 0; font-size: 14px; font-weight: 700; color: #4A507C; text-align: center">Al publicar, etiqueta a LEAD UTP y UTP Internacional.</p>
+        <sc-if value="{{showToast}}" hint-placeholder-val="{{false}}">
+          <div class="v-pop" role="status" style="display: flex; align-items: center; gap: 10px; background: rgba(2,12,62,.9); border: 1px solid rgba(255,255,255,.14); color: #FFFFFF; border-radius: 12px; padding: 12px 16px; font-weight: 700; font-size: 15px; max-width: 440px">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFE36B" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0"><path d="M5 12l5 5 9-10"></path></svg>{{toastMsg}}
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <svg width="100%" height="220" viewBox="0 0 1440 220" preserveAspectRatio="xMidYMax slice" style="position: absolute; left: 0; bottom: -90px">
+      <g class="v-drift-b" fill="#FDFEFC" opacity=".95">
+        <circle cx="120" cy="140" r="52"></circle><circle cx="188" cy="118" r="64"></circle><circle cx="262" cy="144" r="48"></circle><rect x="70" y="140" width="240" height="50" rx="25"></rect>
+        <circle cx="640" cy="150" r="46"></circle><circle cx="702" cy="126" r="60"></circle><circle cx="776" cy="152" r="44"></circle><rect x="596" y="150" width="240" height="46" rx="23"></rect>
+        <circle cx="1120" cy="146" r="50"></circle><circle cx="1188" cy="120" r="66"></circle><circle cx="1266" cy="148" r="48"></circle><rect x="1070" y="146" width="260" height="50" rx="25"></rect>
+      </g>
+      <g class="v-drift" fill="#CFE6F6" opacity=".9">
+        <circle cx="400" cy="170" r="40"></circle><circle cx="456" cy="152" r="52"></circle><circle cx="516" cy="174" r="38"></circle><rect x="360" y="170" width="200" height="40" rx="20"></rect>
+        <circle cx="930" cy="176" r="38"></circle><circle cx="984" cy="158" r="48"></circle><circle cx="1038" cy="178" r="36"></circle><rect x="892" y="176" width="190" height="38" rx="19"></rect>
+      </g>
+    </svg>
+  </section>
+
+  <!-- TU POST · cielo que anochece -->
+  <section style="position: relative; background: linear-gradient(180deg,#64ABE0 0%,#625EAA 45%,#8C55A5 75%,#2A2468 100%); color: #FDFEFC">
+    <img src="assets/estrellas.png" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55">
+    <span class="v-star" style="position: absolute; top: 18%; left: 8%; width: 3px; height: 3px; border-radius: 50%; background: #FDFEFC; box-shadow: 0 0 8px 2px rgba(255,255,255,.6)"></span>
+    <span class="v-star" style="position: absolute; top: 34%; right: 10%; width: 3px; height: 3px; border-radius: 50%; background: #FDFEFC; box-shadow: 0 0 8px 2px rgba(255,255,255,.6); animation-delay: .8s"></span>
+    <span class="v-star" style="position: absolute; top: 70%; left: 46%; width: 3px; height: 3px; border-radius: 50%; background: #FDFEFC; box-shadow: 0 0 8px 2px rgba(255,255,255,.6); animation-delay: 1.6s"></span>
+    <div style="position: relative; max-width: 1200px; margin: 0 auto; padding: 150px 40px 110px; box-sizing: border-box; display: flex; flex-direction: column; gap: 34px">
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(253,254,252,.14); padding: 8px 14px; border-radius: 999px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 13px; letter-spacing: .14em; text-transform: uppercase">Paso 3 · Comparte</span>
+        <h2 style="margin: 0; font-family: 'Lilita One', sans-serif; font-weight: 400; font-size: 70px; line-height: 1; text-shadow: 0 5px 0 rgba(29,33,82,.22)">Tu post en LinkedIn</h2>
+        <p style="margin: 0; max-width: 44ch; font-size: 21px; font-weight: 700; line-height: 1.4; color: rgba(253,254,252,.92)">Al compartir, LinkedIn abre un borrador con este texto y tu badge. Tú decides si lo publicas.</p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+        <div style="flex: 1 1 560px; min-width: 0; background: #FDFEFC; color: #1D2152; border-radius: 22px; padding: 24px; display: flex; flex-direction: column; gap: 16px; transform: rotate(-1deg); box-shadow: 0 10px 0 rgba(8,10,45,.3),0 30px 48px -16px rgba(8,10,45,.6)">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #4A507C">Texto sugerido</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 12px; color: #AC0BAD; border: 2px solid #AC0BAD; border-radius: 6px; padding: 2px 7px; transform: rotate(-4deg)">LLEGA ESCRITO</span>
+          </div>
+          <div style="background: #F1F3FA; border: 1.5px solid #ABAEC8; border-radius: 14px; padding: 18px; font-size: 17px; line-height: 1.5; white-space: pre-line">Este 10 de octubre voy a ser parte de Study Abroad Fest 2026, una tarde para convertir el interés por estudiar en el extranjero en un camino concreto.
+
+Becas, intercambios y orientación directa con instituciones internacionales. Organiza LEAD UTP · Pilar de Excelencia Académica, en alianza con UTP Internacional.
+
+¿También quieres estudiar afuera? Inscríbete gratis aquí: <span style="color: #6258BB; font-weight: 700">[enlace de tu badge]</span>
+
+<span style="color: #6258BB; font-weight: 700">#StudyAbroadFest #LEADUTP #UTPInternacional #Becas #EstudiarEnElExtranjero</span></div>
+          <button class="v-btn" onClick="{{copyText}}" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-weight: 800; font-size: 16px; color: #6258BB; background: #FDFEFC; border: 3px solid #6258BB; border-radius: 999px; padding: 12px 20px; cursor: pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg>{{copyLabel}}</button>
+        </div>
+
+        <ol style="flex: 1 1 380px; min-width: 0; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px">
+          <li style="display: flex; align-items: flex-start; gap: 14px; background: #FDFEFC; color: #1D2152; border-radius: 18px; padding: 18px; transform: rotate(-1.2deg); box-shadow: 0 6px 0 rgba(8,10,45,.3)">
+            <span style="font-family: 'Lilita One', sans-serif; font-size: 30px; line-height: 1; color: #6258BB">1</span>
+            <div style="display: flex; flex-direction: column; gap: 4px"><b style="font-size: 17px">Toca Compartir en LinkedIn</b><span style="font-size: 14px; color: #4A507C; line-height: 1.45">LinkedIn abre un borrador con el texto escrito y la tarjeta de tu badge, en celular o en computadora.</span></div>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 14px; background: #FDFEFC; color: #1D2152; border-radius: 18px; padding: 18px; transform: rotate(1deg); box-shadow: 0 6px 0 rgba(8,10,45,.3)">
+            <span style="font-family: 'Lilita One', sans-serif; font-size: 30px; line-height: 1; color: #6258BB">2</span>
+            <div style="display: flex; flex-direction: column; gap: 4px"><b style="font-size: 17px">Revisa y publica</b><span style="font-size: 14px; color: #4A507C; line-height: 1.45">Cambia lo que quieras del texto. Si no publicas, no se comparte nada.</span></div>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 14px; background: #FDFEFC; color: #1D2152; border-radius: 18px; padding: 18px; transform: rotate(-.8deg); box-shadow: 0 6px 0 rgba(8,10,45,.3)">
+            <span style="font-family: 'Lilita One', sans-serif; font-size: 30px; line-height: 1; color: #6258BB">3</span>
+            <div style="display: flex; flex-direction: column; gap: 4px"><b style="font-size: 17px">Etiqueta a LEAD UTP y UTP Internacional</b><span style="font-size: 14px; color: #4A507C; line-height: 1.45">Escribe @ y sus nombres antes de publicar.</span></div>
+          </li>
+          <li style="display: flex; flex-direction: column; gap: 4px; border: 2px solid rgba(253,254,252,.35); background: rgba(29,33,82,.55); border-radius: 18px; padding: 16px 18px">
+            <b style="font-size: 16px">¿Algo no funcionó?</b>
+            <span style="font-size: 15px; line-height: 1.45">Usa Descargar imagen y Copiar texto, y súbelo tú mismo a LinkedIn.</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ATERRIZAJE · CTA -->
+  <section style="position: relative; height: 560px; overflow: hidden; text-align: center; color: #FDFEFC; background: #2A2468">
+    <img src="assets/aterrizaje-cielo-desktop.jpg" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%">
+    <div style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(180deg,rgba(42,36,104,.95) 0%,rgba(91,42,134,.35) 45%,rgba(91,42,134,0) 100%)"></div>
+    <div style="position: relative; display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 96px 20px 0">
+      <h2 style="margin: 0; max-width: 16ch; font-family: 'Lilita One', sans-serif; font-weight: 400; font-size: 72px; line-height: 1; text-shadow: 0 6px 0 rgba(29,33,82,.28)">¿Aún no te inscribes?</h2>
+      <p style="margin: 0; max-width: 40ch; font-size: 22px; font-weight: 700; text-shadow: 0 2px 10px rgba(42,36,104,.7)">El badge es para quienes van. Asegura tu lugar gratis.</p>
+      <a class="v-btn" href="https://luma.com/txyuybq9?tk=pwCvrY" style="display: inline-flex; align-items: center; gap: 10px; font-family: 'Lilita One', sans-serif; font-size: 24px; color: #FDFEFC; text-decoration: none; background: linear-gradient(100deg,#AC0BAD,#6258BB); border: 4px solid #FDFEFC; border-radius: 999px; padding: 18px 34px 16px; box-shadow: 0 5px 0 rgba(29,33,82,.3)">Inscríbete gratis</a>
+    </div>
+    <svg width="100%" height="200" viewBox="0 0 1440 200" preserveAspectRatio="xMidYMax slice" style="position: absolute; left: 0; bottom: 0">
+      <rect x="0" y="168" width="1440" height="32" fill="#525F97"></rect>
+      <path class="v-dash" d="M0 184 H1440" stroke="#FDFEFC" stroke-width="3" stroke-linecap="round"></path>
+    </svg>
+  </section>
+
+  <!-- FOOTER (SiteFooter) -->
+  <footer style="background: #050814; border-top: 1px solid rgba(255,255,255,.14); color: #FFFFFF; flex-grow: 1">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 40px; box-sizing: border-box">
+      <div style="display: flex; flex-wrap: wrap; gap: 64px; padding: 44px 0 32px">
+        <div style="flex: 0 1 340px; display: flex; flex-direction: column; gap: 16px">
+          <img src="assets/logo-study.png" alt="Study Abroad Fest" style="display: block; height: 96px; width: auto; align-self: flex-start">
+          <p style="margin: 0; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .16em; color: rgba(255,255,255,.72)">LEARN. EXPLORE. ASPIRE. DISCOVER.</p>
+          <div style="display: flex; gap: 10px">
+            <a class="v-social" href="https://www.instagram.com/lead_utp/" aria-label="Instagram de LEAD UTP" style="width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); color: rgba(255,255,255,.8); display: grid; place-items: center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z"></path><path d="M17.5 6.5h.01"></path></svg></a>
+            <a class="v-social" href="https://www.linkedin.com/company/lead-utp" aria-label="LinkedIn de LEAD UTP" style="width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); color: rgba(255,255,255,.8); display: grid; place-items: center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z"></path><path d="M2 9h4v12H2z"></path><circle cx="4" cy="4" r="2"></circle></svg></a>
+            <a class="v-social" href="https://discord.gg/EYXFUfYHbF" aria-label="Discord de LEAD UTP" style="width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); color: rgba(255,255,255,.8); display: grid; place-items: center"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></a>
+          </div>
+        </div>
+        <div style="flex: 1 1 560px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px">
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <p style="margin: 0; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.7)">El evento</p>
+            <a class="v-flink" href="#cronograma" style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72); text-decoration: none">Cronograma</a>
+            <a class="v-flink" href="#ponentes" style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72); text-decoration: none">Ponentes</a>
+            <a class="v-flink" href="#stands" style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72); text-decoration: none">Stands</a>
+            <a class="v-flink" href="#calendario" style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72); text-decoration: none">Calendario de becas</a>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <p style="margin: 0; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.7)">Organizan</p>
+            <a class="v-flink" href="https://www.instagram.com/lead_utp/" style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72); text-decoration: none">LEAD UTP</a>
+            <span style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72)">Pilar de Excelencia Académica</span>
+            <a class="v-flink" href="https://www.utp.edu.pe/internacional-utp" style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72); text-decoration: none">UTP Internacional</a>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <p style="margin: 0; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.7)">Síguenos</p>
+            <a class="v-flink" href="https://www.instagram.com/lead_utp/" style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72); text-decoration: none">Instagram</a>
+            <a class="v-flink" href="https://www.linkedin.com/company/lead-utp" style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72); text-decoration: none">LinkedIn</a>
+            <a class="v-flink" href="https://discord.gg/EYXFUfYHbF" style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72); text-decoration: none">Discord</a>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <p style="margin: 0; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.7)">Soporte</p>
+            <a class="v-flink" href="#canje" style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72); text-decoration: none">Canjear mi código</a>
+            <a class="v-flink" href="Main.dc.html" style="font-family: 'Inter', sans-serif; font-size: 14px; color: rgba(255,255,255,.72); text-decoration: none">Crear mi badge</a>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; border-top: 1px solid rgba(255,255,255,.1); padding: 16px 0 22px; font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(255,255,255,.62)">
+        <span>© 2026 LEAD UTP · Todos los derechos reservados</span>
+        <span>Study Abroad Fest · en alianza con UTP Internacional</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2660}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const name = s.name || '';
+    const photo = s.photo || '';
+    const zoom = s.zoom || 1;
+    const post = 'Este 10 de octubre voy a ser parte de Study Abroad Fest 2026, una tarde para convertir el interés por estudiar en el extranjero en un camino concreto.\n\nBecas, intercambios y orientación directa con instituciones internacionales. Organiza LEAD UTP · Pilar de Excelencia Académica, en alianza con UTP Internacional.\n\n¿También quieres estudiar afuera? Inscríbete gratis: https://luma.com/txyuybq9?tk=pwCvrY\n\n#StudyAbroadFest #LEADUTP #UTPInternacional #Becas #EstudiarEnElExtranjero';
+    const copy = () => { try { navigator.clipboard.writeText(post); } catch (e) {} };
+    const msgs = {
+      download: 'Tu badge se descargó.',
+      share: 'Preparando tu borrador... LinkedIn se abrirá con tu badge y el texto.',
+      consent: 'Marca la casilla para poder compartir en LinkedIn.',
+      copy: 'Texto copiado al portapapeles.'
+    };
+    const mood = s.mood || 'FELIZ';
+    const accepted = !!s.accepted;
+    const chipOn = 'font: 800 14px Figtree, sans-serif; color: #FDFEFC; background: linear-gradient(100deg,#AC0BAD,#6258BB); border: 2px solid #6258BB; border-radius: 999px; padding: 10px 14px; cursor: pointer; min-height: 44px';
+    const chipOff = 'font: 800 14px Figtree, sans-serif; color: #1D2152; background: #F1F3FA; border: 2px solid #ABAEC8; border-radius: 999px; padding: 10px 14px; cursor: pointer; min-height: 44px';
+    const moodList = [['FELIZ', 'Feliz'], ['A FULL', 'A full'], ['CON TODO', 'Con todo'], ['CON GANAS', 'Con ganas'], ['MODO VIAJE', 'Modo viaje']];
+    return {
+      mood: mood,
+      moods: moodList.map(([v, label]) => ({ label, on: mood === v ? 'true' : 'false', style: mood === v ? chipOn : chipOff, pick: () => this.setState({ mood: v }) })),
+      accepted: accepted,
+      onAccept: (e) => this.setState({ accepted: !!e.target.checked }),
+      name: name,
+      count: String(name.length),
+      photo: photo,
+      zoom: String(zoom),
+      hasPhoto: !!photo,
+      photoLabel: photo ? 'Cambiar foto' : 'Subir foto',
+      showToast: !!s.toast,
+      toastMsg: msgs[s.toast] || '',
+      copyLabel: s.toast === 'copy' ? 'Copiado' : 'Copiar texto',
+      onName: (e) => this.setState({ name: e.target.value.slice(0, 40) }),
+      onZoom: (e) => this.setState({ zoom: parseFloat(e.target.value) || 1 }),
+      onPhoto: (e) => {
+        const f = e.target.files && e.target.files[0];
+        if (!f) return;
+        const r = new FileReader();
+        r.onload = () => this.setState({ photo: r.result, zoom: 1 });
+        r.readAsDataURL(f);
+      },
+      removePhoto: () => this.setState({ photo: '', zoom: 1 }),
+      share: () => { if (!accepted) { this.setState({ toast: 'consent' }); return; } copy(); this.setState({ toast: 'share' }); },
+      download: () => this.setState({ toast: 'download' }),
+      copyText: () => { copy(); this.setState({ toast: 'copy' }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

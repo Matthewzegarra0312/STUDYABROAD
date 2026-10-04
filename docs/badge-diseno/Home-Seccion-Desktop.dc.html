@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Home · Navbar y sección Badge</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&amp;family=Figtree:wght@400;500;600;700;800&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Archivo:wght@700;800;900&amp;family=Inter:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:"Figtree","Segoe UI",sans-serif;color:#1D2152;background:#625EAA}
+a{color:#6258BB}a:hover{color:#AC0BAD}
+@keyframes v-float{0%,100%{transform:rotate(3deg) translateY(0)}50%{transform:rotate(1.5deg) translateY(-10px)}}
+@keyframes v-twinkle{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes v-shine{0%{transform:translateX(-140%) skewX(-18deg)}60%,100%{transform:translateX(320%) skewX(-18deg)}}
+.v-float{animation:v-float 7s ease-in-out infinite}
+.v-star{animation:v-twinkle 3s ease-in-out infinite}
+.v-btn{position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}
+.v-btn:hover{transform:translateY(-3px) rotate(-1deg)}
+.v-btn::before{content:"";position:absolute;top:0;bottom:0;left:0;width:36%;background:rgba(255,255,255,.28);transform:translateX(-140%) skewX(-18deg);animation:v-shine 4.5s ease-in-out infinite}
+.v-nav-link:hover{background:rgba(255,255,255,.06);color:#fff}
+.v-nav-cta:hover{background:#AC0BAD;color:#fff}
+@media (prefers-reduced-motion:reduce){.v-float,.v-star,.v-btn::before{animation:none}}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 900px; position: relative; display: flex; flex-direction: column; background: linear-gradient(180deg,#625EAA 0%,#8C55A5 60%,#6A4A9C 100%); overflow: hidden">
+  <img src="assets/estrellas.png" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5">
+  <span class="v-star" style="position: absolute; top: 30%; left: 6%; width: 3px; height: 3px; border-radius: 50%; background: #FDFEFC; box-shadow: 0 0 8px 2px rgba(255,255,255,.6)"></span>
+  <span class="v-star" style="position: absolute; top: 76%; right: 8%; width: 3px; height: 3px; border-radius: 50%; background: #FDFEFC; box-shadow: 0 0 8px 2px rgba(255,255,255,.6); animation-delay: 1s"></span>
+
+  <!-- NAVBAR (SiteNav) con el nuevo enlace "Mi badge" -->
+  <header style="position: relative; z-index: 5; padding: 20px 24px 0">
+    <div style="max-width: 1120px; margin: 0 auto; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); background: rgba(2,12,62,.78); padding: 0 12px 0 20px; color: #FFFFFF; box-shadow: 0 8px 30px -12px rgba(2,12,62,.6)">
+      <a href="#hero" aria-label="LEAD UTP, Study Abroad Fest, inicio" style="display: inline-flex; align-items: center; gap: 12px; min-height: 44px">
+        <img src="assets/logo-lead.png" alt="" style="display: block; width: 102px; height: auto">
+        <span style="width: 1px; height: 26px; background: rgba(255,255,255,.22)"></span>
+        <img src="assets/logo-study.png" alt="Study Abroad Fest" style="display: block; height: 50px; width: auto">
+      </a>
+      <nav aria-label="Navegación principal" style="display: flex; align-items: center; gap: 2px">
+        <a class="v-nav-link" href="#cronograma" style="display: inline-flex; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 500; color: rgba(255,255,255,.8); text-decoration: none">Cronograma</a>
+        <a class="v-nav-link" href="#ponentes" style="display: inline-flex; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 500; color: rgba(255,255,255,.8); text-decoration: none">Ponentes</a>
+        <a class="v-nav-link" href="#stands" style="display: inline-flex; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 500; color: rgba(255,255,255,.8); text-decoration: none">Stands</a>
+        <a class="v-nav-link" href="#calendario" style="display: inline-flex; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 500; color: rgba(255,255,255,.8); text-decoration: none">Calendario de becas</a>
+        <a class="v-nav-link" href="#llegar" style="display: inline-flex; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 500; color: rgba(255,255,255,.8); text-decoration: none">Cómo llegar</a>
+        <a class="v-nav-link" href="Main.dc.html" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13.44px; font-weight: 500; color: rgba(255,255,255,.8); text-decoration: none">Mi badge<span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 9px; letter-spacing: .08em; color: #020C3E; background: #FFE36B; border-radius: 4px; padding: 1px 5px">NUEVO</span></a>
+      </nav>
+      <a class="v-nav-cta" href="https://luma.com/txyuybq9?tk=pwCvrY" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 6px; background: #FFFFFF; color: #020C3E; font-family: 'Archivo', sans-serif; font-weight: 800; font-size: 13px; text-decoration: none; white-space: nowrap">Inscríbete gratis</a>
+    </div>
+  </header>
+
+  <!-- SECCIÓN #badge: entre Pasaporte (#calendario) y Cómo llegar -->
+  <section style="position: relative; flex-grow: 1; color: #FDFEFC">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 90px 40px 90px; box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 70px; align-items: center">
+      <div style="flex: 1 1 500px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
+        <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; background: rgba(253,254,252,.14); padding: 8px 14px; border-radius: 999px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 13px; letter-spacing: .14em; text-transform: uppercase">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFE36B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"></path></svg>Nuevo · Para asistentes
+        </span>
+        <h2 style="margin: 0; font-family: 'Lilita One', sans-serif; font-weight: 400; font-size: 70px; line-height: 1; text-shadow: 0 5px 0 rgba(29,33,82,.22)">Tu pasaporte para LinkedIn</h2>
+        <p style="margin: 0; max-width: 40ch; font-size: 21px; font-weight: 700; line-height: 1.4; color: rgba(253,254,252,.92)">Crea tu badge con tu foto y tu nombre, y cuéntale a tu red que vas a Study Abroad Fest.</p>
+        <ol style="margin: 6px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+          <li style="display: flex; flex-direction: column; gap: 8px; background: #FDFEFC; color: #1D2152; border-radius: 18px; padding: 18px; transform: rotate(-1.2deg); box-shadow: 0 6px 0 rgba(8,10,45,.3)"><span style="font-family: 'Lilita One', sans-serif; font-size: 30px; line-height: 1; color: #6258BB">1</span><b style="font-size: 17px">Sube tu foto</b></li>
+          <li style="display: flex; flex-direction: column; gap: 8px; background: #FDFEFC; color: #1D2152; border-radius: 18px; padding: 18px; transform: rotate(1deg); box-shadow: 0 6px 0 rgba(8,10,45,.3)"><span style="font-family: 'Lilita One', sans-serif; font-size: 30px; line-height: 1; color: #6258BB">2</span><b style="font-size: 17px">Escribe tu nombre</b></li>
+          <li style="display: flex; flex-direction: column; gap: 8px; background: #FDFEFC; color: #1D2152; border-radius: 18px; padding: 18px; transform: rotate(-.8deg); box-shadow: 0 6px 0 rgba(8,10,45,.3)"><span style="font-family: 'Lilita One', sans-serif; font-size: 30px; line-height: 1; color: #6258BB">3</span><b style="font-size: 17px">Comparte en LinkedIn</b></li>
+        </ol>
+        <a class="v-btn" href="Main.dc.html" style="align-self: flex-start; margin-top: 6px; display: inline-flex; align-items: center; gap: 10px; font-family: 'Lilita One', sans-serif; font-size: 21px; color: #FDFEFC; text-decoration: none; background: linear-gradient(100deg,#AC0BAD,#6258BB); border: 4px solid #FDFEFC; border-radius: 999px; padding: 15px 28px 13px; box-shadow: 0 5px 0 rgba(8,10,45,.3)">Crear mi badge
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"></path></svg></a>
+      </div>
+      <div style="flex: 1 1 380px; min-width: 0; display: flex; justify-content: center">
+        <div class="v-float" style="width: 360px; height: 450px; border: 10px solid #FDFEFC; border-radius: 22px; overflow: hidden; background: #FDFEFC; box-shadow: 0 10px 0 rgba(8,10,45,.3),0 30px 48px -16px rgba(8,10,45,.6)">
+          <div style="width: 400px; height: 500px; transform: scale(.9); transform-origin: top left">
+            <dc-import name="Badge" badge-name="Tu nombre" photo="" zoom="1" hint-size="400px,500px"></dc-import>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

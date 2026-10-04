@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Badge pasaporte · SAF 2026</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arvo:wght@400;700&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width: 400px; height: 500px; position: relative; overflow: hidden; background: #3B99D8; font-family: 'Arvo', serif; color: #1A1A1A">
+  <!-- Lienzo real 1080x1350, escalado a 400x500 (factor 0.37037). Las coordenadas son las mismas que usa producción. -->
+  <div style="position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; transform: scale(0.37037); transform-origin: top left">
+    <img src="../../public/badge/plantilla.jpg" alt="" style="position: absolute; left: 0; top: 0; width: 1080px; height: 1350px; display: block">
+
+    <!-- Foto: x164 y721 w300 h396, radio 18; luego se redibuja el borde magenta -->
+    <div style="position: absolute; left: 164px; top: 721px; width: 300px; height: 396px; border-radius: 18px; overflow: hidden; background: #CFE6F6">
+      <sc-if value="{{hasPhoto}}" hint-placeholder-val="{{false}}">
+        <img src="{{photo}}" alt="Foto del asistente" style="width: 300px; height: 396px; object-fit: cover; display: block; transform: scale({{zoom}})">
+      </sc-if>
+      <sc-if value="{{noPhoto}}" hint-placeholder-val="{{true}}">
+        <div style="width: 300px; height: 396px; display: grid; place-items: center; background: linear-gradient(180deg,#BFE0F7 0%,#E6F3FC 70%,#9CC54A 71%,#7BAA2E 100%)">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; font-size: 30px; color: #1D2152; background: rgba(253,254,252,.88); border-radius: 12px; padding: 8px 16px">TU FOTO</span>
+        </div>
+      </sc-if>
+    </div>
+    <div style="position: absolute; left: 163px; top: 719px; width: 303px; height: 399px; border: 6px solid #AC0AAB; border-radius: 18px; box-sizing: border-box"></div>
+
+    <!-- Nombre: caja x485-917, valor en la franja y778-808 -->
+    <div style="position: absolute; left: 495px; top: 770px; width: 412px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: {{nameSize}}; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; overflow: hidden">{{displayName}}</div>
+
+    <!-- Ocupación: x485-917, valor en la franja y850-880 -->
+    <div style="position: absolute; left: 495px; top: 844px; width: 412px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 22px; letter-spacing: .1em">ESTUDIANTE</div>
+
+    <!-- Mood: x701-917, valor en la franja y995-1025 -->
+    <div style="position: absolute; left: 706px; top: 990px; width: 206px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 22px; letter-spacing: .1em; white-space: nowrap">{{mood}}</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"badgeName":{"editor":"text","default":""},"photo":{"editor":null},"zoom":{"editor":null},"mood":{"editor":"enum","options":["FELIZ","A FULL","CON TODO","CON GANAS","MODO VIAJE"],"default":"FELIZ"},"$preview":{"width":400,"height":500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const raw = (this.props.badgeName || '').trim();
+    const name = raw || 'Tu nombre';
+    const photo = this.props.photo || '';
+    const z = Number(this.props.zoom) || 1;
+    const len = name.length;
+    const size = len > 30 ? '15px' : len > 22 ? '18px' : '22px';
+    return {
+      mood: this.props.mood || 'FELIZ',
+      displayName: name,
+      nameSize: size,
+      photo: photo,
+      hasPhoto: !!photo,
+      noPhoto: !photo,
+      zoom: String(z)
+    };
+  }
+}
+</script>
+</body>
+</html>
