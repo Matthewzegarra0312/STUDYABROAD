@@ -1,0 +1,393 @@
+---
+// Creador del badge (UI + script del lado cliente). El render vive en
+// badge-canvas.ts; compartir en LinkedIn se conecta después (badge-share.ts).
+// Diseño: docs/badge-diseno/Main.dc.html (escritorio) y Mobile-Badge.dc.html.
+import { MOODS, NAME_MAX_LENGTH } from "./badge-canvas";
+
+const stepNum = "font-display text-[26px] leading-none text-violet lg:text-[28px]";
+const stepTitle = "text-[17px] font-extrabold lg:text-lg";
+const chipBase =
+  "inline-flex min-h-11 cursor-pointer items-center rounded-full border-2 px-3.5 py-2.5 font-sans text-sm font-extrabold transition-colors";
+---
+
+<div class="grid gap-x-14 gap-y-8 lg:grid-cols-2 lg:items-start" data-badge-studio>
+  <div class="lg:col-start-1 lg:row-start-1">
+    <slot />
+  </div>
+
+  <!-- Vista previa en vivo -->
+  <div class="flex min-w-0 flex-col items-center gap-5 pb-24 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:gap-[22px] lg:pt-10 lg:pb-0">
+    <div class="relative">
+      <div class="v-float w-[min(calc(100vw-48px),340px)] overflow-hidden rounded-[20px] border-8 border-paper bg-paper shadow-[0_6px_0_rgb(29_33_82/0.16),0_18px_32px_-12px_rgb(29_33_82/0.5)] lg:w-[400px] lg:rounded-3xl lg:border-[10px] lg:shadow-[0_8px_0_rgb(29_33_82/0.16),0_24px_44px_-14px_rgb(29_33_82/0.5)]">
+        <canvas
+          data-badge-canvas
+          width="1080"
+          height="1350"
+          role="img"
+          aria-label="Vista previa de tu badge"
+          class="block h-auto w-full touch-none select-none"></canvas>
+      </div>
+      <svg width="130" height="130" viewBox="0 0 150 150" class="pointer-events-none absolute -top-9 -right-6 hidden drop-shadow-[0_6px_0_rgb(29_33_82/0.16)] sm:block lg:-top-[42px] lg:-right-[46px]" aria-hidden="true">
+        <circle cx="75" cy="75" r="72" fill="#FDFEFC"></circle>
+        <g class="v-spin">
+          <defs><path id="badge-ring" d="M75 75 m-56 0 a56 56 0 1 1 112 0 a56 56 0 1 1 -112 0"></path></defs>
+          <text font-family="IBM Plex Mono, monospace" font-size="11.5" font-weight="600" fill="#AC0BAD" letter-spacing="1.8"><textPath href="#badge-ring">VISTA PREVIA · TU BADGE · SAF 2026 ·</textPath></text>
+        </g>
+        <circle cx="75" cy="75" r="38" fill="none" stroke="#AC0BAD" stroke-width="2"></circle>
+        <g transform="translate(75 75) scale(1.7) translate(-12 -12)"><path transform="rotate(45 12 12)" fill="#6258BB" d="M21.5 15.2v-1.8L13.6 8.5V3.3a1.6 1.6 0 1 0-3.2 0v5.2l-7.9 4.9v1.8l7.9-2.4v5.1l-2 1.5V21l3.6-1 3.6 1v-1.6l-2-1.5v-5.1z"></path></g>
+      </svg>
+    </div>
+    <p class="m-0 hidden max-w-[34ch] text-center text-sm font-bold text-paper [text-shadow:0_2px_8px_rgb(29_33_82/0.4)]" data-badge-drag-hint>Arrastra la vista previa para encuadrar tu foto.</p>
+
+    <!-- Acciones: barra fija en celular, fila normal en escritorio -->
+    <div class="fixed inset-x-3 bottom-3 z-40 flex flex-col gap-2 lg:static lg:items-center">
+      <p
+        data-badge-status
+        role="status"
+        aria-live="polite"
+        class="v-pop m-0 hidden rounded-xl border border-border-light bg-[rgb(2_12_62/0.94)] px-3 py-2.5 text-sm font-bold text-white lg:max-w-[440px] lg:px-4 lg:py-3 lg:text-[15px]"
+      >
+      </p>
+      <div class="flex items-center gap-2 rounded-[14px] border border-border-light bg-[rgb(2_12_62/0.85)] p-2 shadow-[0_8px_30px_-12px_rgb(2_12_62/0.6)] backdrop-blur-[8px] lg:flex-wrap lg:justify-center lg:gap-3 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none">
+        <button
+          type="button"
+          data-badge-share
+          aria-disabled="true"
+          class="v-btn inline-flex min-h-12 grow items-center justify-center gap-2 rounded-full border-[3px] border-paper bg-brand-gradient px-4 font-display text-lg text-paper shadow-[0_6px_0_rgb(29_33_82/0.16)] aria-disabled:opacity-60 lg:grow-0 lg:border-4 lg:px-[26px] lg:text-[21px]"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="12" r="2.5"></circle><circle cx="18" cy="6" r="2.5"></circle><circle cx="18" cy="18" r="2.5"></circle><path d="M8.2 10.8l7.6-3.6M8.2 13.2l7.6 3.6"></path></svg>
+          Compartir en LinkedIn
+        </button>
+        <button
+          type="button"
+          data-badge-download
+          aria-disabled="true"
+          aria-label="Descargar imagen"
+          class="v-btn inline-grid size-12 shrink-0 place-items-center rounded-full bg-white text-navy shadow-[0_6px_0_rgb(29_33_82/0.16)] aria-disabled:opacity-60 lg:flex lg:size-auto lg:min-h-12 lg:gap-2 lg:px-[22px] lg:text-[17px] lg:font-extrabold lg:text-ink"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>
+          <span class="hidden lg:inline">Descargar imagen</span>
+        </button>
+      </div>
+    </div>
+    <p class="m-0 text-center text-sm font-bold text-ink-2 lg:-mt-2 lg:text-paper lg:[text-shadow:0_2px_8px_rgb(29_33_82/0.4)]">Al publicar, etiqueta a LEAD UTP y UTP Internacional.</p>
+  </div>
+
+  <!-- Formulario -->
+  <form
+    data-badge-form
+    novalidate
+    class="flex flex-col gap-[18px] rounded-3xl border-[5px] border-paper bg-paper p-[18px] shadow-[0_8px_0_rgb(29_33_82/0.16),0_18px_30px_-18px_rgb(29_33_82/0.55)] lg:col-start-1 lg:row-start-2 lg:gap-5 lg:p-6"
+  >
+    <div class="flex flex-col gap-2.5 lg:gap-3">
+      <div class="flex items-center gap-2.5"><span class={stepNum} aria-hidden="true">1</span><span class={stepTitle} id="foto-titulo">Tu foto</span></div>
+      <label
+        for="badge-foto"
+        data-badge-drop
+        class="relative flex cursor-pointer items-center gap-3 rounded-2xl border-2 border-dashed border-lav bg-paper-2 px-3.5 py-3 transition-colors focus-within:border-violet data-[over=true]:border-violet data-[over=true]:bg-sky-soft lg:gap-3.5 lg:px-4"
+      >
+        <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-sky-soft lg:size-12" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6258BB" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"></path><circle cx="12" cy="13" r="3.5"></circle></svg>
+        </span>
+        <span class="flex min-w-0 flex-col gap-0.5">
+          <span data-badge-photo-label class="text-base font-extrabold text-violet">Subir foto</span>
+          <span class="text-[13px] text-ink-2 lg:text-sm"><span class="lg:hidden">Desde tu galería o cámara. </span><span class="hidden lg:inline">JPG o PNG. Arrástrala aquí o elígela. </span>Mejor de frente y con buena luz.</span>
+        </span>
+        <input id="badge-foto" data-badge-photo type="file" accept="image/*" class="absolute size-px opacity-0" />
+      </label>
+      <div data-badge-photo-tools hidden class="flex items-center gap-3.5">
+        <label for="badge-zoom" class="font-mono text-[11px] font-semibold tracking-[.12em] text-ink-2 uppercase lg:text-xs">Acercar</label>
+        <input id="badge-zoom" data-badge-zoom type="range" min="1" max="2.5" step="0.05" value="1" class="h-11 grow accent-magenta" />
+        <button type="button" data-badge-remove class="min-h-11 rounded-md bg-transparent px-1 text-sm font-bold text-violet">Quitar</button>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2 lg:gap-2.5">
+      <div class="flex items-center gap-2.5"><span class={stepNum} aria-hidden="true">2</span><label for="badge-nombre" class={stepTitle}>Tu nombre</label></div>
+      <input
+        id="badge-nombre"
+        data-badge-name
+        type="text"
+        maxlength={NAME_MAX_LENGTH}
+        autocomplete="name"
+        placeholder="Nombre y apellido"
+        class="w-full rounded-xl border-2 border-lav bg-paper-2 p-[13px] font-sans text-lg font-bold text-ink lg:p-3.5 lg:text-xl"
+      />
+      <div class="flex justify-between text-[13px] text-ink-2 lg:text-sm">
+        <span>Así aparecerá en tu badge.</span>
+        <span class="font-mono" aria-hidden="true"><span data-badge-count>0</span>/{NAME_MAX_LENGTH}</span>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2 lg:gap-2.5">
+      <div class="flex items-center gap-2.5"><span class={stepNum} aria-hidden="true">3</span><span class={stepTitle} id="badge-mood-label">Tu mood</span></div>
+      <div role="radiogroup" aria-labelledby="badge-mood-label" class="flex flex-wrap gap-2" data-badge-moods>
+        {MOODS.map((m, i) => (
+          <button
+            type="button"
+            role="radio"
+            data-mood={m}
+            aria-checked={i === 0 ? "true" : "false"}
+            tabindex={i === 0 ? 0 : -1}
+            class={`${chipBase} border-lav bg-paper-2 text-ink aria-checked:border-violet aria-checked:bg-[linear-gradient(100deg,#AC0BAD,#6258BB)] aria-checked:text-paper`}
+          >
+            {m}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <label
+      for="badge-acepto"
+      class="flex cursor-pointer items-start gap-2.5 rounded-xl border-2 border-lav px-3 py-[11px] text-[13px] leading-snug font-semibold lg:gap-3 lg:px-3.5 lg:py-3 lg:text-sm"
+    >
+      <input id="badge-acepto" data-badge-accept type="checkbox" class="m-0 size-[22px] shrink-0 accent-violet" />
+      <span>Acepto que mi badge se guarde en el sitio del evento para mostrarlo en LinkedIn. Se borra después del evento.</span>
+    </label>
+
+    <p class="m-0 flex items-center gap-2.5 rounded-xl bg-sky-soft px-3 py-[11px] text-[13px] font-semibold lg:px-3.5 lg:py-3 lg:text-sm">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2771A5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="shrink-0" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+      Tu foto original no se sube. Solo se guarda el badge si eliges compartirlo.
+    </p>
+  </form>
+</div>
+
+<noscript>
+  <p class="mt-6 rounded-xl bg-paper p-4 text-center font-bold text-ink">Para crear tu badge necesitas activar JavaScript en tu navegador.</p>
+</noscript>
+
+<script>
+  import { MOODS, SLOTS, PhotoError, dibujarBadge, badgeABlob, leerFoto, normalizarNombre, type BadgePhoto, type BadgeState, type Mood } from "./badge-canvas";
+
+  const root = document.querySelector<HTMLElement>("[data-badge-studio]");
+  const q = <T extends Element>(sel: string) => root?.querySelector<T>(sel) ?? null;
+
+  const canvas = q<HTMLCanvasElement>("[data-badge-canvas]");
+  const photoInput = q<HTMLInputElement>("[data-badge-photo]");
+  const photoLabel = q<HTMLElement>("[data-badge-photo-label]");
+  const drop = q<HTMLElement>("[data-badge-drop]");
+  const tools = q<HTMLElement>("[data-badge-photo-tools]");
+  const zoomInput = q<HTMLInputElement>("[data-badge-zoom]");
+  const removeBtn = q<HTMLButtonElement>("[data-badge-remove]");
+  const nameInput = q<HTMLInputElement>("[data-badge-name]");
+  const count = q<HTMLElement>("[data-badge-count]");
+  const moodGroup = q<HTMLElement>("[data-badge-moods]");
+  const accept = q<HTMLInputElement>("[data-badge-accept]");
+  const status = q<HTMLElement>("[data-badge-status]");
+  const shareBtn = q<HTMLButtonElement>("[data-badge-share]");
+  const downloadBtn = q<HTMLButtonElement>("[data-badge-download]");
+  const dragHint = q<HTMLElement>("[data-badge-drag-hint]");
+
+  if (root && canvas && photoInput && photoLabel && drop && tools && zoomInput && removeBtn && nameInput && count && moodGroup && accept && status && shareBtn && downloadBtn) {
+    const estado: BadgeState = { photo: null, zoom: 1, panX: 0, panY: 0, name: "", mood: MOODS[0] };
+    const mensajeFalta = () =>
+      !estado.photo
+        ? "Primero sube tu foto."
+        : !normalizarNombre(estado.name)
+          ? "Escribe tu nombre para generar el badge."
+          : null;
+
+    let statusTimer: number | undefined;
+    const decir = (texto: string, tipo: "ok" | "error" = "ok") => {
+      window.clearTimeout(statusTimer);
+      status.textContent = texto;
+      status.hidden = false;
+      status.classList.remove("hidden");
+      status.dataset.tipo = tipo;
+      status.style.borderColor = tipo === "error" ? "#FFE36B" : "";
+      statusTimer = window.setTimeout(() => {
+        status.hidden = true;
+        status.classList.add("hidden");
+      }, 6000);
+    };
+
+    // Render con rAF: varios cambios seguidos pintan una sola vez.
+    let pendiente = false;
+    const pintar = () => {
+      if (pendiente) return;
+      pendiente = true;
+      requestAnimationFrame(async () => {
+        pendiente = false;
+        try {
+          await dibujarBadge(canvas, estado);
+        } catch {
+          decir("No pudimos dibujar la vista previa. Recarga la página.", "error");
+        }
+      });
+    };
+
+    const actualizarBotones = () => {
+      const falta = mensajeFalta();
+      downloadBtn.setAttribute("aria-disabled", String(Boolean(falta)));
+      // Compartir se conecta en badge-share.ts: hasta entonces queda inactivo.
+      shareBtn.setAttribute("aria-disabled", String(Boolean(falta) || !accept.checked || !shareBtn.dataset.listo));
+    };
+
+    const actualizarFoto = () => {
+      const hay = Boolean(estado.photo);
+      tools.hidden = !hay;
+      photoLabel.textContent = hay ? "Cambiar foto" : "Subir foto";
+      dragHint?.classList.toggle("hidden", !hay);
+      canvas.style.cursor = hay ? "grab" : "";
+      canvas.tabIndex = hay ? 0 : -1;
+      actualizarBotones();
+      pintar();
+    };
+
+    const usarFoto = async (file: File | undefined) => {
+      if (!file) return;
+      if (file.type && !file.type.startsWith("image/")) {
+        decir("Ese archivo no es una imagen. Sube una foto JPG o PNG.", "error");
+        return;
+      }
+      photoLabel.textContent = "Cargando foto...";
+      let foto: BadgePhoto;
+      try {
+        foto = await leerFoto(file);
+      } catch (e) {
+        decir(e instanceof PhotoError ? e.message : "No pudimos leer esa foto. Prueba con una imagen JPG o PNG.", "error");
+        actualizarFoto();
+        return;
+      }
+      estado.photo = foto;
+      estado.zoom = 1;
+      estado.panX = 0;
+      estado.panY = 0;
+      zoomInput.value = "1";
+      actualizarFoto();
+    };
+
+    photoInput.addEventListener("change", () => {
+      void usarFoto(photoInput.files?.[0]);
+      photoInput.value = "";
+    });
+
+    // Arrastrar y soltar (escritorio).
+    for (const ev of ["dragenter", "dragover"] as const)
+      drop.addEventListener(ev, (e) => {
+        e.preventDefault();
+        drop.dataset.over = "true";
+      });
+    for (const ev of ["dragleave", "drop"] as const)
+      drop.addEventListener(ev, () => {
+        drop.dataset.over = "false";
+      });
+    drop.addEventListener("drop", (e) => {
+      e.preventDefault();
+      void usarFoto(e.dataTransfer?.files?.[0]);
+    });
+
+    zoomInput.addEventListener("input", () => {
+      estado.zoom = Number(zoomInput.value) || 1;
+      pintar();
+    });
+    removeBtn.addEventListener("click", () => {
+      estado.photo = null;
+      estado.zoom = 1;
+      estado.panX = 0;
+      estado.panY = 0;
+      zoomInput.value = "1";
+      actualizarFoto();
+      photoInput.focus();
+    });
+
+    nameInput.addEventListener("input", () => {
+      estado.name = nameInput.value;
+      count.textContent = String(nameInput.value.trim().length);
+      actualizarBotones();
+      pintar();
+    });
+
+    // Mood: radiogroup con flechas.
+    const chips = Array.from(moodGroup.querySelectorAll<HTMLButtonElement>("[data-mood]"));
+    const elegirMood = (chip: HTMLButtonElement, foco = false) => {
+      estado.mood = (chip.dataset.mood as Mood | undefined) ?? MOODS[0];
+      for (const c of chips) {
+        c.setAttribute("aria-checked", String(c === chip));
+        c.tabIndex = c === chip ? 0 : -1;
+      }
+      if (foco) chip.focus();
+      pintar();
+    };
+    chips.forEach((chip, i) => {
+      chip.addEventListener("click", () => elegirMood(chip));
+      chip.addEventListener("keydown", (e) => {
+        const paso = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+        if (!paso) return;
+        e.preventDefault();
+        const next = chips[(i + paso + chips.length) % chips.length];
+        if (next) elegirMood(next, true);
+      });
+    });
+
+    accept.addEventListener("change", actualizarBotones);
+
+    // Encuadre: arrastrar sobre la vista previa o usar las flechas.
+    const mover = (dxSlot: number, dySlot: number) => {
+      const foto = estado.photo;
+      if (!foto) return;
+      const escala = Math.max(SLOTS.foto.w / foto.width, SLOTS.foto.h / foto.height) * estado.zoom;
+      const sobraX = foto.width - SLOTS.foto.w / escala;
+      const sobraY = foto.height - SLOTS.foto.h / escala;
+      if (sobraX > 1) estado.panX = Math.min(1, Math.max(-1, estado.panX - (dxSlot / escala) * (2 / sobraX)));
+      if (sobraY > 1) estado.panY = Math.min(1, Math.max(-1, estado.panY - (dySlot / escala) * (2 / sobraY)));
+      pintar();
+    };
+    let ultimo: { x: number; y: number } | null = null;
+    canvas.addEventListener("pointerdown", (e) => {
+      if (!estado.photo) return;
+      ultimo = { x: e.clientX, y: e.clientY };
+      canvas.setPointerCapture(e.pointerId);
+      canvas.style.cursor = "grabbing";
+    });
+    canvas.addEventListener("pointermove", (e) => {
+      if (!ultimo) return;
+      const k = canvas.width / canvas.getBoundingClientRect().width;
+      mover((e.clientX - ultimo.x) * k, (e.clientY - ultimo.y) * k);
+      ultimo = { x: e.clientX, y: e.clientY };
+    });
+    const soltar = () => {
+      ultimo = null;
+      if (estado.photo) canvas.style.cursor = "grab";
+    };
+    canvas.addEventListener("pointerup", soltar);
+    canvas.addEventListener("pointercancel", soltar);
+    canvas.addEventListener("keydown", (e) => {
+      const d = { ArrowLeft: [-12, 0], ArrowRight: [12, 0], ArrowUp: [0, -12], ArrowDown: [0, 12] }[e.key];
+      if (!d || !estado.photo) return;
+      e.preventDefault();
+      mover(d[0] ?? 0, d[1] ?? 0);
+    });
+
+    // Descargar: no hace ninguna petición, todo queda en el dispositivo.
+    downloadBtn.addEventListener("click", async () => {
+      const falta = mensajeFalta();
+      if (falta) {
+        decir(falta, "error");
+        return;
+      }
+      try {
+        const blob = await badgeABlob(estado);
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "mi-badge-study-abroad-fest-2026.png";
+        document.body.append(a);
+        a.click();
+        a.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 10_000);
+        decir("Badge guardado. Revisa tus descargas o tu galería.");
+      } catch {
+        decir("No pudimos generar la imagen. Inténtalo de nuevo.", "error");
+      }
+    });
+
+    shareBtn.addEventListener("click", () => {
+      if (shareBtn.dataset.listo) return;
+      decir("Compartir en LinkedIn estará disponible muy pronto. Mientras tanto, descarga tu imagen.", "error");
+    });
+
+    actualizarBotones();
+    pintar();
+  }
+</script>

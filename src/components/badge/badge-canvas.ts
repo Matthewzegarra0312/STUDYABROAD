@@ -26,7 +26,7 @@ export const SLOTS = {
   foto: { x: 164, y: 721, w: 300, h: 396, radio: 18 },
   /** Borde magenta que se vuelve a trazar encima de la foto. */
   borde: { x: 163, y: 719, w: 303, h: 399, radio: 18, grosor: 6, color: MAGENTA },
-  nombre: { x1: 485, y1: 742, x2: 917, y2: 814, centroY: 793, margen: 10, tamano: 22, minimo: 15, espaciado: 0.06 },
+  nombre: { x1: 485, y1: 742, x2: 917, y2: 814, centroY: 793, margen: 10, tamano: 22, minimo: 12, espaciado: 0.04 },
   ocupacion: { x1: 485, y1: 814, x2: 917, y2: 887, centroY: 865, tamano: 22, espaciado: 0.1, texto: "ESTUDIANTE" },
   mood: { x1: 701, y1: 960, x2: 917, y2: 1033, centroY: 1010, margen: 6, tamano: 22, minimo: 14, espaciado: 0.1 },
 } as const;
