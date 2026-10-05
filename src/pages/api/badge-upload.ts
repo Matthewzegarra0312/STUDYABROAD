@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { blobDisponible, generarIdBadge, guardarBadge, MAX_CUERPO_BYTES, SUBIDAS_POR_HORA, validarSubida } from "../../server/badges";
-import { subidasBadgeSuperadas } from "../../server/redis";
+import { devolverSubidaBadge, subidasBadgeSuperadas } from "../../server/redis";
 
 export const prerender = false;
 
@@ -48,6 +48,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
 
   if (!blobDisponible()) {
     console.warn("[badge] Falta BLOB_READ_WRITE_TOKEN: no se puede guardar el badge.");
+    await devolverSubidaBadge(ip);
     return error(503, "no-disponible");
   }
 
@@ -56,6 +57,7 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     await guardarBadge(id, validacion.valor);
   } catch (e) {
     console.error("[badge] No se pudo guardar el badge en Blob:", e instanceof Error ? e.message : e);
+    await devolverSubidaBadge(ip);
     return error(502, "servidor");
   }
   return json(200, { id });

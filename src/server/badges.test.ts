@@ -8,7 +8,8 @@ class BlobNotFoundError extends Error {}
 vi.mock("@vercel/blob", () => ({ put, head, get, BlobNotFoundError }));
 
 const subidasBadgeSuperadas = vi.fn(async () => false);
-vi.mock("./redis", () => ({ subidasBadgeSuperadas }));
+const devolverSubidaBadge = vi.fn(async () => {});
+vi.mock("./redis", () => ({ subidasBadgeSuperadas, devolverSubidaBadge }));
 
 const { medidasJpeg, medidasPng } = await import("./imagen");
 const { generarIdBadge, ID_BADGE_RE, obtenerBadge, validarSubida } = await import("./badges");

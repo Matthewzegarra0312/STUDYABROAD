@@ -102,3 +102,13 @@ export async function subidasBadgeSuperadas(ip: string, limite: number): Promise
   }
   return total > limite;
 }
+
+/** Devuelve una subida al contador cuando falló por culpa del servidor, para no gastar el límite de la persona. */
+export async function devolverSubidaBadge(ip: string): Promise<void> {
+  if (!redis) return;
+  try {
+    await redis.decr(`badge-subidas:${ip}`);
+  } catch {
+    // si Redis falla aquí, solo se pierde una subida del límite
+  }
+}
