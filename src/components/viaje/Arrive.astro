@@ -4,6 +4,7 @@
 import evento from "../../data/evento";
 import { faq } from "../../data/schedule";
 import { fechaEvento, hora12 } from "../../lib/viaje";
+import { googleCalendarUrl } from "../../lib/calendario";
 
 const fecha = fechaEvento(evento.fecha);
 const mapa = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${evento.lugar} ${evento.direccion}`)}`;
@@ -40,7 +41,7 @@ const pill = "flex min-h-12 items-center justify-center gap-2 rounded-full borde
         </dl>
         <div class="flex flex-col gap-2.5 lg:flex-row lg:gap-3">
           <a href={mapa} class={pill} target="_blank" rel="noopener">Cómo llegar ↗<span class="sr-only"> (abre Google Maps)</span></a>
-          <a href="/evento.ics" class={pill}>Agregar a mi calendario</a>
+          <a href={googleCalendarUrl()} class={pill} target="_blank" rel="noopener">Agregar a mi calendario<span class="sr-only"> (abre Google Calendar)</span></a>
         </div>
       </div>
       <div class="flex items-center justify-between border-t-[3px] border-dashed border-paper bg-brand-gradient px-5 py-[18px] text-paper lg:flex-col lg:justify-center lg:gap-3.5 lg:border-t-0 lg:border-l-[3px] lg:bg-[linear-gradient(170deg,#AC0BAD,#6258BB)] lg:p-[30px] lg:text-center" aria-hidden="true">

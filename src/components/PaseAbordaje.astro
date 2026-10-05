@@ -5,6 +5,7 @@
 // fase).
 import evento from "../data/evento";
 import { formatoFechaCorta, formatoHora12 } from "../lib/fechas";
+import { googleCalendarUrl } from "../lib/calendario";
 
 const mapaUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
   `${evento.lugar}, ${evento.direccion}`,
@@ -61,7 +62,9 @@ const mapaUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComp
           Cómo llegar ↗
         </a>
         <a
-          href="/evento.ics"
+          href={googleCalendarUrl()}
+          target="_blank"
+          rel="noopener"
           class="btn-lift inline-flex items-center gap-2 rounded-full border-[3px] border-violet px-5 py-2.5 font-extrabold text-violet no-underline"
         >
           Agregar a mi calendario

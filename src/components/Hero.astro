@@ -7,6 +7,7 @@ import { Image } from "astro:assets";
 import evento from "../data/evento";
 import keyVisual from "../assets/marca/key-visual.png";
 import { lumaUrl } from "../lib/luma";
+import { googleCalendarUrl } from "../lib/calendario";
 import { formatoFechaCorta, formatoHora12 } from "../lib/fechas";
 import Button from "./ui/Button.astro";
 import Countdown from "./Countdown.astro";
@@ -60,7 +61,7 @@ const rangoHoras = `${formatoHora12(evento.horaInicio)} a ${formatoHora12(evento
             <path d="M5 12h13M13 6l6 6-6 6"></path>
           </svg>
         </Button>
-        <Button href="/evento.ics" variant="outline" size="md">
+        <Button href={googleCalendarUrl()} external variant="outline" size="md">
           <svg slot="icon-start" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3" y="5" width="18" height="16" rx="3"></rect>
             <path d="M3 10h18M8 3v4M16 3v4"></path>

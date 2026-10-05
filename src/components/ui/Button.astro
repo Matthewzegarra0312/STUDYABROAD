@@ -14,6 +14,8 @@ interface Props {
   block?: boolean;
   class?: string;
   type?: "button" | "submit" | "reset";
+  /** Para enlaces externos: abre en otra pestaña con rel="noopener". */
+  external?: boolean;
 }
 
 const {
@@ -23,6 +25,7 @@ const {
   block = false,
   class: className,
   type = "button",
+  external = false,
 } = Astro.props;
 
 const base =
@@ -60,7 +63,13 @@ const classes = [base, variants[variant], sizes[size], block ? "w-full" : "", cl
 const Tag = href ? "a" : "button";
 ---
 
-<Tag class={classes} href={href} type={href ? undefined : type}>
+<Tag
+  class={classes}
+  href={href}
+  type={href ? undefined : type}
+  target={href && external ? "_blank" : undefined}
+  rel={href && external ? "noopener" : undefined}
+>
   <slot name="icon-start" />
   <slot />
   <slot name="icon-end" />
