@@ -3,7 +3,7 @@
 // badge-canvas.ts; compartir en LinkedIn se conecta después (badge-share.ts).
 // Diseño: docs/badge-diseno/Main.dc.html (escritorio) y Mobile-Badge.dc.html.
 import { plantillaPost } from "../../data/badge";
-import { lumaUrl } from "../../lib/luma";
+import { lumaUrlCorta } from "../../lib/luma";
 import { MOODS, NAME_MAX_LENGTH } from "./badge-canvas";
 
 const stepNum = "font-display text-[26px] leading-none text-violet lg:text-[28px]";
@@ -12,7 +12,7 @@ const chipBase =
   "inline-flex min-h-11 cursor-pointer items-center rounded-full border-2 px-3.5 py-2.5 font-sans text-sm font-extrabold transition-colors";
 ---
 
-<div class="grid gap-x-14 gap-y-8 lg:grid-cols-2 lg:items-start" data-badge-studio data-post-template={plantillaPost} data-luma-url={lumaUrl("badge_linkedin")}>
+<div class="grid gap-x-14 gap-y-8 lg:grid-cols-2 lg:items-start" data-badge-studio data-post-template={plantillaPost} data-luma-url={lumaUrlCorta()}>
   <div class="lg:col-start-1 lg:row-start-1">
     <slot />
   </div>

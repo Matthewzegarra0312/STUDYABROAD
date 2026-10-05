@@ -3,8 +3,9 @@ import sharp from "sharp";
 
 const put = vi.fn(async (pathname: string, _cuerpo?: unknown, _opciones?: Record<string, unknown>) => ({ url: `https://blob.test/${pathname}`, pathname }));
 const head = vi.fn();
+const get = vi.fn();
 class BlobNotFoundError extends Error {}
-vi.mock("@vercel/blob", () => ({ put, head, BlobNotFoundError }));
+vi.mock("@vercel/blob", () => ({ put, head, get, BlobNotFoundError }));
 
 const subidasBadgeSuperadas = vi.fn(async () => false);
 vi.mock("./redis", () => ({ subidasBadgeSuperadas }));
@@ -101,7 +102,7 @@ describe("POST /api/badge-upload", () => {
     const { id } = (await res.json()) as { id: string };
     expect(id).toMatch(ID_BADGE_RE);
     expect(put.mock.calls.map((c) => c[0])).toEqual([`badges/${id}/badge.png`, `badges/${id}/preview.jpg`]);
-    expect(put.mock.calls[0]?.[2]).toMatchObject({ access: "public", allowOverwrite: false, addRandomSuffix: false, contentType: "image/png" });
+    expect(put.mock.calls[0]?.[2]).toMatchObject({ access: "private", allowOverwrite: false, addRandomSuffix: false, contentType: "image/png" });
   });
 
   it("rechaza con 400 las medidas incorrectas y con 413 los cuerpos enormes", async () => {
@@ -126,7 +127,7 @@ describe("obtenerBadge", () => {
   it("devuelve las URL si existen y null si no existe o el id no tiene el formato", async () => {
     head.mockImplementation(async (p: string) => ({ url: `https://blob.test/${p}` }));
     const id = generarIdBadge();
-    expect(await obtenerBadge(id)).toEqual({ badgeUrl: `https://blob.test/badges/${id}/badge.png`, previewUrl: `https://blob.test/badges/${id}/preview.jpg` });
+    expect(await obtenerBadge(id)).toEqual({ badgeUrl: `/b/${id}/badge.png`, previewUrl: `/b/${id}/preview.jpg` });
     expect(await obtenerBadge("../secreto")).toBeNull();
     head.mockRejectedValue(new BlobNotFoundError("no existe"));
     expect(await obtenerBadge(id)).toBeNull();

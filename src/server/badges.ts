@@ -1,7 +1,9 @@
 // Badges compartidos en LinkedIn (PROMPT-BADGE.md, tareas 6 y 7). El servidor
 // solo guarda dos imágenes por badge en Vercel Blob (badges/<id>/badge.png y
 // badges/<id>/preview.jpg). Nunca guarda nombre, mood ni nada personal.
-import { BlobNotFoundError, head, put } from "@vercel/blob";
+// El store es privado: las imágenes se sirven desde /b/<id>/<archivo>
+// (src/pages/b/[id]/[archivo].ts), que las lee con el token.
+import { BlobNotFoundError, get, head, put } from "@vercel/blob";
 import { medidasJpeg, medidasPng } from "./imagen";
 
 export const BADGE = { width: 1080, height: 1350, maxBytes: 4 * 1024 * 1024, tipo: "image/png" } as const;
@@ -59,24 +61,37 @@ export const blobDisponible = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 
 /** Sube las dos imágenes. Nunca sobrescribe: si el id ya existe, falla. */
 export async function guardarBadge(id: string, { badge, preview }: SubidaValida): Promise<void> {
-  const base = { access: "public", addRandomSuffix: false, allowOverwrite: false, cacheControlMaxAge: 60 * 60 * 24 * 30 } as const;
+  const base = { access: "private", addRandomSuffix: false, allowOverwrite: false, cacheControlMaxAge: 60 * 60 * 24 * 30 } as const;
   await put(`badges/${id}/badge.png`, Buffer.from(badge), { ...base, contentType: BADGE.tipo });
   await put(`badges/${id}/preview.jpg`, Buffer.from(preview), { ...base, contentType: PREVIEW.tipo });
 }
 
+export const ARCHIVOS_BADGE = { "badge.png": BADGE.tipo, "preview.jpg": PREVIEW.tipo } as const;
+export type ArchivoBadge = keyof typeof ARCHIVOS_BADGE;
+
+export const esArchivoBadge = (archivo: string): archivo is ArchivoBadge => Object.hasOwn(ARCHIVOS_BADGE, archivo);
+
 export interface BadgeGuardado {
+  /** Rutas del propio sitio (relativas), no URL de Blob. */
   badgeUrl: string;
   previewUrl: string;
 }
 
-/** URLs públicas del badge, o null si no existe (o el id no tiene el formato). */
+/** Rutas públicas del badge, o null si no existe (o el id no tiene el formato). */
 export async function obtenerBadge(id: string): Promise<BadgeGuardado | null> {
   if (!ID_BADGE_RE.test(id)) return null;
   try {
-    const [badge, preview] = await Promise.all([head(`badges/${id}/badge.png`), head(`badges/${id}/preview.jpg`)]);
-    return { badgeUrl: badge.url, previewUrl: preview.url };
+    await Promise.all([head(`badges/${id}/badge.png`), head(`badges/${id}/preview.jpg`)]);
+    return { badgeUrl: `/b/${id}/badge.png`, previewUrl: `/b/${id}/preview.jpg` };
   } catch (e) {
     if (e instanceof BlobNotFoundError) return null;
     throw e;
   }
+}
+
+/** Lee una imagen del badge desde el store privado, o null si no existe. */
+export async function leerImagenBadge(id: string, archivo: ArchivoBadge): Promise<ReadableStream<Uint8Array> | null> {
+  if (!ID_BADGE_RE.test(id)) return null;
+  const res = await get(`badges/${id}/${archivo}`, { access: "private" });
+  return res?.statusCode === 200 ? res.stream : null;
 }

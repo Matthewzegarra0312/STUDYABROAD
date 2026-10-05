@@ -17,3 +17,12 @@ export function lumaUrl(source: string): string {
   url.searchParams.set("utm_campaign", source);
   return url.toString();
 }
+
+/**
+ * Enlace de Luma sin parámetros (ni `tk` ni UTM), para textos que la persona
+ * pega en sus redes, donde un enlace corto se ve mejor.
+ */
+export function lumaUrlCorta(): string {
+  const url = new URL(evento.lumaUrl);
+  return `${url.origin}${url.pathname}`;
+}

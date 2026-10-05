@@ -48,7 +48,7 @@ const boton =
   description={descripcion}
   noindex
   url={urlPagina}
-  image={badge?.previewUrl}
+  image={badge ? new URL(badge.previewUrl, origen).toString() : undefined}
   imageWidth={1200}
   imageHeight={627}
   imageAlt="Badge de asistente a Study Abroad Fest 2026"
