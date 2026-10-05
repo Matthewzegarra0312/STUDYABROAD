@@ -1,6 +1,7 @@
 ---
 // Bandera dibujada en SVG (no emoji). Solo los países de los ponentes confirmados.
 // El recorte redondeado lo da el CSS del contenedor (overflow-hidden + rounded).
+import { NOMBRES_PAIS } from "../../lib/paises";
 interface Props {
   code: string;
   class?: string;
@@ -8,22 +9,12 @@ interface Props {
 
 const { code, class: clase } = Astro.props;
 
-const NOMBRES: Record<string, string> = {
-  US: "Estados Unidos",
-  MX: "México",
-  JP: "Japón",
-  EU: "Europa",
-  CN: "China",
-  CA: "Canadá",
-  PE: "Perú",
-};
-
 // 12 estrellas de la bandera europea, en círculo.
 const estrellasEU = Array.from({ length: 12 }, (_, i) => {
   const a = (i * Math.PI) / 6;
   return { x: 12 + 4.6 * Math.sin(a), y: 8 - 4.6 * Math.cos(a) };
 });
-const nombre = NOMBRES[code];
+const nombre = NOMBRES_PAIS[code];
 ---
 
 {nombre && (

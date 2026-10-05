@@ -132,6 +132,13 @@
   100% { opacity: 1; transform: none; }
 }
 
+/* Al cambiar de filtro, las tarjetas visibles entran con un pop corto y escalonado (Speakers.astro). */
+@keyframes filtro-pop {
+  0% { opacity: 0; transform: translateY(14px) scale(0.96); }
+  100% { opacity: 1; transform: none; }
+}
+.v-filtrando > li { animation: filtro-pop 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 45ms); }
+
 /* Animación 4 · sello de pasaporte que "golpea" (tarjetas de ponentes) */
 @keyframes stamp-hit {
   0% { transform: rotate(-8deg) scale(1); }
@@ -308,6 +315,7 @@ li:has(> .v-card:focus-within) > div:first-child { transform: scale(1.08) rotate
   .cloud-drift-slow,
   .hero-float,
   .motion-armed.motion-visible,
+  .v-filtrando > li,
   .speaker-tag:hover .stamp-mark,
   .speaker-tag:focus-within .stamp-mark,
   .countdown-tick,

@@ -7,6 +7,7 @@ import { speakers } from "../../data/schedule";
 import type { SpeakerMode } from "../../data/schema";
 import { etiquetaEnlace } from "../../lib/enlace";
 import { Image } from "astro:assets";
+import { NOMBRES_PAIS } from "../../lib/paises";
 import Bandera from "../ui/Bandera.astro";
 import IconoRed from "../ui/IconoRed.astro";
 
@@ -28,7 +29,14 @@ const FILTROS = [
   { value: "experiencia", label: "Experiencia personal" },
 ];
 
-const images =import.meta.glob<{ default: ImageMetadata }>('../../assets/ponentes/*.{jpeg,jpg,png,gif,JPG,JPEG}');
+// Países con al menos un ponente publicado, en orden de aparición.
+const paises = [...new Set(publicos.map((s) => s.code).filter((c): c is string => !!c && c in NOMBRES_PAIS))];
+// Un par de reglas por país: oculta a quien no coincide cuando ese país está elegido.
+const reglasPais = paises
+  .map((c) => `#ponentes:has(input[name="ponentes-filtro"][value="${c}"]:checked) li:not([data-pais="${c}"]){display:none}`)
+  .join("\n");
+
+const images = import.meta.glob<{ default: ImageMetadata }>('../../assets/ponentes/*.{jpeg,jpg,png,gif,JPG,JPEG}');
 ---
 
 <section id="ponentes" class="relative scroll-mt-24 pt-10 text-paper" aria-labelledby="ponentes-title">
@@ -45,7 +53,8 @@ const images =import.meta.glob<{ default: ImageMetadata }>('../../assets/ponente
 
   <div class="mx-auto w-full max-w-[1200px] lg:px-10 xl:px-0">
     {/* Filtro solo con CSS (radios + :has, ver global.css): sin JavaScript. */}
-    <fieldset class="m-0 mb-4 flex min-w-0 flex-wrap gap-2 border-0 px-5 py-0 md:px-8 lg:mb-6 lg:px-0">
+    <div class="mb-4 flex flex-wrap gap-2 px-5 md:px-8 lg:mb-6 lg:px-0">
+    <fieldset class="contents">
       <legend class="sr-only">Filtrar ponentes</legend>
       {FILTROS.map((f, i) => (
         <label class="v-filtro inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border-2 border-paper/70 px-4 font-mono text-xs font-semibold tracking-[.08em] text-paper uppercase">
@@ -54,14 +63,24 @@ const images =import.meta.glob<{ default: ImageMetadata }>('../../assets/ponente
           <span class="opacity-75" aria-hidden="true">{f.value === "todos" ? publicos.length : publicos.filter((s) => grupoDe(s.mode) === f.value).length}</span>
         </label>
       ))}
+      {paises.map((c) => (
+        <label class="v-filtro inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border-2 border-paper/70 px-3.5 font-mono text-xs font-semibold tracking-[.08em] text-paper uppercase">
+          <input type="radio" name="ponentes-filtro" value={c} class="sr-only" />
+          <span aria-hidden="true"><Bandera code={c} class="h-[15px] w-[22px] rounded-[2px]" /></span>
+          {NOMBRES_PAIS[c]}
+          <span class="opacity-75" aria-hidden="true">{publicos.filter((s) => s.code === c).length}</span>
+        </label>
+      ))}
     </fieldset>
+    </div>
+    <style set:html={reglasPais} />
     <ul
       class="m-0 flex list-none snap-x snap-mandatory gap-4 overflow-x-auto px-5 pt-2.5 pb-4 [scrollbar-width:none] md:px-8 lg:grid lg:snap-none lg:grid-cols-4 lg:gap-x-6 lg:gap-y-7 lg:overflow-visible lg:p-0 [&::-webkit-scrollbar]:hidden"
       tabindex="0"
       aria-label="Ponentes"
     >
       {publicos.map((p, i) => (
-        <li data-grupo={grupoDe(p.mode)} class="w-[232px] shrink-0 snap-start lg:w-auto">
+        <li data-grupo={grupoDe(p.mode)} data-pais={p.code ?? undefined}class="w-[232px] shrink-0 snap-start lg:w-auto">
           <article class={`v-tag relative flex h-full flex-col rounded-[18px] bg-paper text-ink shadow-[0_6px_0_rgb(29_33_82/0.22),0_14px_24px_-12px_rgb(8_10_45/0.55)] lg:rounded-[20px] lg:shadow-[0_7px_0_rgb(29_33_82/0.22),0_18px_30px_-14px_rgb(8_10_45/0.55)] ${rot[i % 4]}`} data-motion-stop data-motion-delay={`${140 + i * 90}`}>
             <div class="flex items-center justify-between rounded-t-[18px] bg-brand-gradient px-[15px] py-[11px] font-mono text-[10px] font-semibold tracking-[.14em] text-paper uppercase lg:rounded-t-[20px] lg:px-[18px] lg:py-3.5 lg:text-[11px] lg:tracking-[.16em]" aria-hidden="true"><span>Ponente</span><span>SAF 2026</span></div>
             <div class="flex flex-col gap-[9px] p-[15px] lg:gap-2.5 lg:px-[18px] lg:pt-[18px] lg:pb-4">
@@ -98,8 +117,30 @@ const images =import.meta.glob<{ default: ImageMetadata }>('../../assets/ponente
       ))}
     </ul>
     <p class="m-0 mt-2.5 flex items-center gap-3 px-5 font-mono text-[11px] tracking-[.14em] text-paper/75 uppercase md:px-8 lg:hidden">
-      <span>Desliza para ver a los {publicos.length} ponentes</span>
+      <span>Desliza para ver más ponentes</span>
       <svg width="34" height="14" viewBox="0 0 34 14" fill="none" stroke="#FFE36B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 7h30M26 2l6 5-6 5"></path></svg>
     </p>
   </div>
 </section>
+
+<script>
+  // Al filtrar, las tarjetas ya están "precargadas": se quita la animación de
+  // entrada de scroll para que no se vuelvan a pegar al aparecer.
+  document.querySelectorAll<HTMLInputElement>('#ponentes input[name="ponentes-filtro"]').forEach((radio) => {
+    radio.addEventListener("change", () => {
+      document.querySelectorAll("#ponentes [data-motion-stop]").forEach((el) => {
+        el.classList.remove("motion-armed", "motion-visible");
+      });
+      // Pop corto y escalonado de las tarjetas que quedan visibles.
+      const lista = document.querySelector<HTMLElement>("#ponentes ul");
+      if (!lista) return;
+      lista.classList.remove("v-filtrando");
+      let n = 0;
+      lista.querySelectorAll<HTMLElement>(":scope > li").forEach((li) => {
+        if (li.offsetParent !== null) li.style.setProperty("--i", String(Math.min(n++, 8)));
+      });
+      void lista.offsetWidth; // reinicia la animación
+      lista.classList.add("v-filtrando");
+    });
+  });
+</script>
