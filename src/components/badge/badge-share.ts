@@ -72,15 +72,42 @@ export interface ResultadoCompartir {
   copiado: boolean;
 }
 
+/** Pestaña de espera mientras se sube el badge, para que no quede en blanco. */
+function abrirPestanaEspera(): Window | null {
+  const ventana = window.open("", "_blank");
+  if (!ventana) return null;
+  try {
+    ventana.document.title = "Preparando tu publicación...";
+    ventana.document.body.style.cssText =
+      "margin:0;min-height:100vh;display:grid;place-items:center;font:600 18px system-ui,sans-serif;color:#1D2152;background:#F1F3FA";
+    ventana.document.body.textContent = "Preparando tu publicación de LinkedIn...";
+  } catch {
+    // Si el navegador no deja escribir en la pestaña, igual se redirige después.
+  }
+  return ventana;
+}
+
+/** Lleva la pestaña de espera al borrador; si ya no existe, usa la pestaña actual. */
+function irA(ventana: Window | null, destino: string): void {
+  if (ventana && !ventana.closed) {
+    try {
+      ventana.location.replace(destino);
+      ventana.opener = null;
+      return;
+    } catch {
+      ventana.close();
+    }
+  }
+  window.location.assign(destino);
+}
+
 /**
  * Sube el badge y abre el borrador de LinkedIn. Debe llamarse directamente
  * desde el clic: en escritorio abre la pestaña antes de subir para que el
  * navegador no la bloquee. Lanza ErrorCompartir con el mensaje a mostrar.
  */
 export async function compartirEnLinkedIn(estado: BadgeState, plantilla: string): Promise<ResultadoCompartir> {
-  const movil = esMovil();
-  const ventana = movil ? null : window.open("about:blank", "_blank");
-  if (ventana) ventana.opener = null;
+  const ventana = esMovil() ? null : abrirPestanaEspera();
 
   let id: string;
   try {
@@ -91,9 +118,13 @@ export async function compartirEnLinkedIn(estado: BadgeState, plantilla: string)
   }
 
   const texto = textoPost(plantilla, new URL(`/b/${id}`, window.location.origin).toString());
-  const copiado = await copiarTexto(texto);
-  const destino = enlaceLinkedIn(texto);
-  if (ventana) ventana.location.href = destino;
-  else window.location.assign(destino);
+  // Con la pestaña nueva enfocada, el portapapeles de esta página puede quedarse
+  // esperando a recuperar el foco y la redirección nunca llegaba (about:blank).
+  // Se le da un tope corto y se redirige igual.
+  const copiado = await Promise.race([
+    copiarTexto(texto),
+    new Promise<boolean>((resolver) => window.setTimeout(() => resolver(false), 1500)),
+  ]);
+  irA(ventana, enlaceLinkedIn(texto));
   return { copiado };
 }
