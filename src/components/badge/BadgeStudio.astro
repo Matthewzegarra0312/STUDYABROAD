@@ -2,8 +2,7 @@
 // Creador del badge (UI + script del lado cliente). El render vive en
 // badge-canvas.ts; compartir en LinkedIn se conecta después (badge-share.ts).
 // Diseño: docs/badge-diseno/Main.dc.html (escritorio) y Mobile-Badge.dc.html.
-import { plantillaPost } from "../../data/badge";
-import { lumaUrlCorta } from "../../lib/luma";
+import { enlaceInscripcionPost, plantillaPost } from "../../data/badge";
 import { MOODS, NAME_MAX_LENGTH } from "./badge-canvas";
 
 const stepNum = "font-display text-[26px] leading-none text-violet lg:text-[28px]";
@@ -12,7 +11,7 @@ const chipBase =
   "inline-flex min-h-11 cursor-pointer items-center rounded-full border-2 px-3.5 py-2.5 font-sans text-sm font-extrabold transition-colors";
 ---
 
-<div class="grid gap-x-14 gap-y-8 lg:grid-cols-2 lg:items-start" data-badge-studio data-post-template={plantillaPost} data-luma-url={lumaUrlCorta()}>
+<div class="grid gap-x-14 gap-y-8 lg:grid-cols-2 lg:items-start" data-badge-studio data-post-template={plantillaPost} data-inscripcion-url={enlaceInscripcionPost}>
   <div class="lg:col-start-1 lg:row-start-1">
     <slot />
   </div>
@@ -185,7 +184,7 @@ const chipBase =
 
   if (root && canvas && photoInput && photoLabel && drop && tools && zoomInput && removeBtn && nameInput && count && moodGroup && accept && status && shareBtn && downloadBtn && copyBtn) {
     const plantilla = root!.dataset.postTemplate ?? "";
-    const lumaUrl = root!.dataset.lumaUrl ?? "";
+    const inscripcionUrl = root!.dataset.inscripcionUrl ?? "";
     let ocupado = false;
     const estado: BadgeState = { photo: null, zoom: 1, panX: 0, panY: 0, name: "", mood: MOODS[0] };
     const mensajeFalta = () =>
@@ -383,9 +382,9 @@ const chipBase =
       }
     });
 
-    // Copiar texto: mismo post, pero con el enlace de inscripción de Luma. Sin peticiones.
+    // Copiar texto: mismo post, pero con el enlace de inscripción del sitio. Sin peticiones.
     copyBtn.addEventListener("click", async () => {
-      const ok = await copiarTexto(textoPost(plantilla, lumaUrl));
+      const ok = await copiarTexto(textoPost(plantilla, inscripcionUrl));
       decir(ok ? "Texto copiado. Pégalo en tu publicación." : "Tu navegador no permitió copiar el texto.", ok ? "ok" : "error");
     });
 

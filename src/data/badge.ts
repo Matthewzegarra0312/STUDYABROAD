@@ -1,8 +1,11 @@
 import { z } from "zod";
 
+// Enlace de inscripción que va en el texto copiado (no en el borrador de LinkedIn).
+export const enlaceInscripcionPost = z.url().parse("https://studyabroad.leadutp.org/");
+
 // Texto del post de LinkedIn (PROMPT-BADGE.md, tarea 7). {enlace} se reemplaza
-// por el enlace del badge (/b/<id>) al compartir, o por el de Luma al copiar el
-// texto. Lleva un solo enlace para que LinkedIn arme la vista previa con él.
+// por el enlace del badge (/b/<id>) al compartir, o por enlaceInscripcionPost al
+// copiar el texto. Lleva un solo enlace para que LinkedIn arme la vista previa con él.
 export const plantillaPost = z.string().parse(
   `Este 10 de octubre estaré en Study Abroad Fest 2026 🌍✈️
 Una tarde para convertir el interés por estudiar en el extranjero en un camino concreto.
