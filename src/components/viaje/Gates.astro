@@ -68,6 +68,11 @@ const abiertas = gates.filter((g) => g.estado === "confirmado");
                   <Image src={logo} alt="" class:list={["w-auto max-w-full object-contain", claro ? "h-11" : "h-16 mix-blend-screen"]} />
                 </a>
               )}
+              {logo && !sitio && (
+                <div class:list={["isolate inline-flex w-fit max-w-full overflow-hidden rounded-xl", claro ? "border-2 border-lav/60 bg-paper px-3 py-2" : "bg-ink px-2 py-1"]}>
+                  <Image src={logo} alt={g.name} class:list={["w-auto max-w-full object-contain", claro ? "h-11" : "h-16 mix-blend-screen"]} />
+                </div>
+              )}
               {sitio && textoEnlace && (
                 <a href={sitio} target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center self-start text-sm font-extrabold text-violet underline decoration-violet/40 underline-offset-2">
                   {textoEnlace}<span class="sr-only"> de {g.name} (se abre en una pestaña nueva)</span>

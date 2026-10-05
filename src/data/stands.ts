@@ -38,7 +38,6 @@ const standsRaw: Stand[] = [
     descripcion: null,
     logo: "Erasmus-Mundus-Association-Perú-Logo.png",
     fondo: "fondo-stand-erasmus-mundus.png",
-    url: "https://www.instagram.com/erasmusmundus.peru/",
     estado: "confirmado",
   },
 ];
