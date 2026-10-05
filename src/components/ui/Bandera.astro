@@ -1,0 +1,67 @@
+---
+// Bandera dibujada en SVG (no emoji). Solo los países de los ponentes confirmados.
+// El recorte redondeado lo da el CSS del contenedor (overflow-hidden + rounded).
+interface Props {
+  code: string;
+  class?: string;
+}
+
+const { code, class: clase } = Astro.props;
+
+const NOMBRES: Record<string, string> = {
+  US: "Estados Unidos",
+  MX: "México",
+  JP: "Japón",
+  EU: "Europa",
+  CN: "China",
+  CA: "Canadá",
+  PE: "Perú",
+};
+
+// 12 estrellas de la bandera europea, en círculo.
+const estrellasEU = Array.from({ length: 12 }, (_, i) => {
+  const a = (i * Math.PI) / 6;
+  return { x: 12 + 4.6 * Math.sin(a), y: 8 - 4.6 * Math.cos(a) };
+});
+const nombre = NOMBRES[code];
+---
+
+{nombre && (
+  <svg class:list={["overflow-hidden", clase]} width="36" height="24" viewBox="0 0 24 16" role="img" aria-label={`País: ${nombre}`}>
+    {code === "US" && (<>
+      <rect width="24" height="16" fill="#FDFEFC" />
+      {[0, 2, 4, 6, 8, 10, 12].map((i) => <rect y={(i * 16) / 13} width="24" height={16 / 13} fill="#B22234" />)}
+      <rect width="10.5" height="8.6" fill="#3C3B6E" />
+    </>)}
+    {code === "MX" && (<>
+      <rect width="8" height="16" fill="#006847" />
+      <rect x="8" width="8" height="16" fill="#FDFEFC" />
+      <rect x="16" width="8" height="16" fill="#CE1126" />
+      <circle cx="12" cy="8" r="2.2" fill="#9A7B4F" />
+    </>)}
+    {code === "JP" && (<>
+      <rect width="24" height="16" fill="#FDFEFC" />
+      <circle cx="12" cy="8" r="4.6" fill="#BC002D" />
+    </>)}
+    {code === "EU" && (<>
+      <rect width="24" height="16" fill="#003399" />
+      {estrellasEU.map((s) => <circle cx={s.x} cy={s.y} r=".9" fill="#FFCC00" />)}
+    </>)}
+    {code === "CA" && (<>
+      <rect width="24" height="16" fill="#FDFEFC" />
+      <rect width="6" height="16" fill="#D52B1E" />
+      <rect x="18" width="6" height="16" fill="#D52B1E" />
+      <polygon points="12,2.5 13.2,5 14.8,4.4 14.4,7.2 16.4,6.2 16,8.4 17.4,9 14.4,11 14.8,12.2 12.6,11.8 12.6,13.8 11.4,13.8 11.4,11.8 9.2,12.2 9.6,11 6.6,9 8,8.4 7.6,6.2 9.6,7.2 9.2,4.4 10.8,5" fill="#D52B1E" />
+    </>)}
+    {code === "PE" && (<>
+      <rect width="8" height="16" fill="#D91023" />
+      <rect x="8" width="8" height="16" fill="#FDFEFC" />
+      <rect x="16" width="8" height="16" fill="#D91023" />
+    </>)}
+    {code === "CN" && (<>
+      <rect width="24" height="16" fill="#DE2910" />
+      <circle cx="5" cy="4.5" r="2.2" fill="#FFDE00" />
+    </>)}
+    <rect x=".5" y=".5" width="23" height="15" fill="none" stroke="#1D2152" stroke-opacity=".28" />
+  </svg>
+)}

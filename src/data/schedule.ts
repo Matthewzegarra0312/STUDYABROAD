@@ -113,7 +113,7 @@ const speakersRaw: Speaker[] = [
   { id: "ivanna", initials: "IY", code: "US", name: "Ivanna Yllahuaman", institution: "Purdue University", mode: "experiencia", time: "14:15", estado: "confirmado", imagen: "ivanna.png", url: "https://www.linkedin.com/in/ivanna-yllahuaman/" },
   { id: "leslie-sanchez", initials: "LS", code: "US", name: "Leslie Sánchez", institution: "UC Berkeley", mode: "experiencia", time: "14:55", estado: "confirmado", imagen: "leslie-sanchez.png", url: "https://www.instagram.com/leslie_sanchezm14/" },
   { id: "diego-mendoza", initials: "DM", code: "US", name: "Diego Mendoza", institution: "UC Berkeley", mode: "experiencia", time: "14:55", estado: "confirmado", imagen: "Diego-Mendoza.png", url: "https://www.linkedin.com/in/diegomendozaflores/" },
-  { id: "marlon-ugaz", initials: "MH", code: null, name: "Marlon Ugaz", institution: "Beca ELAP", mode: "experiencia", time: "15:45", estado: "confirmado", url: "https://www.linkedin.com/in/marlon-ugaz" },
+  { id: "marlon-ugaz", initials: "MU", code: "CA", name: "Marlon Ugaz", institution: "Beca ELAP", mode: "experiencia", time: "15:45", estado: "confirmado", url: "https://www.linkedin.com/in/marlon-ugaz" },
   { id: "gresly-ruiz", initials: "GR", code: "US", name: "Gresly Ruiz", institution: "Berkeley", mode: "experiencia", time: "15:45", estado: "confirmado", url: "https://www.linkedin.com/in/gresly/" },
   { id: "diego-river", initials: "DR", code: "US", name: "Diego River", institution: "Harvard", mode: "experiencia", time: "15:45", estado: "confirmado", url: "https://www.linkedin.com/in/diego-rivera-balarezo" },
   { id: "joshua-galvez", initials: "JG", code: "MX", name: "Joshua Eduardo Valentino Galvez Peña", institution: "Tecnológico de Monterrey", mode: "experiencia", time: "15:45", estado: "confirmado", url: "https://www.linkedin.com/in/joshua-eduardo-valentino-galvez" },
@@ -121,7 +121,7 @@ const speakersRaw: Speaker[] = [
   { id: "giancarlo-carmelino", initials: "GC", code: "JP", name: "Giancarlo Carmelino", institution: "Study in Japan", mode: "zoom", time: "16:10", estado: "confirmado" },
   { id: "guillermo-gonzalo", initials: "GG", code: "EU", name: "Guillermo Gonzalo", institution: "Erasmus+", mode: "vlog-zoom", time: "17:00", estado: "confirmado", imagen: "guillermo-gonzalo.png", url: "https://www.instagram.com/gonzalfarooo/" },
   { id: "raquel-sanchez", initials: "RS", code: "EU", name: "Raquel Sánchez", institution: "Erasmus Mundus", mode: "zoom", time: "17:30", estado: "confirmado", url: "https://www.instagram.com/raquel.powerade/" },
-  { id: "raul-jauregui", initials: "RJ", code: null, name: "Raúl Jáuregui", institution: "Migajeando Becas", mode: "experiencia", time: "17:45", estado: "confirmado", imagen: "Raúl-Jauregui.png", url: "https://www.instagram.com/rauenciencia/" },
+  { id: "raul-jauregui", initials: "RJ", code: "PE", name: "Raúl Jáuregui", institution: "Migajeando Becas", mode: "experiencia", time: "17:45", estado: "confirmado", imagen: "Raúl-Jauregui.png", url: "https://www.instagram.com/rauenciencia/" },
   // No está en el cronograma confirmado. No se publica hasta reconfirmarla.
   { id: "lizbeth-davila", initials: "LD", code: "CN", name: "Lizbeth Dávila", institution: "ELAP · SIAS", mode: "experiencia", time: "14:00", estado: "por-confirmar", imagen: "lizbeth-davila.JPG" },
 ];

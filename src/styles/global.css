@@ -237,6 +237,14 @@
 .v-flink:hover { color: white; }
 .v-stop:hover { transform: translateX(6px); }
 .v-row:hover { background: rgb(255 255 255 / 9%) !important; }
+.v-enlace { transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+.v-enlace:hover, .v-enlace:focus-visible { background: var(--color-violet); border-color: var(--color-violet); color: var(--color-paper); }
+.v-filtro { transition: background-color .2s ease, color .2s ease; }
+.v-filtro:hover { background: rgb(255 255 255 / 14%); }
+.v-filtro:has(:checked) { background: var(--color-paper); border-color: var(--color-paper); color: var(--color-violet); }
+.v-filtro:has(:focus-visible) { outline: 3px solid var(--color-paper); outline-offset: 3px; }
+#ponentes:has(input[value="internacional"]:checked) li[data-grupo="experiencia"],
+#ponentes:has(input[value="experiencia"]:checked) li[data-grupo="internacional"] { display: none; }
 .v-tag:hover { transform: rotate(0deg) translateY(-10px) !important; }
 .v-gate:hover,
 .v-gate:focus-within { transform: translateY(-8px) rotate(-0.4deg); }
@@ -251,7 +259,6 @@
 .v-gate > div:first-child > img,
 .v-gate a img,
 .v-gate .v-seal,
-.v-tag img,
 .v-tag .v-sello,
 .v-stop > span:last-child,
 li:has(> .v-card) > div:first-child {
@@ -265,8 +272,6 @@ li:has(> .v-card) > div:first-child {
 .v-gate:focus-within a img { transform: scale(1.05); }
 .v-gate:hover .v-seal,
 .v-gate:focus-within .v-seal { transform: rotate(-8deg) scale(1.05); }
-.v-tag:hover img,
-.v-tag:focus-within img { transform: scale(1.07); }
 .v-tag:hover .v-sello,
 .v-tag:focus-within .v-sello { transform: rotate(-14deg) scale(1.06); }
 .v-stop:hover > span:last-child { transform: scale(1.06); }

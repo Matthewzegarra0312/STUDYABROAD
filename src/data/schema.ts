@@ -94,30 +94,6 @@ export const CarrilParaleloSchema = z.object({
 export type CarrilParalelo = z.infer<typeof CarrilParaleloSchema>;
 
 // ---------------------------------------------------------------------------
-// Ponentes (src/data/ponentes.ts)
-// ---------------------------------------------------------------------------
-export const GrupoPonenteSchema = z.enum([
-  "internacional", // vlog + Q&A vía Zoom
-  "panel", // ex-becarios, presencial
-]);
-export type GrupoPonente = z.infer<typeof GrupoPonenteSchema>;
-
-export const PonenteSchema = z.object({
-  id: z.string(),
-  nombre: z.string(),
-  /** null cuando la fuente solo da el nombre y el país (p. ej. "Mila (Japón)"). */
-  institucion: z.string().nullable(),
-  codigoPais: CodigoSchema.nullable(),
-  /** Nota corta bajo el nombre: país, o algo como "Beca culminada". */
-  meta: z.string().nullable(),
-  grupo: GrupoPonenteSchema,
-  /** Ruta relativa dentro de src/assets/ponentes/. Ausente = placeholder. */
-  imagen: z.string().optional(),
-  estado: EstadoSchema,
-});
-export type Ponente = z.infer<typeof PonenteSchema>;
-
-// ---------------------------------------------------------------------------
 // Stands (src/data/stands.ts)
 // ---------------------------------------------------------------------------
 export const StandSchema = z.object({
