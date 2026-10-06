@@ -7,6 +7,7 @@ import Base from "../layouts/Base.astro";
 import CanjeNav from "../components/canje/CanjeNav.astro";
 import LibroPasaporte from "../components/pasaporte/LibroPasaporte.astro";
 import RutaProgreso from "../components/pasaporte/RutaProgreso.astro";
+import Escaner from "../components/pasaporte/Escaner.astro";
 import { gates } from "../data/schedule";
 import cielo from "../assets/marca/hero-cielo-mobile.jpg";
 import logo from "../assets/marca/logo study.png";
@@ -164,6 +165,7 @@ const mono = "font-mono font-semibold";
       </div>
     </main>
   </div>
+  <Escaner />
 </Base>
 
 <style is:global>

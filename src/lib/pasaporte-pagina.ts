@@ -3,6 +3,9 @@
 // prerenderizado. Las vistas y los ganchos `data-libro-*` viven en
 // src/pages/pasaporte.astro y src/components/pasaporte/LibroPasaporte.astro.
 import { gates } from "../data/schedule";
+import { sellosHash } from "../data/sellos";
+import { crearEscaner, type ErrorCamara } from "./escaner";
+import { interpretarQr } from "./qr-sello";
 import { formatoHoraLima, formatoHoraLimaSegundos } from "./fechas";
 import { lineasMrz } from "./mrz";
 import {
@@ -72,6 +75,7 @@ export function armarPasaporte(): void {
   const raiz = $("pas-raiz");
   if (!raiz) return;
   const almacen: AlmacenSeguro = almacenDelNavegador();
+  const quiereEscanear = location.hash === "#escanear";
   let pasaporte: Pasaporte | null = leer(almacen);
   let reloj: number | undefined;
 
@@ -198,9 +202,77 @@ export function armarPasaporte(): void {
     window.setTimeout(() => (b.textContent = "Copiar enlace"), 2000);
   });
 
+  // Escáner: lee el QR de un stand y navega a su /stamp, que aplica el sello.
+  let abrirEscanerAlInicio = (): void => {};
+  const panel = $("pas-escaner");
+  const video = $<HTMLVideoElement>("pas-esc-video");
+  const MOTIVOS: Record<ErrorCamara, string> = {
+    denegada: "No tenemos permiso para usar la cámara.",
+    "sin-camara": "No encontramos una cámara en este dispositivo.",
+    "no-disponible": "La cámara no está disponible en este navegador.",
+  };
+  if (panel && video) {
+    let ultimoInvalido = "";
+    let invalidoHasta = 0;
+    const escaner = crearEscaner(video, async (texto) => {
+      const r = await interpretarQr(texto, location.origin, sellosHash);
+      if (r) {
+        escaner.cerrar();
+        location.assign(r.destino);
+        return;
+      }
+      // El mismo QR ajeno no repite el aviso en cada cuadro.
+      if (texto === ultimoInvalido && Date.now() < invalidoHasta) return;
+      ultimoInvalido = texto;
+      invalidoHasta = Date.now() + 3000;
+      $("pas-esc-invalido")!.hidden = false;
+      window.setTimeout(() => ($("pas-esc-invalido")!.hidden = true), 3000);
+    });
+    const cerrarEscaner = () => {
+      escaner.cerrar();
+      panel.hidden = true;
+      document.body.style.overflow = "";
+    };
+    const abrirEscaner = async () => {
+      if (!pasaporte) return;
+      $("pas-esc-contador")!.textContent = `${contarSellos(pasaporte, IDS_STANDS)} / ${IDS_STANDS.length} SELLOS`;
+      panel.querySelectorAll<HTMLElement>("[data-esc-chip]").forEach((chip) => {
+        const hecho = Object.hasOwn(pasaporte!.sellos, chip.dataset.escChip ?? "");
+        chip.style.background = hecho ? (chip.dataset.color ?? "#6258BB") : "";
+        chip.style.borderStyle = hecho ? "solid" : "";
+        chip.style.borderColor = hecho ? "#FDFEFC" : "";
+      });
+      $("pas-esc-invalido")!.hidden = true;
+      $("pas-esc-sin-camara")!.hidden = true;
+      $("pas-esc-visor")!.hidden = false;
+      panel.hidden = false;
+      document.body.style.overflow = "hidden";
+      $("pas-esc-cerrar")!.focus();
+      const error = await escaner.abrir();
+      if (error) {
+        $("pas-esc-motivo")!.textContent = MOTIVOS[error];
+        $("pas-esc-sin-camara")!.hidden = false;
+        $("pas-esc-visor")!.hidden = true;
+      }
+    };
+    $("pas-escanear")?.addEventListener("click", () => void abrirEscaner());
+    $("pas-esc-cerrar")?.addEventListener("click", cerrarEscaner);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !panel.hidden) cerrarEscaner();
+    });
+    window.addEventListener("pagehide", () => escaner.cerrar());
+    // Desde /stamp ("Escanear de nuevo"): abre el escáner directo.
+    abrirEscanerAlInicio = () => {
+      const est = estadoPasaporte(pasaporte, IDS_STANDS);
+      if (quiereEscanear && (est === "vacio" || est === "progreso" || est === "casi")) void abrirEscaner();
+    };
+  }
+
   revisarAlmacen();
   const codigo = tomarCodigoDelFragmento();
   if (codigo) void abrir(codigo);
-  else if (pasaporte) irAlLibro();
-  else mostrar("codigo");
+  else if (pasaporte) {
+    irAlLibro();
+    abrirEscanerAlInicio();
+  } else mostrar("codigo");
 }

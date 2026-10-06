@@ -423,3 +423,13 @@ li:has(> .v-card:focus-within) > div:first-child { transform: scale(1.08) rotate
   .stamp-estampa { transform: rotate(-9deg); }
   .stamp-onda { opacity: 0; }
 }
+
+/* Escáner del pasaporte: línea de barrido (design/pasaporte/Escaner.dc.html). */
+@keyframes pas-barrido {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(228px); }
+}
+.pas-barrido { animation: pas-barrido 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .pas-barrido { animation: none; transform: translateY(114px); }
+}
