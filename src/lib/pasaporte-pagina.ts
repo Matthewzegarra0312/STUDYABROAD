@@ -312,7 +312,7 @@ export function armarPasaporte(): void {
     let ultimoInvalido = "";
     let invalidoHasta = 0;
     const escaner = crearEscaner(video, async (texto) => {
-      const r = await interpretarQr(texto, location.origin, sellosHash);
+      const r = await interpretarQr(texto, sellosHash);
       if (r) {
         escaner.cerrar();
         location.assign(r.destino);
