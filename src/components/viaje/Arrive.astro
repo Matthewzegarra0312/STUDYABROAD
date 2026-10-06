@@ -7,7 +7,8 @@ import { fechaEvento, hora12 } from "../../lib/viaje";
 import { googleCalendarUrl } from "../../lib/calendario";
 
 const fecha = fechaEvento(evento.fecha);
-const mapa = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${evento.lugar} ${evento.direccion}`)}`;
+const mapa =
+  evento.mapaUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${evento.lugar} ${evento.direccion}`)}`;
 const campos = [
   { k: "Fecha", v: `${fecha.corta} ${fecha.anio}`, span: "" },
   { k: "Tarifa", v: evento.gratuito ? "Gratis" : "Con costo", span: "order-2 lg:order-4" },

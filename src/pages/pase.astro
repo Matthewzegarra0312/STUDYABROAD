@@ -1,0 +1,102 @@
+---
+// /pase: pase de abordaje personal (saf-pases). UNA página prerenderizada; el
+// build (scripts/rutas-pase.mjs) agrega la regla que sirve esta misma página
+// para /pase/<codigo>. El código se lee y se valida en el navegador
+// (src/lib/pase-cliente.ts) y nunca llega a un servidor: los datos vienen
+// cifrados en public/pases/<id>.json. Sin analítica en esta página, noindex y
+// sin referrer.
+import Base from "../layouts/Base.astro";
+import CanjeNav from "../components/canje/CanjeNav.astro";
+---
+
+<Base
+  title="Tu pase de abordaje · Study Abroad Fest"
+  description="Ingresa el código de tu correo para ver y descargar tu pase de abordaje."
+  noindex
+  analytics={false}
+>
+  <meta slot="head" name="referrer" content="no-referrer" />
+  <div class="min-h-screen overflow-hidden bg-[linear-gradient(180deg,#3B99D8_0%,#66B3EA_44%,#6258BB_100%)]">
+    <CanjeNav current="pase" />
+    <main id="pase-raiz" class="relative mx-auto flex max-w-[560px] flex-col gap-6 px-4 py-8 text-paper sm:px-6 sm:py-12">
+      <form id="pase-form" hidden class="flex flex-col gap-5" novalidate>
+        <div>
+          <h1 class="m-0 max-w-[12ch] font-display text-[42px] leading-[.94] [text-shadow:0_4px_0_rgba(29,33,82,.2)] sm:text-6xl">
+            Tu pase de abordaje
+          </h1>
+          <p class="m-0 mt-3 text-lg font-bold leading-snug">
+            Escribe el código que te llegó por correo para ver tu pase y descargarlo.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3 rounded-[24px] border-[5px] border-paper bg-paper p-5 text-ink shadow-[0_8px_0_rgba(29,33,82,.16),0_18px_30px_-18px_rgba(29,33,82,.55)] sm:p-6">
+          <label for="pase-codigo" class="font-mono text-xs font-semibold uppercase tracking-[.12em] text-ink-2">Tu código</label>
+          <input
+            id="pase-codigo"
+            name="codigo"
+            placeholder="XXXXX-XXXXX"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            inputmode="text"
+            aria-describedby="pase-error"
+            class="w-full rounded-xl border-2 border-lav bg-paper-2 p-3.5 font-mono text-xl font-semibold tracking-[.08em] text-ink uppercase placeholder:text-ink-2/60 focus:border-violet focus:outline-none focus:ring-4 focus:ring-violet/20"
+          />
+          <div id="pase-error" role="alert" hidden class="text-sm font-bold text-magenta">
+            No encontramos un pase con ese código. Revisa que esté completo, con el formato XXXXX-XXXXX, y vuelve a intentarlo.
+          </div>
+          <button
+            type="submit"
+            class="btn-lift inline-flex items-center justify-center gap-2.5 rounded-full border-4 border-paper bg-brand-gradient px-7 py-3.5 font-display text-xl text-paper shadow-[0_6px_0_rgba(29,33,82,.16),0_14px_28px_-12px_rgba(29,33,82,.35)] disabled:opacity-70"
+          >
+            Ver mi pase
+          </button>
+        </div>
+      </form>
+
+      <div id="pase-estado" hidden role="status" class="rounded-[20px] border-2 border-paper/40 bg-ink/55 p-5 text-center text-lg font-extrabold">
+        Validando tu código…
+      </div>
+
+      <section id="pase-vista" hidden aria-label="Tu pase de abordaje" class="flex flex-col items-center gap-5">
+        <div id="pase-contenedor" class="w-full max-w-[375px]"></div>
+        <p class="m-0 max-w-[36ch] text-center text-[15px] font-bold leading-snug">
+          Es el mismo QR de tu inscripción en Luma. Muéstralo en el ingreso, con el brillo alto.
+        </p>
+        <div class="flex w-full max-w-[375px] flex-col gap-3">
+          <button
+            id="pase-descargar"
+            type="button"
+            class="btn-lift inline-flex items-center justify-center gap-2.5 rounded-full border-4 border-paper bg-brand-gradient px-7 py-3.5 font-display text-xl text-paper shadow-[0_6px_0_rgba(29,33,82,.16),0_14px_28px_-12px_rgba(29,33,82,.35)] disabled:opacity-70"
+          >
+            Descargar pase
+          </button>
+          <button
+            id="pase-otro"
+            type="button"
+            class="btn-lift inline-flex items-center justify-center rounded-full border-[3px] border-paper bg-transparent px-5 py-2.5 font-sans text-[17px] font-extrabold text-paper"
+          >
+            Ingresar otro código
+          </button>
+        </div>
+      </section>
+
+      <noscript>
+        <p class="rounded-[20px] bg-ink/55 p-5 text-center font-bold">Para ver tu pase necesitas activar JavaScript.</p>
+      </noscript>
+    </main>
+  </div>
+</Base>
+
+<style is:global>
+  /* El pase usa Lilita One con peso 700 (respaldo grueso en correos sin la fuente):
+     aquí la fuente sí está, así que no se simula una negrita encima. */
+  .saf-pase,
+  .saf-pase * {
+    font-synthesis: none;
+  }
+</style>
+
+<script>
+  import { armarPagina } from "../lib/pase-cliente";
+  armarPagina();
+</script>

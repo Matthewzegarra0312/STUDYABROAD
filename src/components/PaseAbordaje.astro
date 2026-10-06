@@ -7,9 +7,9 @@ import evento from "../data/evento";
 import { formatoFechaCorta, formatoHora12 } from "../lib/fechas";
 import { googleCalendarUrl } from "../lib/calendario";
 
-const mapaUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-  `${evento.lugar}, ${evento.direccion}`,
-)}`;
+const mapaUrl =
+  evento.mapaUrl ??
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${evento.lugar}, ${evento.direccion}`)}`;
 ---
 
 <section id="llegar" class="bg-paper-2 px-4 py-16 sm:px-8 lg:px-[120px] lg:py-24">

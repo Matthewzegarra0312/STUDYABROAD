@@ -26,6 +26,8 @@ interface Props {
   imageWidth?: number;
   imageHeight?: number;
   imageAlt?: string;
+  /** false en páginas personales (p. ej. /pase): no se carga la analítica. */
+  analytics?: boolean;
 }
 
 const DESCRIPCION_POR_DEFECTO =
@@ -40,6 +42,7 @@ const {
   imageWidth = 1200,
   imageHeight = 630,
   imageAlt = "Study Abroad Fest 2026 · sábado 10 de octubre · Centro de convenciones UTP, Lima",
+  analytics = true,
 } = Astro.props;
 
 // Astro.site depende de la variable de entorno SITE_URL (astro.config.mjs):
@@ -88,9 +91,22 @@ const imagenOgURL = Astro.site ? new URL(image, Astro.site).toString() : image;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imagenOgURL} />
+    <slot name="head" />
   </head>
   <body>
     <slot />
-    <Analytics />
+    {
+      analytics && (
+        <>
+          {/* Defensa extra: /pase/<codigo> nunca se registra con el código, solo como /pase. */}
+          <script is:inline>
+            window.webAnalyticsBeforeSend = function (e) {
+              return Object.assign({}, e, { url: String(e.url).replace(/\/pase\/[^/?#]+/, "/pase").replace(/([?#&])c=[^&#]*/g, "$1") });
+            };
+          </script>
+          <Analytics />
+        </>
+      )
+    }
   </body>
 </html>
