@@ -356,3 +356,33 @@ li:has(> .v-card:focus-within) > div:first-child { transform: scale(1.08) rotate
     transition-duration: .01ms !important;
   }
 }
+
+/* Pasaporte digital (design/pasaporte): portada flotante, franja de verificación
+   en vivo y sello APROBADO. Solo CSS; sin movimiento con prefers-reduced-motion. */
+@keyframes pas-flotar {
+  0%, 100% { transform: rotate(-3deg) translateY(0); }
+  50% { transform: rotate(-2deg) translateY(-8px); }
+}
+.pas-flotar { animation: pas-flotar 6s ease-in-out infinite; }
+
+@keyframes pas-cae {
+  0% { opacity: 0.001; transform: rotate(-30deg) scale(2.2); }
+  60% { opacity: 1; transform: rotate(-10deg) scale(0.92); }
+  100% { opacity: 1; transform: rotate(-12deg) scale(1); }
+}
+.pas-cae { animation: pas-cae 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+@keyframes pas-corre {
+  from { background-position: 0 0; }
+  to { background-position: 48px 0; }
+}
+.pas-corre {
+  background: repeating-linear-gradient(115deg, #ffe36b 0 12px, #1d2152 12px 24px);
+  background-size: 48px 100%;
+  animation: pas-corre 1.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pas-flotar, .pas-corre { animation: none; }
+  .pas-cae { animation: none; transform: rotate(-12deg); }
+}

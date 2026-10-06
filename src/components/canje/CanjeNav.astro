@@ -7,11 +7,12 @@ import logoLead from "../../assets/marca/logo-lead.png";
 import logoEvento from "../../assets/marca/logo study.png";
 
 interface Props {
-  current?: "canje" | "calendario" | "pase";
+  current?: "canje" | "calendario" | "pase" | "pasaporte";
 }
 
 const { current = "canje" } = Astro.props;
-const currentLabel = current === "calendario" ? "Mi calendario" : current === "pase" ? "Tu pase · SAF 2026" : "Canje · SAF 2026";
+const ETIQUETAS = { canje: "Canje · SAF 2026", calendario: "Mi calendario", pase: "Tu pase · SAF 2026", pasaporte: "Pasaporte · SAF 2026" } as const;
+const currentLabel = ETIQUETAS[current];
 ---
 
 <header class="pointer-events-none sticky top-3 z-50 mt-3 px-3 lg:top-5 lg:mt-5 lg:px-6">
