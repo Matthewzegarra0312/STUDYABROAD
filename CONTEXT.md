@@ -152,7 +152,7 @@ Cada dato lleva `estado`: `confirmado` o `por-confirmar`. Solo lo confirmado se 
 | 14:35 a 14:55 | Convenios, requisitos y movilidad internacional | UTP Internacional | Presencial |
 | 14:55 a 15:25 | Berkeley Haas Global Access Program | Leslie Sánchez y Diego Mendoza, UC Berkeley | Presencial |
 | 15:25 a 15:45 | Beca Fulbright | EducationUSA | Presencial |
-| 15:45 a 16:05 | Panel de exbecarios | Marlon Ugaz (ELAP), Gresly Ruiz (Berkeley), Leslie Sánchez (Berkeley), Diego River (Harvard), Joshua Eduardo Valentino Galvez Peña (Tec de Monterrey) | Presencial |
+| 15:45 a 16:05 | Panel de exbecarios | Marlon Ugaz (ELAP), Leslie Sánchez (Berkeley), Diego River (Harvard), Joshua Eduardo Valentino Galvez Peña (Tec de Monterrey) | Presencial |
 | 16:05 a 16:10 | Cápsula: estudiar en Japón | Milagros Virhuez, Mila en Japón | Vlog + Zoom |
 | 16:10 a 16:30 | Study in Japan | Giancarlo Carmelino | Zoom |
 | 16:30 a 16:50 | Beca MEXT: experiencia de un exbecario | APEBEMO | Presencial |
