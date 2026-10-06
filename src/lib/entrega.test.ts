@@ -12,7 +12,7 @@ const resp = (status: number) => () => Promise.resolve(new Response("{}", { stat
 describe("enviarEntrega", () => {
   it("manda número, nombre, sellos y hora, más el PIN; nunca el código del pase", async () => {
     let enviado: Record<string, unknown> = {};
-    const r = await enviarEntrega(completo(), "4821", (_u, init) => {
+    const r = await enviarEntrega(completo(), "7305", (_u, init) => {
       enviado = JSON.parse(String(init.body));
       return Promise.resolve(new Response("{}", { status: 200 }));
     });

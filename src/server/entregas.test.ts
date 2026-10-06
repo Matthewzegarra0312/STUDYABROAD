@@ -25,8 +25,8 @@ describe("validarEntrega", () => {
   });
 
   it("no deja pasar campos extra: no guarda el código del pase ni el PIN", () => {
-    const e = validarEntrega({ ...base(), codigo: "7K3QD-M9X2Q", pin: "4821" }, IDS, AHORA)!;
-    expect(JSON.stringify(e)).not.toMatch(/7K3QD|4821/);
+    const e = validarEntrega({ ...base(), codigo: "7K3QD-M9X2Q", pin: "7305" }, IDS, AHORA)!;
+    expect(JSON.stringify(e)).not.toMatch(/7K3QD|7305/);
   });
 });
 
