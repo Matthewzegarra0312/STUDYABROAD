@@ -8,11 +8,11 @@ import CanjeNav from "../components/canje/CanjeNav.astro";
 import LibroPasaporte from "../components/pasaporte/LibroPasaporte.astro";
 import RutaProgreso from "../components/pasaporte/RutaProgreso.astro";
 import Escaner from "../components/pasaporte/Escaner.astro";
+import PortadaPasaporte from "../components/pasaporte/PortadaPasaporte.astro";
 import SelloStand from "../components/pasaporte/SelloStand.astro";
 import { gates } from "../data/schedule";
 import cielo from "../assets/marca/hero-cielo-mobile.jpg";
-import logo from "../assets/marca/logo study.png";
-import { Image } from "astro:assets";
+import cieloDesktop from "../assets/marca/hero-cielo-desktop.jpg";
 
 const total = gates.length;
 const boton =
@@ -23,7 +23,7 @@ const mono = "font-mono font-semibold";
 
 <Base title="Tu pasaporte · Study Abroad Fest" description="Tu pasaporte digital del Study Abroad Fest 2026." noindex analytics={false}>
   <meta slot="head" name="referrer" content="no-referrer" />
-  <div id="pas-raiz" data-estado="cargando" class="pas-cielo min-h-screen overflow-hidden text-paper" style={`--cielo:url(${cielo.src})`}>
+  <div id="pas-raiz" data-estado="cargando" class="pas-cielo min-h-screen overflow-hidden text-paper" style={`--cielo-m:url(${cielo.src});--cielo-d:url(${cieloDesktop.src})`}>
     <CanjeNav current="pasaporte" />
 
     <div id="pas-aviso-almacen" role="alert" hidden class="mx-auto mt-3 max-w-[560px] rounded-2xl bg-yellow px-4 py-3 text-center text-sm font-extrabold text-ink"></div>
@@ -35,62 +35,56 @@ const mono = "font-mono font-semibold";
 
     <div id="pas-cargando" role="status" class="mx-auto mt-10 max-w-[560px] px-4 text-center text-lg font-extrabold" hidden>Validando tu código…</div>
 
-    <!-- Sin pasaporte: abrir con el código del pase -->
-    <main id="pas-codigo" hidden class="mx-auto flex max-w-[560px] flex-col gap-[18px] px-4 pt-3 pb-8 sm:px-6 sm:pt-10">
-      <header class="flex flex-col gap-2 px-1">
-        <span class={`${mono} w-fit rounded-full bg-ink/40 px-3.5 py-[7px] text-xs tracking-[.14em]`}>PASAPORTE SAF 2026</span>
-        <h1 class="m-0 font-display text-[44px] leading-[.94] font-normal [text-shadow:0_4px_0_rgb(29_33_82/0.25)] sm:text-6xl">Abre tu pasaporte</h1>
-        <p class="m-0 text-[17px] leading-[1.35] font-bold [text-shadow:0_1px_8px_rgb(29_33_82/0.35)]">Usa el código de tu pase de abordaje. Así tu pasaporte queda a tu nombre.</p>
-      </header>
-      <form id="pas-form" novalidate class="flex flex-col gap-3 rounded-3xl border-[5px] border-paper bg-paper px-4 pt-[18px] pb-4 text-ink shadow-[0_8px_0_rgb(8_10_45/0.25),0_20px_30px_-14px_rgb(8_10_45/0.55)]">
-        <label for="pas-input" class={`${mono} text-[11px] tracking-[.14em] text-ink-2`}>TU CÓDIGO</label>
-        <input
-          id="pas-input"
-          name="codigo"
-          placeholder="XXXXX-XXXXX"
-          autocomplete="off"
-          autocapitalize="characters"
-          spellcheck="false"
-          inputmode="text"
-          aria-describedby="pas-error"
-          class="w-full rounded-[14px] border-[2.5px] border-lav bg-paper-2 p-3.5 text-center font-mono text-2xl font-semibold tracking-[.16em] text-ink uppercase placeholder:text-ink-2/50 focus:border-violet focus:ring-4 focus:ring-violet/20 focus:outline-none"
-        />
-        <div id="pas-error" role="alert" hidden class="text-sm font-bold text-magenta">
-          No encontramos un pase con ese código. Revisa que esté completo, con el formato XXXXX-XXXXX, y vuelve a intentarlo.
+    <!-- Sin pasaporte: abrir con el código del pase. Escritorio: dos columnas con la portada a la derecha. -->
+    <main id="pas-codigo" hidden class="mx-auto flex w-full max-w-[560px] flex-col gap-[18px] px-4 pt-3 pb-8 sm:px-6 sm:pt-10 lg:grid lg:max-w-[1120px] lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)] lg:items-center lg:gap-x-14 lg:px-6 lg:pt-11 lg:pb-14">
+      <div class="flex flex-col gap-[18px] lg:gap-[22px]">
+        <header class="flex flex-col gap-2 px-1 lg:gap-2.5 lg:px-0">
+          <span class={`${mono} w-fit rounded-full bg-ink/40 px-3.5 py-[7px] text-xs tracking-[.14em]`}>PASAPORTE SAF 2026</span>
+          <h1 class="m-0 font-display text-[44px] leading-[.94] font-normal [text-shadow:0_4px_0_rgb(29_33_82/0.25)] sm:text-6xl lg:text-[72px] lg:[text-shadow:0_5px_0_rgb(29_33_82/0.25)]">Abre tu pasaporte</h1>
+          <p class="m-0 text-[17px] leading-[1.35] font-bold [text-shadow:0_1px_8px_rgb(29_33_82/0.35)] lg:max-w-[34ch] lg:text-[21px]">Usa el código de tu pase de abordaje. Así tu pasaporte queda a tu nombre.</p>
+        </header>
+        <form id="pas-form" novalidate class="flex flex-col gap-3 rounded-3xl border-[5px] border-paper bg-paper px-4 pt-[18px] pb-4 text-ink shadow-[0_8px_0_rgb(8_10_45/0.25),0_20px_30px_-14px_rgb(8_10_45/0.55)] lg:max-w-[460px]">
+          <label for="pas-input" class={`${mono} text-[11px] tracking-[.14em] text-ink-2`}>TU CÓDIGO</label>
+          <input
+            id="pas-input"
+            name="codigo"
+            placeholder="XXXXX-XXXXX"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            inputmode="text"
+            aria-describedby="pas-error"
+            class="w-full rounded-[14px] border-[2.5px] border-lav bg-paper-2 p-3.5 text-center font-mono text-2xl font-semibold tracking-[.16em] text-ink uppercase placeholder:text-ink-2/50 focus:border-violet focus:ring-4 focus:ring-violet/20 focus:outline-none"
+          />
+          <div id="pas-error" role="alert" hidden class="text-sm font-bold text-magenta">
+            No encontramos un pase con ese código. Revisa que esté completo, con el formato XXXXX-XXXXX, y vuelve a intentarlo.
+          </div>
+          <span class="text-[13.5px] leading-[1.35] font-bold text-ink-2">Lo encuentras en el correo de tu pase de abordaje.</span>
+          <button type="submit" class={`${boton} lg:w-full`}>Abrir mi pasaporte <Fragment set:html={flecha} /></button>
+        </form>
+        <div class="flex flex-col gap-2.5 rounded-[18px] border-2 border-paper/30 bg-[rgb(18_22_74/0.42)] px-4 py-3.5 lg:max-w-[460px] lg:bg-[rgb(18_22_74/0.62)]">
+          <span class={`${mono} text-[11px] tracking-[.14em] text-yellow`}>ANTES DE BAJAR A LOS STANDS</span>
+          <ol class="m-0 flex list-none flex-col gap-2 p-0 text-[14.5px] leading-[1.3] font-bold">
+            <li class="flex gap-2.5"><span class="font-display text-yellow">1</span>Abre tu pasaporte aquí, con internet.</li>
+            <li class="flex gap-2.5"><span class="font-display text-yellow">2</span>Quédate en este mismo navegador.</li>
+            <li class="flex gap-2.5"><span class="font-display text-yellow">3</span>No uses una pestaña de incógnito.</li>
+          </ol>
         </div>
-        <span class="text-[13.5px] leading-[1.35] font-bold text-ink-2">Lo encuentras en el correo de tu pase de abordaje.</span>
-        <button type="submit" class={boton}>Abrir mi pasaporte <Fragment set:html={flecha} /></button>
-      </form>
-      <div class="flex flex-col gap-2.5 rounded-[18px] border-2 border-paper/30 bg-[rgb(18_22_74/0.42)] px-4 py-3.5">
-        <span class={`${mono} text-[11px] tracking-[.14em] text-yellow`}>ANTES DE BAJAR A LOS STANDS</span>
-        <ol class="m-0 flex list-none flex-col gap-2 p-0 text-[14.5px] leading-[1.3] font-bold">
-          <li class="flex gap-2.5"><span class="font-display text-yellow">1</span>Abre tu pasaporte aquí, con internet.</li>
-          <li class="flex gap-2.5"><span class="font-display text-yellow">2</span>Quédate en este mismo navegador.</li>
-          <li class="flex gap-2.5"><span class="font-display text-yellow">3</span>No uses una pestaña de incógnito.</li>
-        </ol>
+        <a href="/pase" class="inline-flex min-h-11 items-center self-center text-[15px] font-extrabold text-paper underline underline-offset-[3px] lg:self-start lg:[text-shadow:0_1px_8px_rgb(29_33_82/0.7)]">Volver a mi pase de abordaje</a>
       </div>
-      <a href="/pase" class="inline-flex min-h-11 items-center self-center text-[15px] font-extrabold text-paper underline underline-offset-[3px]">Volver a mi pase de abordaje</a>
+      <div class="hidden justify-center lg:flex" aria-hidden="true">
+        <PortadaPasaporte titular="Nombre Apellido" numero="Nº P-·····" />
+      </div>
     </main>
 
-    <!-- Bienvenida: portada, justo después de abrirlo -->
-    <main id="pas-bienvenida" hidden class="mx-auto flex max-w-[560px] flex-col items-center gap-[18px] px-5 pt-2 pb-8">
-      <div class="flex flex-col items-center gap-2 text-center">
+    <!-- Bienvenida: portada, justo después de abrirlo. Escritorio: texto a la izquierda, portada a la derecha. -->
+    <main id="pas-bienvenida" hidden class="mx-auto flex w-full max-w-[560px] flex-col items-center gap-[18px] px-5 pt-2 pb-8 lg:grid lg:max-w-[1120px] lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)] lg:content-center lg:items-start lg:gap-x-14 lg:gap-y-[22px] lg:px-6 lg:pt-11 lg:pb-14">
+      <div class="flex flex-col items-center gap-2 text-center lg:col-start-1 lg:items-start lg:gap-2.5 lg:text-left">
         <span class={`${mono} rounded-full bg-ink/40 px-3.5 py-[7px] text-xs tracking-[.16em] uppercase`}>Pasaporte SAF 2026</span>
-        <h1 class="m-0 font-display text-[44px] leading-[.95] font-normal [text-shadow:0_4px_0_rgb(29_33_82/0.25)]">Tu recorrido comienza aquí</h1>
+        <h1 class="m-0 font-display text-[44px] leading-[.95] font-normal [text-shadow:0_4px_0_rgb(29_33_82/0.25)] lg:text-[72px] lg:leading-[.94] lg:[text-shadow:0_5px_0_rgb(29_33_82/0.25)]">Tu recorrido comienza aquí</h1>
       </div>
-      <div class="pas-flotar relative flex h-[338px] w-[262px] flex-col items-center justify-between overflow-hidden rounded-[14px_22px_22px_14px] bg-brand-gradient py-[22px] pr-5 pl-[30px] shadow-[0_10px_0_rgb(8_10_45/0.3),0_26px_40px_-16px_rgb(8_10_45/0.65)]">
-        <div class="absolute inset-y-0 left-0 w-3.5 border-r-2 border-yellow/45 bg-ink/35"></div>
-        <div class={`${mono} text-[11px] tracking-[.24em] text-yellow uppercase`}>Pasaporte · Passport</div>
-        <div class="relative grid size-[168px] place-items-center rounded-full border-2 border-dashed border-yellow/70">
-          <Image src={logo} alt="Study Abroad Fest" width={146} class="block h-auto w-[146px]" loading="eager" />
-        </div>
-        <div class="w-full">
-          <span class={`${mono} block text-[10px] tracking-[.16em] text-paper/75 uppercase`}>Titular</span>
-          <span id="pas-b-titular" class="block font-display text-[21px] leading-none uppercase [overflow-wrap:anywhere]"></span>
-          <span id="pas-b-numero" class={`${mono} mt-[3px] block text-[11px] tracking-[.12em] text-yellow`}></span>
-        </div>
-      </div>
-      <div class="grid w-full grid-cols-2 gap-2">
+      <PortadaPasaporte idTitular="pas-b-titular" idNumero="pas-b-numero" class="lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:self-center lg:justify-self-center" />
+      <div class="grid w-full grid-cols-2 gap-2 lg:col-start-1 lg:max-w-[360px]">
         <div class="flex -rotate-[1.5deg] flex-col items-center rounded-[14px] bg-paper px-1 pt-[9px] pb-2 text-ink shadow-[0_4px_0_rgb(8_10_45/0.25)]">
           <span class="font-display text-[26px] leading-none text-violet">{total}</span><span class="text-[13px] font-extrabold">destinos</span>
         </div>
@@ -98,9 +92,9 @@ const mono = "font-mono font-semibold";
           <span class="font-display text-[26px] leading-none text-magenta">{total}</span><span class="text-[13px] font-extrabold">sellos</span>
         </div>
       </div>
-      <div class="mt-2 flex w-full flex-col items-center gap-2.5">
+      <div class="mt-2 flex w-full flex-col items-center gap-2.5 lg:col-start-1 lg:mt-0 lg:items-start">
         <button id="pas-abrir-libro" type="button" class={boton}>Abrir mi pasaporte <Fragment set:html={flecha} /></button>
-        <p class="m-0 max-w-[32ch] text-center text-[13px] leading-[1.35] font-bold text-paper/92">Tus sellos se guardan en este celular. Ábrelo siempre desde el mismo navegador.</p>
+        <p class="m-0 max-w-[32ch] text-center text-[13px] leading-[1.35] font-bold text-paper/92 lg:text-left lg:[text-shadow:0_1px_8px_rgb(29_33_82/0.7)]">Tus sellos se guardan en este celular. Ábrelo siempre desde el mismo navegador.</p>
       </div>
     </main>
 
@@ -161,7 +155,7 @@ const mono = "font-mono font-semibold";
           </button>
           <button id="pas-canjear" type="button" hidden class={boton}>Canjear mi código <Fragment set:html={flecha} /></button>
           <a id="pas-ir-canje" href="/canje" hidden class={boton}>Ir a canjear mi código <Fragment set:html={flecha} /></a>
-          <span id="pas-barra-nota" class="text-[13px] font-bold text-paper/92"></span>
+          <span id="pas-barra-nota" class="text-[13px] font-bold text-paper/92 lg:[text-shadow:0_1px_8px_rgb(29_33_82/0.7)]"></span>
         </div>
       </div>
     </main>
@@ -217,21 +211,29 @@ const mono = "font-mono font-semibold";
 </Base>
 
 <style is:global>
+  /* Fondo: celeste de marca, con el cielo del diseño encima. Móvil usa la imagen
+     vertical; desde 1024 px, la horizontal (design/pasaporte/DeskPasaporte.dc.html). */
   .pas-cielo {
-    background:
-      var(--cielo) center top / 100% auto no-repeat,
-      linear-gradient(180deg, #3b99d8 0%, #66b3ea 40%, #6258bb 100%);
+    --cielo: var(--cielo-m);
+    --pas-degradado: linear-gradient(180deg, #3b99d8 0%, #66b3ea 40%, #6258bb 100%);
+    --pas-tamano: 100% auto;
+    background: var(--cielo) center top / var(--pas-tamano) no-repeat, var(--pas-degradado);
   }
   .pas-cielo[data-estado="completo"],
   .pas-cielo[data-estado="canjeado"] {
-    background:
-      var(--cielo) center top / 100% auto no-repeat,
-      linear-gradient(180deg, #3b99d8 0%, #66b3ea 24%, #6258bb 62%, #8c55a5 82%, #2a2468 100%);
+    --pas-degradado: linear-gradient(180deg, #3b99d8 0%, #66b3ea 24%, #6258bb 62%, #8c55a5 82%, #2a2468 100%);
+  }
+  @media (min-width: 1024px) {
+    .pas-cielo {
+      --cielo: var(--cielo-d);
+      --pas-tamano: cover;
+    }
   }
   .pas-cielo[data-estado="completo"] #pas-subtitulo,
   .pas-cielo[data-estado="canjeado"] #pas-subtitulo {
     display: block;
   }
+  /* La mesa de canje mantiene su fondo oscuro, sin cielo. */
   .pas-cielo[data-vista="mesa"] {
     background: linear-gradient(180deg, #1d2152 0%, #2a2468 100%);
   }
@@ -247,11 +249,6 @@ const mono = "font-mono font-semibold";
     background: linear-gradient(180deg, rgb(42 36 104 / 0), rgb(42 36 104 / 0.95) 36%);
   }
   @media (min-width: 1024px) {
-    .pas-cielo {
-      background:
-        var(--cielo) center top / cover no-repeat,
-        linear-gradient(180deg, #3b99d8 0%, #66b3ea 40%, #6258bb 100%);
-    }
     .pas-barra {
       background: none !important;
     }

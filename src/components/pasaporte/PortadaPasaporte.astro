@@ -1,0 +1,38 @@
+---
+// Portada del pasaporte (design/pasaporte/Main.dc.html): la tapa de degradado con
+// el logo y el titular. Sin lógica: /pasaporte le pone nombre y número por los ids.
+// Se usa en la bienvenida y, solo en escritorio, junto al formulario del código
+// (design/pasaporte/DeskPasaporte.dc.html).
+import { Image } from "astro:assets";
+import logo from "../../assets/marca/logo study.png";
+
+interface Props {
+  titular?: string;
+  numero?: string;
+  /** ids de los textos que /pasaporte rellena al abrir el pasaporte. */
+  idTitular?: string;
+  idNumero?: string;
+  class?: string;
+}
+
+const { titular = "", numero = "", idTitular, idNumero, class: className } = Astro.props;
+const mono = "font-mono font-semibold";
+---
+
+<div
+  class:list={[
+    "pas-flotar relative flex h-[338px] w-[262px] shrink-0 flex-col items-center justify-between overflow-hidden rounded-[14px_22px_22px_14px] bg-brand-gradient py-[22px] pr-5 pl-[30px] shadow-[0_10px_0_rgb(8_10_45/0.3),0_26px_40px_-16px_rgb(8_10_45/0.65)]",
+    className,
+  ]}
+>
+  <div class="absolute inset-y-0 left-0 w-3.5 border-r-2 border-yellow/45 bg-ink/35"></div>
+  <div class={`${mono} text-[11px] tracking-[.24em] text-yellow uppercase`}>Pasaporte · Passport</div>
+  <div class="relative grid size-[168px] place-items-center rounded-full border-2 border-dashed border-yellow/70">
+    <Image src={logo} alt="Study Abroad Fest" width={146} class="block h-auto w-[146px]" loading="eager" />
+  </div>
+  <div class="w-full">
+    <span class={`${mono} block text-[11px] tracking-[.16em] text-paper/75 uppercase`}>Titular</span>
+    <span id={idTitular} class="block font-display text-[21px] leading-none uppercase [overflow-wrap:anywhere]">{titular}</span>
+    <span id={idNumero} class={`${mono} mt-[3px] block text-[11px] tracking-[.12em] text-yellow`}>{numero}</span>
+  </div>
+</div>
