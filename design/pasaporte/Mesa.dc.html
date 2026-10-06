@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Mesa de canje</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Lilita+One&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}
+@keyframes brillo{0%{transform:translateX(-140%) skewX(-18deg)}60%,100%{transform:translateX(320%) skewX(-18deg)}}
+.btn{position:relative;overflow:hidden}
+.btn::before{content:"";position:absolute;top:0;bottom:0;left:0;width:36%;background:rgba(255,255,255,.28);animation:brillo 4.5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.btn::before{animation:none}}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;font-family:Figtree,sans-serif;color:#FDFEFC;background:linear-gradient(180deg,#1D2152 0%,#2A2468 100%);display:flex;flex-direction:column;padding:20px 16px 20px;gap:14px">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <a href="Completo.dc.html" aria-label="Volver" style="display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:rgba(253,254,252,.14);border:2px solid rgba(253,254,252,.4);text-decoration:none">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" style="fill:none;stroke:#FDFEFC;stroke-width:2.8px;stroke-linecap:round;stroke-linejoin:round"></path></svg>
+    </a>
+    <span style="border-radius:999px;background:#FFE36B;color:#1D2152;padding:7px 14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:.16em">SOLO EQUIPO · MESA DE CANJE</span>
+  </div>
+
+  <section aria-label="Pasaporte a validar" style="border-radius:22px;background:#FDFEFC;color:#1D2152;padding:16px 16px 14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 8px 0 rgba(0,0,0,.3)">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px">
+      <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.14em;color:#4A507C">TITULAR</span>
+        <span style="font-family:'Lilita One',sans-serif;font-size:24px;line-height:1;text-transform:uppercase">Nombre Apellido</span>
+      </div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;letter-spacing:.06em;color:#6258BB">P-7K2QM</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;justify-items:center;border-radius:14px;background:#F1F3FA;padding:8px 4px">
+      <dc-import name="Sello" stand="utp-internacional" estado="sellado" size="64" rot="-6" hint-size="64px,64px"></dc-import>
+      <dc-import name="Sello" stand="educationusa" estado="sellado" size="64" rot="5" hint-size="64px,64px"></dc-import>
+      <dc-import name="Sello" stand="study-in-japan" estado="sellado" size="64" rot="-4" hint-size="64px,64px"></dc-import>
+      <dc-import name="Sello" stand="erasmus-mundus" estado="sellado" size="64" rot="7" hint-size="64px,64px"></dc-import>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span style="display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#1D2152">
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" style="fill:none;stroke:#22709F;stroke-width:3.6px;stroke-linecap:round;stroke-linejoin:round"></path></svg>4 / 4 sellos</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:#4A507C">16:51:07 · franja en movimiento</span>
+    </div>
+  </section>
+
+  <section aria-label="PIN del equipo" style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:2px">
+    <span style="font-size:15px;font-weight:800">Entrega el código SAF. Luego ingresa el PIN del equipo.</span>
+    <div style="display:flex;gap:12px" role="img" aria-label="PIN de 4 dígitos, 2 ingresados">
+      <span style="width:18px;height:18px;border-radius:50%;background:#FFE36B"></span>
+      <span style="width:18px;height:18px;border-radius:50%;background:#FFE36B"></span>
+      <span style="width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(253,254,252,.7);box-sizing:border-box"></span>
+      <span style="width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(253,254,252,.7);box-sizing:border-box"></span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,76px);gap:10px">
+      <button style="height:56px;border-radius:16px;border:0;background:rgba(253,254,252,.14);color:#FDFEFC;font-family:'Lilita One',sans-serif;font-size:26px">1</button>
+      <button style="height:56px;border-radius:16px;border:0;background:rgba(253,254,252,.14);color:#FDFEFC;font-family:'Lilita One',sans-serif;font-size:26px">2</button>
+      <button style="height:56px;border-radius:16px;border:0;background:rgba(253,254,252,.14);color:#FDFEFC;font-family:'Lilita One',sans-serif;font-size:26px">3</button>
+      <button style="height:56px;border-radius:16px;border:0;background:rgba(253,254,252,.14);color:#FDFEFC;font-family:'Lilita One',sans-serif;font-size:26px">4</button>
+      <button style="height:56px;border-radius:16px;border:0;background:rgba(253,254,252,.14);color:#FDFEFC;font-family:'Lilita One',sans-serif;font-size:26px">5</button>
+      <button style="height:56px;border-radius:16px;border:0;background:rgba(253,254,252,.14);color:#FDFEFC;font-family:'Lilita One',sans-serif;font-size:26px">6</button>
+      <button style="height:56px;border-radius:16px;border:0;background:rgba(253,254,252,.14);color:#FDFEFC;font-family:'Lilita One',sans-serif;font-size:26px">7</button>
+      <button style="height:56px;border-radius:16px;border:0;background:rgba(253,254,252,.14);color:#FDFEFC;font-family:'Lilita One',sans-serif;font-size:26px">8</button>
+      <button style="height:56px;border-radius:16px;border:0;background:rgba(253,254,252,.14);color:#FDFEFC;font-family:'Lilita One',sans-serif;font-size:26px">9</button>
+      <span></span>
+      <button style="height:56px;border-radius:16px;border:0;background:rgba(253,254,252,.14);color:#FDFEFC;font-family:'Lilita One',sans-serif;font-size:26px">0</button>
+      <button aria-label="Borrar" style="height:56px;border-radius:16px;border:0;background:rgba(253,254,252,.08);color:#FDFEFC;display:grid;place-items:center"><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h10a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 19 18H9l-5-6 5-6zM12 9.5l5 5M17 9.5l-5 5" style="fill:none;stroke:#FDFEFC;stroke-width:2.2px;stroke-linecap:round;stroke-linejoin:round"></path></svg></button>
+    </div>
+  </section>
+
+  <a href="Canjeado.dc.html" class="btn" style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:auto;min-height:58px;border-radius:999px;border:4px solid #FDFEFC;background:linear-gradient(100deg,#AC0BAD,#6258BB);color:#FDFEFC;text-decoration:none;font-family:'Lilita One',sans-serif;font-size:21px;box-shadow:0 6px 0 rgba(0,0,0,.35)">Marcar código entregado</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

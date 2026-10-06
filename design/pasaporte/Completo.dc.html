@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Pasaporte completado</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Lilita+One&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.cielo{background:url(/_blob/0492b58d1df7f8e8ced5f7afb5072e3e) center top/100% auto no-repeat,linear-gradient(180deg,#3B99D8 0%,#66B3EA 24%,#6258BB 62%,#8C55A5 82%,#2A2468 100%)}
+@keyframes cae{0%{opacity:.001;transform:rotate(-30deg) scale(2.2)}60%{opacity:1;transform:rotate(-10deg) scale(.92)}100%{opacity:1;transform:rotate(-12deg) scale(1)}}
+.cae{animation:cae .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes corre{from{background-position:0 0}to{background-position:48px 0}}
+.corre{background:repeating-linear-gradient(115deg,#FFE36B 0 12px,#1D2152 12px 24px);background-size:48px 100%;animation:corre 1.2s linear infinite}
+@keyframes brillo{0%{transform:translateX(-140%) skewX(-18deg)}60%,100%{transform:translateX(320%) skewX(-18deg)}}
+.btn{position:relative;overflow:hidden}
+.btn::before{content:"";position:absolute;top:0;bottom:0;left:0;width:36%;background:rgba(255,255,255,.28);animation:brillo 4.5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.cae,.corre,.btn::before{animation:none}.cae{transform:rotate(-12deg)}}
+</style>
+</helmet>
+<div class="cielo" style="width:390px;height:1260px;box-sizing:border-box;font-family:Figtree,sans-serif;color:#FDFEFC;display:flex;flex-direction:column;position:relative">
+  <dc-import name="NavMovil" label="Pasaporte" hint-size="390px,84px"></dc-import>
+  <main style="display:flex;flex-direction:column;align-items:center;gap:14px;padding:6px 16px 118px">
+    <div style="width:100%;display:flex;flex-direction:column;gap:6px;padding:0 4px;text-align:center;align-items:center">
+      <svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true" style="transform:rotate(45deg)"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" style="fill:#FFE36B"></path></svg>
+      <h1 style="margin:0;font-family:'Lilita One',sans-serif;font-weight:400;font-size:40px;line-height:.95;text-shadow:0 4px 0 rgba(29,33,82,.25)">Pasaporte completado</h1>
+      <p style="margin:0;font-size:16px;font-weight:700;line-height:1.35">Has visitado todos los stands. ¡Buen viaje!</p>
+    </div>
+
+    <dc-import name="Ruta" n="4" hint-size="358px,112px"></dc-import>
+
+    <div style="position:relative">
+      <dc-import name="Libro" n="4" hint-size="358px,640px"></dc-import>
+      <div class="cae" style="position:absolute;right:-6px;top:36px;display:grid;place-items:center;width:128px;height:128px;border-radius:50%;border:5px solid #AC0BAD;background:rgba(253,254,252,.92);box-sizing:border-box;color:#AC0BAD;text-align:center;box-shadow:0 0 0 3px rgba(253,254,252,.9)">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:0">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:.2em">SAF 2026</span>
+          <span style="font-family:'Lilita One',sans-serif;font-size:27px;line-height:1">APROBADO</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.1em">4 / 4 · 4:47 PM</span>
+        </div>
+      </div>
+    </div>
+
+    <section aria-label="Verificación en vivo" style="width:100%;box-sizing:border-box;border-radius:18px;background:rgba(18,22,74,.5);border:2px solid rgba(253,254,252,.3);padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+      <div class="corre" style="height:8px;border-radius:6px"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.12em;color:#FFE36B">VERIFICACIÓN EN VIVO</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;letter-spacing:.08em">16:51:07</span>
+      </div>
+      <span style="font-size:13.5px;font-weight:700;line-height:1.35;color:rgba(253,254,252,.92)">La franja amarilla se mueve y la hora cambia. Una captura de pantalla no sirve para canjear.</span>
+    </section>
+  </main>
+
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 16px 16px;background:linear-gradient(180deg,rgba(42,36,104,0),rgba(42,36,104,.95) 36%);display:flex;flex-direction:column;align-items:center;gap:6px">
+    <a href="Mesa.dc.html" class="btn" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;min-height:58px;border-radius:999px;border:4px solid #FDFEFC;background:linear-gradient(100deg,#AC0BAD,#6258BB);color:#FDFEFC;text-decoration:none;font-family:'Lilita One',sans-serif;font-size:21px;box-shadow:0 6px 0 rgba(8,10,45,.35)">
+      Canjear mi código
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" style="fill:none;stroke:#FDFEFC;stroke-width:2.6px;stroke-linecap:round;stroke-linejoin:round"></path></svg>
+    </a>
+    <span style="font-size:13px;font-weight:700;color:rgba(253,254,252,.92)">Muestra esta pantalla en la mesa de canje.</span>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1260}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+---
+// /stamp/<standId>?k=<clave>: destino del QR de cada stand. Una página estática
+// por puerta (getStaticPaths desde gates). El navegador calcula SHA-256(k) y lo
+// compara con el hash de src/data/sellos.json: las claves en claro no están en
+// el repo ni en el código fuente. Todas las respuestas viven en el HTML y
+// src/lib/stamp-pagina.ts muestra la que toca. Sin servidor, cookies ni analítica.
+import type { GetStaticPaths } from "astro";
+import Base from "../../layouts/Base.astro";
+import SelloStand from "../../components/pasaporte/SelloStand.astro";
+import { gates } from "../../data/schedule";
+import { sellosHash } from "../../data/sellos";
+import stands from "../../data/stands";
+import fondoUtp from "../../assets/aliados/fondo-stand-utp-internacional.png";
+import fondoUsa from "../../assets/aliados/fondo-stand-education-usa.png";
+import fondoJp from "../../assets/aliados/fondo-stand-study-in-japan.png";
+import fondoEu from "../../assets/aliados/fondo-stand-erasmus-mundus.png";
+
+export const getStaticPaths = (() => gates.map((g) => ({ params: { id: g.standId } }))) satisfies GetStaticPaths;
+
+const { id } = Astro.params;
+const gate = gates.find((g) => g.standId === id)!;
+const nombre = stands.find((s) => s.id === gate.standId)?.nombre ?? gate.name;
+const num = String(gate.n).padStart(2, "0");
+
+const FONDOS: Record<string, { img: ImageMetadata; pos: string }> = {
+  "utp-internacional": { img: fondoUtp, pos: "30% center" },
+  educationusa: { img: fondoUsa, pos: "70% center" },
+  "study-in-japan": { img: fondoJp, pos: "28% center" },
+  "erasmus-mundus": { img: fondoEu, pos: "50% center" },
+};
+const LUGAR: Record<string, string> = {
+  "utp-internacional": "LIMA",
+  educationusa: "ESTADOS UNIDOS",
+  "study-in-japan": "JAPÓN",
+  "erasmus-mundus": "EUROPA",
+};
+const COLOR: Record<string, string> = {
+  "utp-internacional": "#6258BB",
+  educationusa: "#AC0BAD",
+  "study-in-japan": "#525F97",
+  "erasmus-mundus": "#22709F",
+};
+const fondo = FONDOS[gate.standId]!;
+const color = COLOR[gate.standId] ?? "#525F97";
+const etiqueta = `PUERTA ${num} · ${LUGAR[gate.standId] ?? ""}`.trim();
+
+const boton =
+  "btn-lift inline-flex min-h-[58px] w-full items-center justify-center gap-2.5 rounded-full border-4 border-paper bg-brand-gradient px-7 font-display text-[21px] text-paper shadow-[0_6px_0_rgb(8_10_45/0.35)] disabled:opacity-70";
+const secundario = "btn-lift inline-flex min-h-[52px] w-full items-center justify-center rounded-full border-[3px] border-paper px-5 text-[17px] font-extrabold text-paper";
+const mono = "font-mono font-semibold";
+const tarjeta =
+  "relative flex w-[min(320px,100%)] flex-col items-center gap-1.5 rounded-[28px] bg-paper px-5 pt-[22px] pb-5 text-ink shadow-[0_10px_0_rgb(8_10_45/0.35),0_26px_40px_-16px_rgb(0_0_0/0.7)]";
+const chip = `${mono} inline-flex items-center gap-2 rounded-full border border-paper/30 bg-ink/60 px-3.5 py-[7px] text-xs tracking-[.16em]`;
+const flecha = `<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="#FDFEFC" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const check = (c: string) => `<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="${c}" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+---
+
+<Base title={`${nombre} · Study Abroad Fest`} description="Sello de destino del Study Abroad Fest 2026." noindex analytics={false}>
+  <meta slot="head" name="referrer" content="no-referrer" />
+  <div
+    id="stamp-raiz"
+    data-stand={gate.standId}
+    data-hash={sellosHash[gate.standId]}
+    data-total={gates.length}
+    class="stamp-fondo relative isolate min-h-screen overflow-hidden bg-[#12164A] text-paper"
+    style={`--fondo:url(${fondo.img.src});--pos:${fondo.pos}`}
+  >
+    <noscript>
+      <p class="mx-4 mt-10 rounded-[20px] bg-ink/55 p-5 text-center font-bold">Para sellar tu pasaporte necesitas activar JavaScript.</p>
+    </noscript>
+
+    <div id="stamp-cargando" role="status" class="px-6 pt-32 text-center text-lg font-extrabold">Verificando destino…</div>
+
+    <!-- Sello nuevo -->
+    <main id="stamp-nuevo" hidden class="relative mx-auto flex min-h-screen w-full max-w-[480px] flex-col items-center px-4 pt-[52px] pb-[110px]">
+      <div class="flex flex-col items-center gap-1.5 text-center">
+        <span class={chip}>
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="transform:rotate(45deg)"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="#FFE36B" /></svg>
+          SAF 2026
+        </span>
+        <h1 class="m-0 mt-2.5 font-display text-[46px] leading-[.94] font-normal [text-shadow:0_4px_0_rgb(0_0_0/0.35)]">Nuevo destino<br />desbloqueado</h1>
+      </div>
+      <div class="mt-[26px] flex w-full justify-center">
+        <div class={tarjeta}>
+          <span class={`${mono} text-[11px] tracking-[.18em]`} style={`color:${color}`}>{etiqueta}</span>
+          <div class="relative my-0.5 grid size-[230px] place-items-center">
+            <div class="stamp-onda absolute inset-1.5 rounded-full border-[5px]" style={`border-color:${color}`} aria-hidden="true"></div>
+            <div class="stamp-disco absolute inset-2.5 rounded-full bg-paper-2" aria-hidden="true"></div>
+            <div class="stamp-estampa relative size-[206px]"><SelloStand stand={gate.standId} size={206} rot={0} /></div>
+          </div>
+          <h2 class="m-0 font-display text-[30px] leading-none font-normal">{nombre}</h2>
+          <span class="stamp-chip inline-flex items-center gap-1.5 text-sm font-extrabold" style={`color:${color}`}>
+            <Fragment set:html={check(color)} />Sello registrado · <span id="stamp-hora"></span>
+          </span>
+        </div>
+      </div>
+      <div class="mt-5 flex flex-col items-center gap-1.5">
+        <span id="stamp-progreso" class="stamp-num font-display text-[44px] leading-none text-yellow [text-shadow:0_4px_0_rgb(0_0_0/0.35)]"></span>
+        <span id="stamp-faltan" class="text-[15px] font-extrabold"></span>
+      </div>
+    </main>
+
+    <!-- Ya lo tenía -->
+    <main id="stamp-repetido" hidden class="relative mx-auto flex min-h-screen w-full max-w-[480px] flex-col items-center px-4 pt-16 pb-[110px]">
+      <div class="flex flex-col items-center gap-1.5 text-center">
+        <span class={chip}><Fragment set:html={check("#FFE36B")} />SELLO YA REGISTRADO</span>
+        <h1 class="m-0 mt-2.5 font-display text-[44px] leading-[.94] font-normal [text-shadow:0_4px_0_rgb(0_0_0/0.35)]">Ya tienes este sello</h1>
+      </div>
+      <div class="mt-7 flex w-full justify-center">
+        <div class={tarjeta}>
+          <span class={`${mono} text-[11px] tracking-[.18em]`} style={`color:${color}`}>{etiqueta}</span>
+          <div class="stamp-disco my-0.5 grid size-[200px] place-items-center rounded-full bg-paper-2"><SelloStand stand={gate.standId} size={180} rot={-9} /></div>
+          <h2 class="m-0 font-display text-[28px] leading-none font-normal">{nombre}</h2>
+          <span class="text-center text-[14.5px] leading-[1.35] font-bold text-ink-2">Visitaste este stand a las <span id="stamp-hora-previa"></span>.</span>
+        </div>
+      </div>
+      <div class="mt-[22px] flex flex-col items-center gap-1.5">
+        <span id="stamp-progreso-rep" class="font-display text-[40px] leading-none text-yellow [text-shadow:0_4px_0_rgb(0_0_0/0.35)]"></span>
+        <span id="stamp-faltan-rep" class="text-center text-[15px] font-extrabold"></span>
+      </div>
+    </main>
+
+    <!-- Sin pasaporte en este navegador -->
+    <main id="stamp-espera" hidden class="relative mx-auto flex min-h-screen w-full max-w-[480px] flex-col items-center px-4 pt-14 pb-10">
+      <div class="flex flex-col items-center gap-1.5 text-center">
+        <span class={chip}>{etiqueta.replace(` · ${LUGAR[gate.standId]}`, ` · ${nombre.toUpperCase()}`)}</span>
+        <h1 class="m-0 mt-2.5 font-display text-[42px] leading-[.95] font-normal [text-shadow:0_4px_0_rgb(0_0_0/0.35)]">Primero abre tu pasaporte</h1>
+        <p class="m-0 max-w-[30ch] text-[16.5px] leading-[1.38] font-bold">Este celular todavía no tiene tu pasaporte. Ábrelo y este sello se estampa solo.</p>
+      </div>
+      <div class="mt-5 grid size-[172px] place-items-center rounded-full bg-paper/90 shadow-[0_6px_0_rgb(8_10_45/0.25)]"><SelloStand stand={gate.standId} estado="pendiente" size={140} /></div>
+      <form id="stamp-form" novalidate class="mt-5 flex w-full flex-col gap-2.5 rounded-3xl border-[5px] border-paper bg-paper p-4 text-ink shadow-[0_8px_0_rgb(8_10_45/0.3)]">
+        <label for="stamp-input" class={`${mono} text-[11px] tracking-[.14em] text-ink-2`}>CÓDIGO DE TU PASE DE ABORDAJE</label>
+        <input
+          id="stamp-input"
+          placeholder="XXXXX-XXXXX"
+          autocomplete="off"
+          autocapitalize="characters"
+          spellcheck="false"
+          aria-describedby="stamp-error"
+          class="w-full rounded-[14px] border-[2.5px] border-lav bg-paper-2 p-[13px] text-center font-mono text-[22px] font-semibold tracking-[.16em] text-ink uppercase placeholder:text-ink-2/50 focus:border-violet focus:ring-4 focus:ring-violet/20 focus:outline-none"
+        />
+        <div id="stamp-error" role="alert" hidden class="text-sm font-bold text-magenta">
+          No encontramos un pase con ese código. Revisa que esté completo, con el formato XXXXX-XXXXX, y vuelve a intentarlo.
+        </div>
+        <button type="submit" class="btn-lift inline-flex min-h-[54px] items-center justify-center rounded-full border-4 border-paper bg-brand-gradient font-display text-xl text-paper shadow-[0_5px_0_rgb(29_33_82/0.2)] disabled:opacity-70">Abrir y estampar sello</button>
+      </form>
+      <p class="m-0 mt-3.5 px-6 text-center text-[13.5px] leading-[1.4] font-bold text-paper/90">Si ya abriste tu pasaporte en otro navegador, ábrelo en ese mismo y vuelve a escanear.</p>
+    </main>
+
+    <!-- Destino no válido -->
+    <main id="stamp-invalido" hidden class="stamp-claro relative mx-auto flex min-h-screen w-full max-w-[480px] flex-col items-center gap-[18px] px-5 pt-[60px] pb-6">
+      <div class="grid size-[210px] place-items-center rounded-full bg-paper/90 shadow-[0_8px_0_rgb(8_10_45/0.25)]">
+        <svg viewBox="0 0 200 200" width="170" height="170" aria-hidden="true">
+          <circle cx="100" cy="100" r="86" fill="none" stroke="#ABAEC8" stroke-width="4" stroke-dasharray="10 9" />
+          <path d="M70 76a30 30 0 1 1 42 28c-8 4-12 9-12 18v4" fill="none" stroke="#6258BB" stroke-width="9" stroke-linecap="round" />
+          <circle cx="100" cy="146" r="6.5" fill="#6258BB" />
+        </svg>
+      </div>
+      <div class="flex flex-col items-center gap-2 text-center">
+        <h1 class="m-0 font-display text-[40px] leading-[.96] font-normal [text-shadow:0_4px_0_rgb(29_33_82/0.25)]">No encontramos este destino</h1>
+        <p class="m-0 max-w-[30ch] text-[17px] leading-[1.38] font-bold">Verifica el QR e inténtalo nuevamente. Tus sellos siguen guardados.</p>
+      </div>
+      <div class="mt-auto flex w-full flex-col gap-3">
+        <a href="/pasaporte#escanear" class={boton}>Escanear de nuevo</a>
+        <a href="/pasaporte" class={secundario}>Ver mi pasaporte</a>
+      </div>
+    </main>
+
+    <!-- Barra inferior con el acceso al pasaporte (nuevo / repetido) -->
+    <div id="stamp-barra" hidden class="fixed inset-x-0 bottom-0 z-40 mx-auto flex max-w-[480px] flex-col items-center px-4 pb-[22px]">
+      <a href="/pasaporte" class={boton}>Ver mi pasaporte <Fragment set:html={flecha} /></a>
+    </div>
+  </div>
+</Base>
+
+<style is:global>
+  .stamp-fondo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: var(--fondo) var(--pos) / cover;
+  }
+  .stamp-fondo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgb(18 22 74 / 0.55) 0%, rgb(18 22 74 / 0.3) 38%, rgb(42 36 104 / 0.92) 100%);
+  }
+  .stamp-fondo[data-vista="invalido"] {
+    background: linear-gradient(180deg, #3b99d8 0%, #66b3ea 40%, #6258bb 100%);
+  }
+  .stamp-fondo[data-vista="invalido"]::before,
+  .stamp-fondo[data-vista="invalido"]::after {
+    display: none;
+  }
+  .stamp-disco {
+    background-image: repeating-linear-gradient(135deg, rgb(171 174 200 / 0.18) 0 1px, transparent 1px 9px);
+  }
+</style>
+
+<script>
+  import { armarStamp } from "../../lib/stamp-pagina";
+  armarStamp();
+</script>

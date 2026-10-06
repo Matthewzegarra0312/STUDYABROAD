@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Pase de abordaje en desktop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Lilita+One&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.cielo{background:url(/_blob/bac4bd132300e949771f60573858d60d) center top/cover no-repeat,linear-gradient(180deg,#3B99D8 0%,#66B3EA 40%,#6258BB 100%)}
+.cut-l{-webkit-mask:radial-gradient(circle 15px at 100% 0,transparent 96%,#000 100%) top/100% 51% no-repeat,radial-gradient(circle 15px at 100% 100%,transparent 96%,#000 100%) bottom/100% 51% no-repeat;mask:radial-gradient(circle 15px at 100% 0,transparent 96%,#000 100%) top/100% 51% no-repeat,radial-gradient(circle 15px at 100% 100%,transparent 96%,#000 100%) bottom/100% 51% no-repeat}
+.cut-r{-webkit-mask:radial-gradient(circle 15px at 0 0,transparent 96%,#000 100%) top/100% 51% no-repeat,radial-gradient(circle 15px at 0 100%,transparent 96%,#000 100%) bottom/100% 51% no-repeat;mask:radial-gradient(circle 15px at 0 0,transparent 96%,#000 100%) top/100% 51% no-repeat,radial-gradient(circle 15px at 0 100%,transparent 96%,#000 100%) bottom/100% 51% no-repeat}
+@keyframes brillo{0%{transform:translateX(-140%) skewX(-18deg)}60%,100%{transform:translateX(320%) skewX(-18deg)}}
+.btn{position:relative;overflow:hidden}
+.btn::before{content:"";position:absolute;top:0;bottom:0;left:0;width:36%;background:rgba(255,255,255,.28);animation:brillo 4.5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.btn::before{animation:none}}
+</style>
+</helmet>
+<div class="cielo" style="min-height:1000px;box-sizing:border-box;font-family:Figtree,sans-serif;color:#FDFEFC;display:flex;flex-direction:column">
+  <header style="padding:20px 24px 0">
+    <nav aria-label="Study Abroad Fest" style="margin:0 auto;max-width:1120px;height:60px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:12px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(2,12,62,.78);padding:0 12px 0 20px;box-shadow:0 8px 30px -12px rgba(2,12,62,.6)">
+      <a href="#" aria-label="LEAD UTP, Study Abroad Fest, inicio" style="display:inline-flex;align-items:center;gap:12px;text-decoration:none">
+        <img src="/_blob/e2638c35f7d4444e7d0027c655afc8e1" alt="" style="width:102px;height:auto;display:block">
+        <span style="width:1px;height:26px;background:rgba(255,255,255,.22)"></span>
+        <img src="/_blob/4f5fc0f183f48a40ed2d9272310af51e" alt="Study Abroad Fest" style="height:50px;width:auto;display:block">
+      </a>
+      <span style="border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);padding:6px 14px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.12em">TU PASE · SAF 2026</span>
+      <a href="#" style="display:inline-flex;align-items:center;min-height:44px;border-radius:6px;background:#FFFFFF;padding:0 16px;color:#020C3E;text-decoration:none;font-size:13px;font-weight:800">Volver al evento</a>
+    </nav>
+  </header>
+
+  <main style="max-width:1120px;width:100%;box-sizing:border-box;margin:0 auto;padding:44px 24px 56px;display:flex;flex-direction:column;gap:30px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="width:fit-content;border-radius:999px;background:rgba(29,33,82,.42);padding:7px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em">CHECK-IN LISTO</span>
+      <h1 style="margin:0;font-family:'Lilita One',sans-serif;font-weight:400;font-size:72px;line-height:.94;text-shadow:0 5px 0 rgba(29,33,82,.25)">Tu pase de abordaje</h1>
+      <p style="margin:0;font-size:21px;font-weight:700;line-height:1.35">Muéstralo en el ingreso desde tu celular. Es el mismo QR de tu inscripción en Luma.</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start">
+      <section aria-label="Pase de abordaje" style="flex:1 1 640px;max-width:720px;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;filter:drop-shadow(0 8px 0 rgba(8,10,45,.28)) drop-shadow(0 22px 22px rgba(8,10,45,.35))">
+          <div class="cut-l" style="flex:1 1 auto;min-width:0;border-radius:22px 0 0 22px;background:#FDFEFC;color:#1D2152;overflow:hidden">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;background:#1D2152;padding:12px 22px;color:#FDFEFC">
+              <img src="/_blob/4f5fc0f183f48a40ed2d9272310af51e" alt="Study Abroad Fest" style="height:52px;width:auto;display:block">
+              <span style="display:inline-flex;align-items:center;gap:8px;font-family:'Lilita One',sans-serif;font-size:22px;color:#FFE36B">LIMA
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" style="transform:rotate(90deg)"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" style="fill:#FFE36B"></path></svg>
+                EL MUNDO</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:18px;padding:22px 26px 26px">
+              <div style="display:flex;flex-direction:column;gap:3px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;letter-spacing:.14em;color:#4A507C">PASAJERO</span><span style="font-family:'Lilita One',sans-serif;font-size:38px;line-height:1;text-transform:uppercase">Nombre Apellido</span></div>
+              <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;color:#4A507C">FECHA</span><span style="font-size:18px;font-weight:800">Sáb 10 oct 2026</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;color:#4A507C">EMBARQUE</span><span style="font-size:18px;font-weight:800">2:00 p.m.</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;color:#4A507C">LLEGADA</span><span style="font-size:18px;font-weight:800">6:00 p.m.</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;color:#4A507C">TARIFA</span><span style="font-size:18px;font-weight:800">Gratis</span></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em;color:#4A507C">PUERTA</span><a href="https://maps.app.goo.gl/3AqFumREKmqrjo4q7" style="font-size:18px;font-weight:800;color:#1D2152;text-decoration:none">Centro de convenciones UTP <span style="color:#6258BB">↗</span></a></div>
+            </div>
+          </div>
+          <div class="cut-r" style="position:relative;flex:0 0 230px;border-radius:0 22px 22px 0;background:linear-gradient(160deg,#AC0BAD,#6258BB);padding:22px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
+            <div style="position:absolute;top:18px;bottom:18px;left:0;border-left:3px dashed rgba(253,254,252,.85)"></div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.14em">ASIENTO · TUYO</span>
+            <div style="border-radius:16px;border:4px solid #FDFEFC;background:#FFFFFF;padding:9px;box-shadow:0 5px 0 rgba(8,10,45,.25)">
+              <svg viewBox="-1 -1 27 27" width="150" height="150" role="img" aria-label="QR de ejemplo (en la web va el QR real de Luma)" style="display:block">
+                <rect x="0" y="0" width="7" height="7" style="fill:#1D2152"></rect><rect x="1" y="1" width="5" height="5" style="fill:#FFFFFF"></rect><rect x="2" y="2" width="3" height="3" style="fill:#1D2152"></rect>
+                <rect x="18" y="0" width="7" height="7" style="fill:#1D2152"></rect><rect x="19" y="1" width="5" height="5" style="fill:#FFFFFF"></rect><rect x="20" y="2" width="3" height="3" style="fill:#1D2152"></rect>
+                <rect x="0" y="18" width="7" height="7" style="fill:#1D2152"></rect><rect x="1" y="19" width="5" height="5" style="fill:#FFFFFF"></rect><rect x="2" y="20" width="3" height="3" style="fill:#1D2152"></rect>
+                <path d="M8 0h1v1h-1zM9 0h1v1h-1zM10 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM13 0h1v1h-1zM8 1h1v1h-1zM10 1h1v1h-1zM11 1h1v1h-1zM12 1h1v1h-1zM13 1h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM15 2h1v1h-1zM10 3h1v1h-1zM12 3h1v1h-1zM16 3h1v1h-1zM13 4h1v1h-1zM15 4h1v1h-1zM16 4h1v1h-1zM8 5h1v1h-1zM10 5h1v1h-1zM11 5h1v1h-1zM13 5h1v1h-1zM16 5h1v1h-1zM9 6h1v1h-1zM10 6h1v1h-1zM11 6h1v1h-1zM13 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM12 7h1v1h-1zM15 7h1v1h-1zM16 7h1v1h-1zM0 8h1v1h-1zM1 8h1v1h-1zM2 8h1v1h-1zM8 8h1v1h-1zM9 8h1v1h-1zM12 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM18 8h1v1h-1zM19 8h1v1h-1zM20 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM24 8h1v1h-1zM0 9h1v1h-1zM2 9h1v1h-1zM3 9h1v1h-1zM4 9h1v1h-1zM6 9h1v1h-1zM7 9h1v1h-1zM8 9h1v1h-1zM9 9h1v1h-1zM10 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM15 9h1v1h-1zM17 9h1v1h-1zM20 9h1v1h-1zM23 9h1v1h-1zM24 9h1v1h-1zM0 10h1v1h-1zM1 10h1v1h-1zM2 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM8 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM12 10h1v1h-1zM13 10h1v1h-1zM17 10h1v1h-1zM23 10h1v1h-1zM24 10h1v1h-1zM3 11h1v1h-1zM11 11h1v1h-1zM14 11h1v1h-1zM18 11h1v1h-1zM20 11h1v1h-1zM23 11h1v1h-1zM24 11h1v1h-1zM4 12h1v1h-1zM5 12h1v1h-1zM7 12h1v1h-1zM9 12h1v1h-1zM15 12h1v1h-1zM17 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM3 13h1v1h-1zM4 13h1v1h-1zM7 13h1v1h-1zM10 13h1v1h-1zM12 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM18 13h1v1h-1zM19 13h1v1h-1zM23 13h1v1h-1zM1 14h1v1h-1zM3 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM8 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM13 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM1 15h1v1h-1zM7 15h1v1h-1zM9 15h1v1h-1zM11 15h1v1h-1zM15 15h1v1h-1zM16 15h1v1h-1zM18 15h1v1h-1zM20 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM24 15h1v1h-1zM1 16h1v1h-1zM3 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM8 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM13 16h1v1h-1zM19 16h1v1h-1zM9 17h1v1h-1zM15 17h1v1h-1zM17 17h1v1h-1zM21 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM10 18h1v1h-1zM11 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM15 18h1v1h-1zM16 18h1v1h-1zM20 18h1v1h-1zM23 18h1v1h-1zM24 18h1v1h-1zM12 19h1v1h-1zM13 19h1v1h-1zM14 19h1v1h-1zM15 19h1v1h-1zM19 19h1v1h-1zM20 19h1v1h-1zM21 19h1v1h-1zM23 19h1v1h-1zM11 20h1v1h-1zM13 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM18 20h1v1h-1zM20 20h1v1h-1zM16 21h1v1h-1zM19 21h1v1h-1zM20 21h1v1h-1zM22 21h1v1h-1zM23 21h1v1h-1zM9 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM12 22h1v1h-1zM14 22h1v1h-1zM16 22h1v1h-1zM17 22h1v1h-1zM20 22h1v1h-1zM24 22h1v1h-1zM13 23h1v1h-1zM17 23h1v1h-1zM20 23h1v1h-1zM24 23h1v1h-1zM9 24h1v1h-1zM12 24h1v1h-1zM15 24h1v1h-1z" style="fill:#1D2152"></path>
+              </svg>
+            </div>
+            <span style="font-size:12.5px;font-weight:700;text-align:center;line-height:1.3">Muestra este QR en el ingreso</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <a href="#" style="display:inline-flex;align-items:center;gap:8px;min-height:52px;border-radius:999px;background:#FDFEFC;color:#1D2152;text-decoration:none;padding:0 26px;font-size:16px;font-weight:800;box-shadow:0 5px 0 rgba(8,10,45,.25)">Descargar pase</a>
+          <a href="#" style="display:inline-flex;align-items:center;gap:8px;min-height:52px;border-radius:999px;border:3px solid #FDFEFC;box-sizing:border-box;color:#FDFEFC;text-decoration:none;padding:0 24px;font-size:16px;font-weight:800">Agregar a mi calendario</a>
+          <a href="#" style="display:inline-flex;align-items:center;min-height:52px;color:#FDFEFC;font-size:15px;font-weight:800;text-underline-offset:3px">Ingresar otro código</a>
+        </div>
+      </section>
+
+      <aside aria-labelledby="pp-d" style="position:relative;flex:1 1 320px;max-width:360px;border-radius:24px;border:5px solid #FDFEFC;background:#FDFEFC;color:#1D2152;padding:22px 20px 20px;display:flex;flex-direction:column;gap:14px;transform:rotate(1.2deg);box-shadow:0 8px 0 rgba(8,10,45,.25),0 20px 30px -14px rgba(8,10,45,.55);margin-top:10px">
+        <span style="position:absolute;top:-15px;right:20px;border-radius:999px;background:#FFE36B;padding:5px 12px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;box-shadow:0 3px 0 rgba(8,10,45,.25);transform:rotate(3deg)">NUEVO</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;color:#6258BB">PASAPORTE SAF 2026</span>
+        <h2 id="pp-d" style="margin:0;font-family:'Lilita One',sans-serif;font-weight:400;font-size:32px;line-height:1">Tu pasaporte digital</h2>
+        <p style="margin:0;font-size:15px;font-weight:600;line-height:1.4;color:#4A507C">El sábado escanea el QR de cada puerta y junta los 4 sellos. Con el pasaporte completo recibes el código del Calendario de becas.</p>
+        <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;justify-items:center;border-radius:16px;background:#F1F3FA;padding:10px 4px">
+          <dc-import name="Sello" stand="utp-internacional" estado="pendiente" size="64" hint-size="64px,64px"></dc-import>
+          <dc-import name="Sello" stand="educationusa" estado="pendiente" size="64" hint-size="64px,64px"></dc-import>
+          <dc-import name="Sello" stand="study-in-japan" estado="pendiente" size="64" hint-size="64px,64px"></dc-import>
+          <dc-import name="Sello" stand="erasmus-mundus" estado="pendiente" size="64" hint-size="64px,64px"></dc-import>
+        </div>
+        <a href="#" class="btn" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;border-radius:999px;border:4px solid #FDFEFC;background:linear-gradient(100deg,#AC0BAD,#6258BB);color:#FDFEFC;text-decoration:none;font-family:'Lilita One',sans-serif;font-size:21px;box-shadow:0 5px 0 rgba(29,33,82,.2)">Abrir mi pasaporte</a>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

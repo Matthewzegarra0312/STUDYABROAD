@@ -12,6 +12,9 @@
     "check": "astro check",
     "pdf": "tsx scripts/pdf.ts",
     "codigos": "tsx scripts/codigos.ts",
+    "qr-stands": "tsx scripts/qr-stands.ts",
+    "pin-mesa": "tsx scripts/pin-mesa.ts",
+    "entregas": "tsx scripts/entregas.ts",
     "og-image": "tsx scripts/og-image.ts",
     "test": "vitest run",
     "astro": "astro"
@@ -29,6 +32,7 @@
     "astro": "^7.3.5",
     "html-to-image": "^1.11.13",
     "ics": "^3.12.0",
+    "jsqr": "^1.4.0",
     "qrcode": "^1.5.4",
     "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",

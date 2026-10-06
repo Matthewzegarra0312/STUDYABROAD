@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Portada del pasaporte</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Lilita+One&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.cielo{background:url(/_blob/0492b58d1df7f8e8ced5f7afb5072e3e) center top/100% auto no-repeat,linear-gradient(180deg,#3B99D8 0%,#66B3EA 44%,#6258BB 100%)}
+@keyframes flotar{0%,100%{transform:rotate(-3deg) translateY(0)}50%{transform:rotate(-2deg) translateY(-8px)}}
+.flotar{animation:flotar 6s ease-in-out infinite}
+@keyframes brillo{0%{transform:translateX(-140%) skewX(-18deg)}60%,100%{transform:translateX(320%) skewX(-18deg)}}
+.btn{position:relative;overflow:hidden}
+.btn::before{content:"";position:absolute;top:0;bottom:0;left:0;width:36%;background:rgba(255,255,255,.28);animation:brillo 4.5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.flotar,.btn::before{animation:none}}
+</style>
+</helmet>
+<div class="cielo" style="width:390px;height:844px;box-sizing:border-box;position:relative;overflow:hidden;font-family:Figtree,sans-serif;color:#FDFEFC;display:flex;flex-direction:column">
+  <dc-import name="NavMovil" label="Pasaporte" hint-size="390px,84px"></dc-import>
+
+  <main style="display:flex;flex-direction:column;align-items:center;gap:18px;padding:6px 20px 24px;flex-grow:1">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+      <span style="display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:rgba(29,33,82,.38);padding:7px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase">Pasaporte SAF 2026</span>
+      <h1 style="margin:0;font-family:'Lilita One',sans-serif;font-weight:400;font-size:44px;line-height:.95;text-shadow:0 4px 0 rgba(29,33,82,.25)">Tu recorrido comienza aquí</h1>
+    </div>
+
+    <div class="flotar" style="position:relative;width:262px;height:338px;border-radius:14px 22px 22px 14px;background:linear-gradient(100deg,#AC0BAD,#6258BB);box-shadow:0 10px 0 rgba(8,10,45,.3),0 26px 40px -16px rgba(8,10,45,.65);overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:22px 20px 20px 30px;box-sizing:border-box">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:14px;background:rgba(29,33,82,.35);border-right:2px solid rgba(255,227,107,.45)"></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.24em;color:#FFE36B;text-transform:uppercase">Pasaporte · Passport</div>
+      <div style="position:relative;display:grid;place-items:center;width:168px;height:168px;border-radius:50%;border:2px dashed rgba(255,227,107,.7)">
+        <img src="/_blob/4f5fc0f183f48a40ed2d9272310af51e" alt="Study Abroad Fest" style="width:146px;height:auto;display:block">
+      </div>
+      <div style="width:100%;display:flex;align-items:flex-end;justify-content:space-between;gap:10px">
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.16em;color:rgba(253,254,252,.75);text-transform:uppercase">Titular</span>
+          <span style="font-family:'Lilita One',sans-serif;font-size:21px;line-height:1;text-transform:uppercase">Nombre Apellido</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.12em;color:#FFE36B">Nº P-7K2QM</span>
+        </div>
+        <svg width="34" height="24" viewBox="0 0 34 24" aria-hidden="true" style="flex-shrink:0"><rect x="1.5" y="1.5" width="31" height="21" rx="4" style="fill:none;stroke:#FFE36B;stroke-width:2px"></rect><circle cx="17" cy="12" r="5" style="fill:none;stroke:#FFE36B;stroke-width:2px"></circle><path d="M1.5 12h10.5M22 12h10.5" style="stroke:#FFE36B;stroke-width:2px"></path></svg>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%">
+      <div style="display:flex;flex-direction:column;align-items:center;border-radius:14px;background:#FDFEFC;color:#1D2152;padding:9px 4px 8px;transform:rotate(-1.5deg);box-shadow:0 4px 0 rgba(8,10,45,.25)">
+        <span style="font-family:'Lilita One',sans-serif;font-size:26px;line-height:1;color:#6258BB">4</span>
+        <span style="font-size:13px;font-weight:800">destinos</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;border-radius:14px;background:#FDFEFC;color:#1D2152;padding:9px 4px 8px;transform:rotate(1deg);box-shadow:0 4px 0 rgba(8,10,45,.25)">
+        <span style="font-family:'Lilita One',sans-serif;font-size:26px;line-height:1;color:#AC0BAD">4</span>
+        <span style="font-size:13px;font-weight:800">sellos</span>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;border-radius:14px;background:#FDFEFC;color:#1D2152;padding:9px 4px 8px;transform:rotate(-.8deg);box-shadow:0 4px 0 rgba(8,10,45,.25)">
+        <span style="font-family:'Lilita One',sans-serif;font-size:26px;line-height:1;color:#2771A5">1</span>
+        <span style="font-size:13px;font-weight:800">experiencia</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;margin-top:auto">
+      <a href="Vacio.dc.html" class="btn" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;min-height:58px;border-radius:999px;border:4px solid #FDFEFC;background:linear-gradient(100deg,#AC0BAD,#6258BB);color:#FDFEFC;text-decoration:none;font-family:'Lilita One',sans-serif;font-size:22px;box-shadow:0 6px 0 rgba(29,33,82,.2),0 14px 28px -12px rgba(29,33,82,.45)">
+        Abrir mi pasaporte
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" style="fill:none;stroke:#FDFEFC;stroke-width:2.6px;stroke-linecap:round;stroke-linejoin:round"></path></svg>
+      </a>
+      <p style="margin:0;max-width:32ch;text-align:center;font-size:13px;font-weight:700;line-height:1.35;color:rgba(253,254,252,.92)">Tus sellos se guardan en este celular. Ábrelo siempre desde el mismo navegador.</p>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

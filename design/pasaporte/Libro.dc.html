@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Página del pasaporte</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Lilita+One&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<article aria-label="Tu pasaporte SAF 2026" style="position:relative;width:358px;height:640px;box-sizing:border-box;border-radius:22px;background:repeating-linear-gradient(135deg,rgba(171,174,200,.13) 0 1px,transparent 1px 10px),repeating-linear-gradient(45deg,rgba(171,174,200,.08) 0 1px,transparent 1px 14px),#FDFEFC;box-shadow:0 8px 0 rgba(8,10,45,.3),0 24px 36px -14px rgba(8,10,45,.6);padding:18px 16px 14px;display:flex;flex-direction:column;gap:12px;overflow:hidden;font-family:Figtree,sans-serif;color:#1D2152">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.16em;color:#6258BB">PASAPORTE · PASSPORT</span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;color:#4A507C">PÁG. 02</span>
+  </div>
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px">
+    <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.14em;color:#4A507C">TITULAR</span>
+      <span style="font-family:'Lilita One',sans-serif;font-size:23px;line-height:1;text-transform:uppercase">{{titular}}</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.14em;color:#4A507C">Nº</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;letter-spacing:.06em">P-7K2QM</span>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:8px">
+    <span style="flex-grow:1;border-top:2px dashed #ABAEC8"></span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.16em;color:#4A507C">VISAS · SELLOS DE ENTRADA</span>
+    <span style="flex-grow:1;border-top:2px dashed #ABAEC8"></span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;flex-grow:1">
+    <sc-for list="{{slots}}" as="s" hint-placeholder-count="4">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:4px;border-radius:16px;border:1.5px solid {{s.borde}};background:{{s.fondo}};padding:10px 8px 10px;box-sizing:border-box">
+        <div style="display:grid;place-items:center;flex-grow:1">
+          <dc-import name="Sello" stand="{{s.id}}" estado="{{s.estado}}" size="{{s.size}}" rot="{{s.rot}}" hint-size="118px,118px"></dc-import>
+        </div>
+        <sc-if value="{{s.hecho}}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:1px;text-align:center">
+            <span style="display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:800;line-height:1.15">
+              <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" style="fill:none;stroke:{{s.c}};stroke-width:3.6px;stroke-linecap:round;stroke-linejoin:round"></path></svg>{{s.nombre}}</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:#4A507C">Sellado · {{s.hora}}</span>
+          </div>
+        </sc-if>
+        <sc-if value="{{s.falta}}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:1px;text-align:center">
+            <span style="font-size:13px;font-weight:800;line-height:1.15;color:#4A507C">{{s.nombre}}</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:{{s.c}}">Visita esta puerta</span>
+          </div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+
+  <div aria-hidden="true" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;letter-spacing:.14em;line-height:1.45;color:#4A507C;white-space:nowrap;overflow:hidden">
+    <div>P&lt;SAF2026&lt;&lt;APELLIDO&lt;&lt;NOMBRE&lt;&lt;&lt;&lt;&lt;&lt;</div>
+    <div>P7K2QM&lt;&lt;{{n}}&lt;4&lt;SELLOS&lt;&lt;101026&lt;&lt;&lt;&lt;&lt;</div>
+  </div>
+
+  <sc-if value="{{canjeado}}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:50%;top:52%;transform:translate(-50%,-50%) rotate(-14deg);width:236px;height:236px;border-radius:50%;border:6px solid #1D2152;box-sizing:border-box;display:grid;place-items:center;background:rgba(255,227,107,.82);box-shadow:0 0 0 5px rgba(253,254,252,.9)">
+      <div style="width:198px;height:198px;border-radius:50%;border:2px solid #1D2152;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.2em">MESA DE CANJE</span>
+        <span style="font-family:'Lilita One',sans-serif;font-size:31px;line-height:.95">CÓDIGO<br>ENTREGADO</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.12em">10.10.26 · 4:58 P.M.</span>
+      </div>
+    </div>
+  </sc-if>
+</article>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"n":{"editor":"int","default":2,"min":0,"max":4},"canjeado":{"editor":"boolean","default":false},"titular":{"editor":"text","default":"Nombre Apellido"},"$preview":{"width":358,"height":640}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const n = Math.max(0, Math.min(4, Number(this.props.n ?? 2)));
+    const cj = this.props.canjeado;
+    const canjeado = cj === true || cj === 'true' || cj === 'si';
+    const base = [
+      { id: 'utp-internacional', nombre: 'UTP Internacional', c: '#6258BB', rot: -9, hora: '2:31 p.m.' },
+      { id: 'educationusa', nombre: 'EducationUSA', c: '#AC0BAD', rot: 6, hora: '2:58 p.m.' },
+      { id: 'study-in-japan', nombre: 'Study in Japan', c: '#525F97', rot: -5, hora: '3:42 p.m.' },
+      { id: 'erasmus-mundus', nombre: 'Erasmus Mundus', c: '#22709F', rot: 8, hora: '4:47 p.m.' }
+    ];
+    const slots = base.map((b, i) => {
+      const hecho = i < n;
+      return {
+        ...b,
+        hecho,
+        falta: !hecho,
+        estado: hecho ? 'sellado' : 'pendiente',
+        size: hecho ? 124 : 104,
+        borde: hecho ? 'rgba(171,174,200,.55)' : '#ABAEC8',
+        fondo: hecho ? 'rgba(253,254,252,.6)' : 'rgba(241,243,250,.85)'
+      };
+    });
+    return { n, slots, canjeado, titular: this.props.titular ?? 'Nombre Apellido' };
+  }
+}
+</script>
+</body>
+</html>

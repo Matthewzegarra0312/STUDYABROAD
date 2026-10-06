@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Sistema de sellos</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Lilita+One&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div style="width:1280px;height:820px;box-sizing:border-box;padding:48px 56px;font-family:Figtree,sans-serif;color:#1D2152;background:repeating-linear-gradient(135deg,rgba(171,174,200,.13) 0 1px,transparent 1px 10px),#FDFEFC;display:flex;flex-direction:column;gap:28px">
+  <header style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.16em;color:#6258BB">SISTEMA DE SELLOS · PASAPORTE SAF 2026</span>
+      <h1 style="margin:0;font-family:'Lilita One',sans-serif;font-weight:400;font-size:52px;line-height:1">Cuatro puertas, un mismo sistema</h1>
+    </div>
+    <p style="margin:0;max-width:44ch;font-size:16px;font-weight:600;line-height:1.45;color:#4A507C">Todos comparten anillo doble, tipografía Lilita One y Plex Mono, fecha 10.10.26 y número de puerta. Cambian la forma, el color y el motivo, para reconocerlos de un vistazo.</p>
+  </header>
+
+  <section aria-label="Sellos estampados" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;border-radius:24px;background:#F1F3FA;border:1.5px solid #ABAEC8;padding:22px 16px 18px">
+      <dc-import name="Sello" stand="utp-internacional" estado="sellado" size="230" rot="-8" hint-size="230px,230px"></dc-import>
+      <b style="font-size:18px">01 · UTP Internacional</b>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#6258BB">CÍRCULO · #6258BB · AVIÓN</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;border-radius:24px;background:#F1F3FA;border:1.5px solid #ABAEC8;padding:22px 16px 18px">
+      <dc-import name="Sello" stand="educationusa" estado="sellado" size="230" rot="6" hint-size="230px,230px"></dc-import>
+      <b style="font-size:18px">02 · EducationUSA</b>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#AC0BAD">RECTÁNGULO · #AC0BAD · ESTRELLA</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;border-radius:24px;background:#F1F3FA;border:1.5px solid #ABAEC8;padding:22px 16px 18px">
+      <dc-import name="Sello" stand="study-in-japan" estado="sellado" size="230" rot="-5" hint-size="230px,230px"></dc-import>
+      <b style="font-size:18px">03 · Study in Japan</b>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#525F97">OCTÓGONO · #525F97 · MONTE Y SOL</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;border-radius:24px;background:#F1F3FA;border:1.5px solid #ABAEC8;padding:22px 16px 18px">
+      <dc-import name="Sello" stand="erasmus-mundus" estado="sellado" size="230" rot="8" hint-size="230px,230px"></dc-import>
+      <b style="font-size:18px">04 · Erasmus Mundus</b>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:#22709F">ÓVALO · #22709F · CORONA DE 12 PUNTOS</span>
+    </div>
+  </section>
+
+  <section aria-label="Estado pendiente" style="display:flex;align-items:center;gap:28px;border-radius:22px;background:#1D2152;color:#FDFEFC;padding:18px 28px">
+    <div style="display:flex;flex-direction:column;gap:4px;min-width:260px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em;color:#FFE36B">ESTADO PENDIENTE</span>
+      <span style="font-size:15px;font-weight:700;line-height:1.35">Misma silueta, trazo discontinuo y número grande. No se ve apagado: se ve esperando.</span>
+    </div>
+    <div style="display:flex;gap:18px;align-items:center;border-radius:16px;background:#FDFEFC;padding:10px 20px">
+      <dc-import name="Sello" stand="utp-internacional" estado="pendiente" size="96" hint-size="96px,96px"></dc-import>
+      <dc-import name="Sello" stand="educationusa" estado="pendiente" size="96" hint-size="96px,96px"></dc-import>
+      <dc-import name="Sello" stand="study-in-japan" estado="pendiente" size="96" hint-size="96px,96px"></dc-import>
+      <dc-import name="Sello" stand="erasmus-mundus" estado="pendiente" size="96" hint-size="96px,96px"></dc-import>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px;font-size:13.5px;font-weight:700;line-height:1.4;color:rgba(253,254,252,.9)">
+      <span>Tinta: filtro de ruido, bordes irregulares.</span>
+      <span>Rotación al estampar: entre -9° y 8°.</span>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":820}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

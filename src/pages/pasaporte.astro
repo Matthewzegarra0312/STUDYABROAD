@@ -1,0 +1,259 @@
+---
+// /pasaporte: pasaporte digital (PROMPT-PASAPORTE.md). UNA página prerenderizada
+// con todos los estados en el HTML; src/lib/pasaporte-pagina.ts decide cuál se
+// muestra según lo guardado en este navegador. No hay servidor, cookies ni
+// analítica. El código del pase nunca se guarda.
+import Base from "../layouts/Base.astro";
+import CanjeNav from "../components/canje/CanjeNav.astro";
+import LibroPasaporte from "../components/pasaporte/LibroPasaporte.astro";
+import RutaProgreso from "../components/pasaporte/RutaProgreso.astro";
+import Escaner from "../components/pasaporte/Escaner.astro";
+import PortadaPasaporte from "../components/pasaporte/PortadaPasaporte.astro";
+import SelloStand from "../components/pasaporte/SelloStand.astro";
+import { gates } from "../data/schedule";
+import cielo from "../assets/marca/hero-cielo-mobile.jpg";
+import cieloDesktop from "../assets/marca/hero-cielo-desktop.jpg";
+
+const total = gates.length;
+const boton =
+  "btn-lift inline-flex min-h-[58px] w-full items-center justify-center gap-2.5 rounded-full border-4 border-paper bg-brand-gradient px-7 font-display text-[21px] text-paper shadow-[0_6px_0_rgb(8_10_45/0.3)] disabled:opacity-70 lg:w-fit lg:min-h-[60px] lg:px-8 lg:text-[22px]";
+const flecha = `<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="#FDFEFC" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const mono = "font-mono font-semibold";
+---
+
+<Base title="Tu pasaporte · Study Abroad Fest" description="Tu pasaporte digital del Study Abroad Fest 2026." noindex analytics={false}>
+  <meta slot="head" name="referrer" content="no-referrer" />
+  <div id="pas-raiz" data-estado="cargando" class="pas-cielo min-h-screen overflow-hidden text-paper" style={`--cielo-m:url(${cielo.src});--cielo-d:url(${cieloDesktop.src})`}>
+    <CanjeNav current="pasaporte" />
+
+    <div id="pas-aviso-almacen" role="alert" hidden class="mx-auto mt-3 max-w-[560px] rounded-2xl bg-yellow px-4 py-3 text-center text-sm font-extrabold text-ink"></div>
+    <div id="pas-aviso" role="status" hidden class="mx-auto mt-3 max-w-[560px] rounded-2xl bg-paper px-4 py-3 text-center text-sm font-extrabold text-ink"></div>
+
+    <noscript>
+      <p class="mx-4 mt-6 rounded-[20px] bg-ink/55 p-5 text-center font-bold">Para ver tu pasaporte necesitas activar JavaScript.</p>
+    </noscript>
+
+    <div id="pas-cargando" role="status" class="mx-auto mt-10 max-w-[560px] px-4 text-center text-lg font-extrabold" hidden>Validando tu código…</div>
+
+    <!-- Sin pasaporte: abrir con el código del pase. Escritorio: dos columnas con la portada a la derecha. -->
+    <main id="pas-codigo" hidden class="mx-auto flex w-full max-w-[560px] flex-col gap-[18px] px-4 pt-3 pb-8 sm:px-6 sm:pt-10 lg:grid lg:max-w-[1120px] lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)] lg:items-center lg:gap-x-14 lg:px-6 lg:pt-11 lg:pb-14">
+      <div class="flex flex-col gap-[18px] lg:gap-[22px]">
+        <header class="flex flex-col gap-2 px-1 lg:gap-2.5 lg:px-0">
+          <h1 class="m-0 font-display text-[44px] leading-[.94] font-normal [text-shadow:0_4px_0_rgb(29_33_82/0.25)] sm:text-6xl lg:text-[72px] lg:[text-shadow:0_5px_0_rgb(29_33_82/0.25)]">Abre tu pasaporte</h1>
+          <p class="m-0 text-[17px] leading-[1.35] font-bold [text-shadow:0_1px_8px_rgb(29_33_82/0.35)] lg:max-w-[34ch] lg:text-[21px]">Usa el código de tu pase de abordaje. Así tu pasaporte queda a tu nombre.</p>
+        </header>
+        <form id="pas-form" novalidate class="flex flex-col gap-3 rounded-3xl border-[5px] border-paper bg-paper px-4 pt-[18px] pb-4 text-ink shadow-[0_8px_0_rgb(8_10_45/0.25),0_20px_30px_-14px_rgb(8_10_45/0.55)] lg:max-w-[460px]">
+          <label for="pas-input" class={`${mono} text-[11px] tracking-[.14em] text-ink-2`}>TU CÓDIGO</label>
+          <input
+            id="pas-input"
+            name="codigo"
+            placeholder="XXXXX-XXXXX"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            inputmode="text"
+            aria-describedby="pas-error"
+            class="w-full rounded-[14px] border-[2.5px] border-lav bg-paper-2 p-3.5 text-center font-mono text-2xl font-semibold tracking-[.16em] text-ink uppercase placeholder:text-ink-2/50 focus:border-violet focus:ring-4 focus:ring-violet/20 focus:outline-none"
+          />
+          <div id="pas-error" role="alert" hidden class="text-sm font-bold text-magenta">
+            No encontramos un pase con ese código. Revisa que esté completo, con el formato XXXXX-XXXXX, y vuelve a intentarlo.
+          </div>
+          <span class="text-[13.5px] leading-[1.35] font-bold text-ink-2">Lo encuentras en el correo de tu pase de abordaje.</span>
+          <button type="submit" class={`${boton} lg:w-full`}>Abrir mi pasaporte <Fragment set:html={flecha} /></button>
+        </form>
+        <div class="flex flex-col gap-2.5 rounded-[18px] border-2 border-paper/30 bg-[rgb(18_22_74/0.42)] px-4 py-3.5 lg:max-w-[460px] lg:bg-[rgb(18_22_74/0.62)]">
+          <span class={`${mono} text-[11px] tracking-[.14em] text-yellow`}>ANTES DE BAJAR A LOS STANDS</span>
+          <ol class="m-0 flex list-none flex-col gap-2 p-0 text-[14.5px] leading-[1.3] font-bold">
+            <li class="flex gap-2.5"><span class="font-display text-yellow">1</span>Abre tu pasaporte aquí, con internet.</li>
+            <li class="flex gap-2.5"><span class="font-display text-yellow">2</span>Quédate en este mismo navegador.</li>
+            <li class="flex gap-2.5"><span class="font-display text-yellow">3</span>No uses una pestaña de incógnito.</li>
+          </ol>
+        </div>
+        <a href="/pase" class="inline-flex min-h-11 items-center self-center text-[15px] font-extrabold text-paper underline underline-offset-[3px] lg:self-start lg:[text-shadow:0_1px_8px_rgb(29_33_82/0.7)]">Volver a mi pase de abordaje</a>
+      </div>
+      <div class="hidden justify-center lg:flex" aria-hidden="true">
+        <PortadaPasaporte titular="Nombre Apellido" numero="Nº P-·····" />
+      </div>
+    </main>
+
+    <!-- Bienvenida: portada, justo después de abrirlo. Escritorio: texto a la izquierda, portada a la derecha. -->
+    <main id="pas-bienvenida" hidden class="mx-auto flex w-full max-w-[560px] flex-col items-center gap-[18px] px-5 pt-2 pb-8 lg:grid lg:max-w-[1120px] lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)] lg:content-center lg:items-start lg:gap-x-14 lg:gap-y-[22px] lg:px-6 lg:pt-11 lg:pb-14">
+      <div class="flex flex-col items-center gap-2 text-center lg:col-start-1 lg:items-start lg:gap-2.5 lg:text-left">
+        <h1 class="m-0 font-display text-[44px] leading-[.95] font-normal [text-shadow:0_4px_0_rgb(29_33_82/0.25)] lg:text-[72px] lg:leading-[.94] lg:[text-shadow:0_5px_0_rgb(29_33_82/0.25)]">Tu recorrido comienza aquí</h1>
+      </div>
+      <PortadaPasaporte idTitular="pas-b-titular" idNumero="pas-b-numero" class="lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:self-center lg:justify-self-center" />
+      <div class="grid w-full grid-cols-2 gap-2 lg:col-start-1 lg:max-w-[360px]">
+        <div class="flex -rotate-[1.5deg] flex-col items-center rounded-[14px] bg-paper px-1 pt-[9px] pb-2 text-ink shadow-[0_4px_0_rgb(8_10_45/0.25)]">
+          <span class="font-display text-[26px] leading-none text-violet">{total}</span><span class="text-[13px] font-extrabold">destinos</span>
+        </div>
+        <div class="flex rotate-1 flex-col items-center rounded-[14px] bg-paper px-1 pt-[9px] pb-2 text-ink shadow-[0_4px_0_rgb(8_10_45/0.25)]">
+          <span class="font-display text-[26px] leading-none text-magenta">{total}</span><span class="text-[13px] font-extrabold">sellos</span>
+        </div>
+      </div>
+      <div class="mt-2 flex w-full flex-col items-center gap-2.5 lg:col-start-1 lg:mt-0 lg:items-start">
+        <button id="pas-abrir-libro" type="button" class={boton}>Abrir mi pasaporte <Fragment set:html={flecha} /></button>
+        <p class="m-0 max-w-[32ch] text-center text-[13px] leading-[1.35] font-bold text-paper/92 lg:text-left lg:[text-shadow:0_1px_8px_rgb(29_33_82/0.7)]">Tus sellos se guardan en este celular. Ábrelo siempre desde el mismo navegador.</p>
+      </div>
+    </main>
+
+    <!-- Libro: 0, 1 a total-1, completo y canjeado -->
+    <main id="pas-libro" hidden class="mx-auto w-full max-w-[1120px] px-4 pt-1.5 pb-[130px] lg:px-6 lg:pt-11 lg:pb-14">
+      <div class="mx-auto flex max-w-[560px] flex-col items-center gap-3.5 lg:max-w-none lg:grid lg:grid-cols-[minmax(0,520px)_358px] lg:items-start lg:justify-center lg:gap-x-14 lg:gap-y-[22px]">
+        <div class="flex w-full flex-col gap-0.5 px-1 lg:col-start-1 lg:gap-2.5 lg:px-0">
+          <h1 id="pas-titulo" class="m-0 font-display text-[34px] leading-none font-normal [text-shadow:0_3px_0_rgb(29_33_82/0.25)] lg:text-[72px] lg:leading-[.94]"></h1>
+          <p id="pas-subtitulo" class="m-0 hidden text-base leading-[1.35] font-bold lg:block lg:max-w-[34ch] lg:text-[21px]"></p>
+        </div>
+
+        <div class="flex w-full justify-center lg:col-start-1 lg:justify-start" id="pas-rutas">
+          {Array.from({ length: total + 1 }, (_, i) => <div data-ruta={i} hidden class="w-full max-w-[358px] lg:max-w-[430px]"><RutaProgreso n={i} class="max-w-none" /></div>)}
+        </div>
+
+        <div class="hidden items-center gap-4 rounded-[20px] border-2 border-paper/30 bg-[rgb(18_22_74/0.5)] px-[18px] py-4 lg:col-start-1 lg:flex lg:max-w-[430px]" id="pas-tip-celular">
+          <span class="grid size-[52px] shrink-0 place-items-center rounded-[14px] bg-yellow">
+            <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5" fill="none" stroke="#1D2152" stroke-width="2.2" /><path d="M10.5 18.5h3" stroke="#1D2152" stroke-width="2.2" stroke-linecap="round" /></svg>
+          </span>
+          <div class="text-[15.5px] leading-[1.35] font-bold">
+            El pasaporte está pensado para el celular. Ábrelo desde tu teléfono para escanear los sellos en cada stand.
+            <div class="mt-2 flex flex-wrap items-center gap-2">
+              <code class={`${mono} rounded-md bg-ink/40 px-2 py-1 text-[13px] tracking-[.02em]`} id="pas-url-celular">studyabroad.leadutp.org/pasaporte</code>
+              <button type="button" id="pas-copiar" class="min-h-9 rounded-full border-2 border-paper px-3 text-[13px] font-extrabold">Copiar enlace</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative w-full max-w-[358px] lg:col-start-2 lg:row-span-5 lg:row-start-1 lg:mt-2 lg:rotate-[-2deg]" id="pas-libro-caja">
+          <LibroPasaporte class="max-w-none" />
+          <div id="pas-aprobado" hidden class="pas-cae absolute top-9 -right-1.5 grid size-32 place-items-center rounded-full border-[5px] border-magenta bg-paper/90 text-center text-magenta shadow-[0_0_0_3px_rgb(253_254_252/0.9)]">
+            <div class="flex flex-col items-center">
+              <span class={`${mono} text-[9.5px] tracking-[.2em]`}>SAF 2026</span>
+              <span class="font-display text-[23px] leading-none">APROBADO</span>
+              <span id="pas-aprobado-hora" class={`${mono} text-[9px] tracking-[.04em]`}></span>
+            </div>
+          </div>
+        </div>
+
+        <section id="pas-vivo" hidden aria-label="Verificación en vivo" class="flex w-full max-w-[358px] flex-col gap-2 rounded-[18px] border-2 border-paper/30 bg-[rgb(18_22_74/0.5)] px-3.5 py-3 lg:col-start-1 lg:max-w-[430px]">
+          <div class="pas-corre h-2 rounded-md"></div>
+          <div class="flex items-center justify-between gap-2.5">
+            <span class={`${mono} text-[11px] tracking-[.12em] text-yellow`}>VERIFICACIÓN EN VIVO</span>
+            <span id="pas-reloj" class={`${mono} text-sm tracking-[.08em]`}></span>
+          </div>
+          <span class="text-[13.5px] leading-[1.35] font-bold text-paper/92">La franja amarilla se mueve y la hora cambia. Una captura de pantalla no sirve para canjear.</span>
+        </section>
+
+        <div id="pas-nota-canjeado" hidden class="w-full max-w-[358px] rounded-[18px] border-2 border-paper/30 bg-[rgb(18_22_74/0.5)] px-3.5 py-3 text-sm leading-[1.4] font-bold lg:col-start-1 lg:max-w-[430px]">
+          Este pasaporte ya canjeó su código. Si lo necesitas de nuevo, acércate a la mesa de canje.
+        </div>
+
+        <div id="pas-barra" class="pas-barra fixed inset-x-0 bottom-0 z-40 flex flex-col items-center gap-1.5 px-4 pt-3 pb-4 lg:static lg:col-start-1 lg:items-start lg:bg-none lg:p-0">
+          <button id="pas-escanear" type="button" hidden class={boton}>
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16M4 12h16" fill="none" stroke="#FDFEFC" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            Escanear sello
+          </button>
+          <button id="pas-canjear" type="button" hidden class={boton}>Canjear mi código <Fragment set:html={flecha} /></button>
+          <button id="pas-reenviar" type="button" hidden class="btn-lift inline-flex min-h-[52px] w-full items-center justify-center rounded-full border-[3px] border-paper px-5 text-[17px] font-extrabold text-paper lg:w-fit">Registrar entrega</button>
+          <a id="pas-ir-canje" href="/canje" hidden class={boton}>Ir a canjear mi código <Fragment set:html={flecha} /></a>
+          <span id="pas-barra-nota" class="text-[13px] font-bold text-paper/92 lg:[text-shadow:0_1px_8px_rgb(29_33_82/0.7)]"></span>
+        </div>
+      </div>
+    </main>
+  
+    <!-- Mesa de canje: validación del equipo con PIN -->
+    <main id="pas-mesa" hidden class="mx-auto flex min-h-screen w-full max-w-[480px] flex-col gap-3.5 px-4 py-5">
+      <div class="flex items-center justify-between">
+        <button id="pas-mesa-volver" type="button" aria-label="Volver" class="grid size-12 place-items-center rounded-full border-2 border-paper/40 bg-paper/15">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="#FDFEFC" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </button>
+        <span class={`${mono} rounded-full bg-yellow px-3.5 py-[7px] text-[11.5px] tracking-[.16em] text-ink`}>SOLO EQUIPO · MESA DE CANJE</span>
+      </div>
+      <section aria-label="Pasaporte a validar" class="flex flex-col gap-2.5 rounded-[22px] bg-paper px-4 pt-4 pb-3.5 text-ink shadow-[0_8px_0_rgb(0_0_0/0.3)]">
+        <div class="flex items-end justify-between gap-2.5">
+          <div class="flex min-w-0 flex-col gap-0.5">
+            <span class={`${mono} text-[10px] tracking-[.14em] text-ink-2`}>TITULAR</span>
+            <span id="pas-mesa-titular" class="font-display text-2xl leading-none uppercase [overflow-wrap:anywhere]"></span>
+          </div>
+          <span id="pas-mesa-numero" class={`${mono} text-[15px] tracking-[.06em] text-violet`}></span>
+        </div>
+        <div class="grid grid-cols-4 justify-items-center gap-1.5 rounded-[14px] bg-paper-2 px-1 py-2">
+          {gates.map((g, i) => <SelloStand stand={g.standId} size={64} rot={[-6, 5, -4, 7][i] ?? 0} />)}
+        </div>
+        <div class="flex items-center justify-between gap-2">
+          <span class="inline-flex shrink-0 items-center gap-1.5 text-sm font-extrabold whitespace-nowrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#22709F" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" /></svg>{total} / {total} sellos
+          </span>
+          <span class={`${mono} text-[13px] text-ink-2`}><span id="pas-mesa-reloj"></span> · franja en movimiento</span>
+        </div>
+        <div class="pas-corre h-2 rounded-md" aria-hidden="true"></div>
+      </section>
+      <section aria-label="PIN del equipo" class="mt-0.5 flex flex-col items-center gap-2.5">
+        <span class="text-center text-[15px] font-extrabold">Entrega el código SAF. Luego ingresa el PIN del equipo.</span>
+        <div id="pas-pin-puntos" class="flex gap-3" role="img" aria-label="PIN de 4 dígitos, 0 ingresados">
+          {[0, 1, 2, 3].map(() => <span class="size-[18px] rounded-full border-[2.5px] border-paper/70"></span>)}
+        </div>
+        <div class="grid grid-cols-[repeat(3,76px)] gap-2.5">
+          {["1", "2", "3", "4", "5", "6", "7", "8", "9"].map((n) => (
+            <button type="button" data-tecla={n} class="h-14 rounded-2xl bg-paper/15 font-display text-[26px] text-paper active:bg-paper/30">{n}</button>
+          ))}
+          <span></span>
+          <button type="button" data-tecla="0" class="h-14 rounded-2xl bg-paper/15 font-display text-[26px] text-paper active:bg-paper/30">0</button>
+          <button type="button" data-tecla="borrar" aria-label="Borrar" class="grid h-14 place-items-center rounded-2xl bg-paper/10 text-paper active:bg-paper/30">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h10a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 19 18H9l-5-6 5-6zM12 9.5l5 5M17 9.5l-5 5" fill="none" stroke="#FDFEFC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </button>
+        </div>
+        <p id="pas-pin-error" role="alert" hidden class="m-0 rounded-2xl bg-paper px-4 py-2.5 text-center text-sm font-extrabold text-ink"></p>
+      </section>
+      <button id="pas-mesa-entregar" type="button" disabled class={`${boton} mt-auto`}>Marcar código entregado</button>
+    </main>
+  </div>
+  <Escaner />
+</Base>
+
+<style is:global>
+  /* Fondo: celeste de marca, con el cielo del diseño encima. Móvil usa la imagen
+     vertical; desde 1024 px, la horizontal (design/pasaporte/DeskPasaporte.dc.html). */
+  .pas-cielo {
+    --cielo: var(--cielo-m);
+    --pas-degradado: linear-gradient(180deg, #3b99d8 0%, #66b3ea 40%, #6258bb 100%);
+    --pas-tamano: 100% auto;
+    background: var(--cielo) center top / var(--pas-tamano) no-repeat, var(--pas-degradado);
+  }
+  .pas-cielo[data-estado="completo"],
+  .pas-cielo[data-estado="canjeado"] {
+    --pas-degradado: linear-gradient(180deg, #3b99d8 0%, #66b3ea 24%, #6258bb 62%, #8c55a5 82%, #2a2468 100%);
+  }
+  @media (min-width: 1024px) {
+    .pas-cielo {
+      --cielo: var(--cielo-d);
+      --pas-tamano: cover;
+    }
+  }
+  .pas-cielo[data-estado="completo"] #pas-subtitulo,
+  .pas-cielo[data-estado="canjeado"] #pas-subtitulo {
+    display: block;
+  }
+  /* La mesa de canje mantiene su fondo oscuro, sin cielo. */
+  .pas-cielo[data-vista="mesa"] {
+    background: linear-gradient(180deg, #1d2152 0%, #2a2468 100%);
+  }
+  .pas-cielo[data-vista="mesa"] > header,
+  .pas-cielo[data-vista="mesa"] #pas-barra {
+    display: none;
+  }
+  .pas-barra {
+    background: linear-gradient(180deg, rgb(74 63 150 / 0), rgb(74 63 150 / 0.92) 38%);
+  }
+  .pas-cielo[data-estado="completo"] .pas-barra,
+  .pas-cielo[data-estado="canjeado"] .pas-barra {
+    background: linear-gradient(180deg, rgb(42 36 104 / 0), rgb(42 36 104 / 0.95) 36%);
+  }
+  @media (min-width: 1024px) {
+    .pas-barra {
+      background: none !important;
+    }
+  }
+</style>
+
+<script>
+  import { armarPasaporte } from "../lib/pasaporte-pagina";
+  armarPasaporte();
+</script>

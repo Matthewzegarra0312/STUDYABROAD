@@ -51,3 +51,13 @@ export function cuentaRegresiva(fecha: string, hora: string, ahora: Date = new D
     minutos: minutosTotales % 60,
   };
 }
+
+/** "2:31 p. m." a partir de un instante ISO, en hora de Lima. */
+export function formatoHoraLima(iso: string): string {
+  return new Intl.DateTimeFormat(LOCALE, { timeZone: ZONA_HORARIA, hour: "numeric", minute: "2-digit", hour12: true }).format(new Date(iso));
+}
+
+/** "4:51:07 p. m." en hora de Lima, para la franja de verificación en vivo. */
+export function formatoHoraLimaSegundos(d: Date): string {
+  return new Intl.DateTimeFormat(LOCALE, { timeZone: ZONA_HORARIA, hour: "numeric", minute: "2-digit", second: "2-digit", hour12: true }).format(d);
+}

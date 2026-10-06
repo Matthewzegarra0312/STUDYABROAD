@@ -7,16 +7,14 @@ import logoLead from "../../assets/marca/logo-lead.png";
 import logoEvento from "../../assets/marca/logo study.png";
 
 interface Props {
-  current?: "canje" | "calendario" | "pase";
+  current?: "canje" | "calendario" | "pase" | "pasaporte";
 }
 
-const { current = "canje" } = Astro.props;
-const currentLabel = current === "calendario" ? "Mi calendario" : current === "pase" ? "Tu pase · SAF 2026" : "Canje · SAF 2026";
 ---
 
 <header class="pointer-events-none sticky top-3 z-50 mt-3 px-3 lg:top-5 lg:mt-5 lg:px-6">
   <div
-    class="pointer-events-auto relative mx-auto flex h-[60px] w-full max-w-[1120px] items-center justify-between rounded-xl border border-border-light bg-[rgb(2_12_62/0.78)] pr-2 pl-3.5 text-white shadow-[0_8px_30px_-12px_rgb(2_12_62/0.6)] backdrop-blur-[8px] backdrop-saturate-[1.3] lg:grid lg:grid-cols-[1fr_auto_1fr] lg:pr-3 lg:pl-5"
+    class="pointer-events-auto relative mx-auto flex h-[60px] w-full max-w-[1120px] items-center justify-between rounded-xl border border-border-light bg-[rgb(2_12_62/0.78)] pr-2 pl-3.5 text-white shadow-[0_8px_30px_-12px_rgb(2_12_62/0.6)] backdrop-blur-[8px] backdrop-saturate-[1.3] lg:pr-3 lg:pl-5"
   >
     <a href="/#hero" aria-label="LEAD UTP, Study Abroad Fest, inicio" class="inline-flex min-h-11 items-center gap-[7px] rounded-md max-[374px]:gap-1.5 lg:gap-3 lg:justify-self-start">
       <Image src={logoLead} alt="" width={102} height={40} widths={[84, 102, 204]} sizes="(min-width: 1024px) 102px, 84px" class="block h-auto w-[84px] max-[374px]:w-[62px] lg:w-[102px]" loading="eager" />
@@ -24,9 +22,7 @@ const currentLabel = current === "calendario" ? "Mi calendario" : current === "p
       <Image src={logoEvento} alt="Study Abroad Fest" width={1080} height={1350} class="block h-[46px] w-auto object-contain max-[374px]:h-10 lg:h-[50px]" loading="eager" />
     </a>
 
-    <span class="hidden rounded-full border border-white/20 bg-white/8 px-3.5 py-1.5 font-mono text-[11px] font-semibold tracking-[.12em] text-white uppercase sm:max-lg:inline-flex lg:inline-flex">{currentLabel}</span>
-
-    <div class="flex items-center gap-1 lg:justify-self-end">
+    <div class="flex items-center gap-1">
       <a
         href="/#hero"
         class="inline-flex min-h-11 items-center justify-center rounded-md bg-white px-3 font-archivo text-[12.5px] font-extrabold tracking-[.005em] whitespace-nowrap text-navy transition-colors duration-200 hover:bg-magenta hover:text-white lg:px-4 lg:text-[13px]"

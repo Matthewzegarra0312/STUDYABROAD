@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Navbar móvil</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Lilita+One&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<header style="width:390px;height:84px;box-sizing:border-box;padding:12px 12px 12px;font-family:Figtree,sans-serif;color:#FFFFFF">
+  <nav aria-label="Study Abroad Fest" style="height:60px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:8px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(2,12,62,.78);padding:0 8px 0 14px;box-shadow:0 8px 30px -12px rgba(2,12,62,.6)">
+    <a href="#" aria-label="LEAD UTP, Study Abroad Fest, inicio" style="display:inline-flex;align-items:center;gap:7px;min-height:44px;text-decoration:none">
+      <img src="/_blob/e2638c35f7d4444e7d0027c655afc8e1" alt="" style="width:76px;height:auto;display:block">
+      <span style="width:1px;height:22px;background:rgba(255,255,255,.22)"></span>
+      <img src="/_blob/4f5fc0f183f48a40ed2d9272310af51e" alt="Study Abroad Fest" style="height:38px;width:auto;display:block">
+    </a>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span style="border-radius:999px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);padding:5px 9px;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap">{{label}}</span>
+      <a href="#" style="display:inline-flex;align-items:center;min-height:44px;border-radius:6px;background:#FFFFFF;padding:0 11px;color:#020C3E;text-decoration:none;font-size:12.5px;font-weight:800;white-space:nowrap">Volver</a>
+    </div>
+  </nav>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"label":{"editor":"text","default":"Pasaporte"},"$preview":{"width":390,"height":84}}'>
+class Component extends DCLogic {
+  renderVals() { return { label: this.props.label ?? 'Pasaporte' }; }
+}
+</script>
+</body>
+</html>

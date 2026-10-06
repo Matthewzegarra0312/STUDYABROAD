@@ -27,3 +27,7 @@ pnpm-debug.log*
 # contenido protegido del canje (ver CLAUDE.md · Reglas de contenido, punto 10)
 /private/
 codigos-imprimir.csv
+
+# QR y claves de los sellos del pasaporte (nunca se suben)
+/qr-stands/
+/entregas*.csv

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>QR no reconocido</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Lilita+One&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.cielo{background:url(/_blob/0492b58d1df7f8e8ced5f7afb5072e3e) center top/100% auto no-repeat,linear-gradient(180deg,#3B99D8 0%,#66B3EA 40%,#6258BB 100%)}
+</style>
+</helmet>
+<div class="cielo" style="width:390px;height:844px;box-sizing:border-box;font-family:Figtree,sans-serif;color:#FDFEFC;display:flex;flex-direction:column;overflow:hidden">
+  <dc-import name="NavMovil" label="Pasaporte" hint-size="390px,84px"></dc-import>
+  <main style="display:flex;flex-direction:column;align-items:center;gap:18px;padding:30px 20px 24px;flex-grow:1">
+    <div style="display:grid;place-items:center;width:210px;height:210px;border-radius:50%;background:rgba(253,254,252,.9);box-shadow:0 8px 0 rgba(8,10,45,.25)">
+      <svg viewBox="0 0 200 200" width="170" height="170" aria-hidden="true">
+        <circle cx="100" cy="100" r="86" style="fill:none;stroke:#ABAEC8;stroke-width:4px;stroke-dasharray:10 9"></circle>
+        <path d="M70 76a30 30 0 1 1 42 28c-8 4-12 9-12 18v4" style="fill:none;stroke:#6258BB;stroke-width:9px;stroke-linecap:round"></path>
+        <circle cx="100" cy="146" r="6.5" style="fill:#6258BB"></circle>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+      <h1 style="margin:0;font-family:'Lilita One',sans-serif;font-weight:400;font-size:40px;line-height:.96;text-shadow:0 4px 0 rgba(29,33,82,.25)">No encontramos este destino</h1>
+      <p style="margin:0;max-width:30ch;font-size:17px;font-weight:700;line-height:1.38">Verifica el QR e inténtalo nuevamente. Tus sellos siguen guardados.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;width:100%;margin-top:auto">
+      <a href="Escaner.dc.html" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:58px;border-radius:999px;border:4px solid #FDFEFC;background:linear-gradient(100deg,#AC0BAD,#6258BB);color:#FDFEFC;text-decoration:none;font-family:'Lilita One',sans-serif;font-size:21px;box-shadow:0 6px 0 rgba(8,10,45,.3)">Escanear de nuevo</a>
+      <a href="Progreso.dc.html" style="display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:999px;border:3px solid #FDFEFC;color:#FDFEFC;text-decoration:none;font-size:17px;font-weight:800">Ver mi pasaporte</a>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

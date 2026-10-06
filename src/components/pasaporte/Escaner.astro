@@ -1,0 +1,70 @@
+---
+// Cámara dentro del pasaporte (design/pasaporte/Escaner.dc.html). Pantalla
+// completa sobre /pasaporte. Solo marcado: src/lib/pasaporte-pagina.ts la abre y
+// src/lib/escaner.ts maneja la cámara.
+import { gates } from "../../data/schedule";
+
+const COLOR: Record<string, string> = {
+  "utp-internacional": "#6258BB",
+  educationusa: "#AC0BAD",
+  "study-in-japan": "#525F97",
+  "erasmus-mundus": "#22709F",
+};
+const CORTO: Record<string, string> = { "utp-internacional": "UTP", educationusa: "EducationUSA", "study-in-japan": "Japón", "erasmus-mundus": "Erasmus" };
+const esquina = "absolute size-14 border-yellow";
+---
+
+<section
+  id="pas-escaner"
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="pas-esc-titulo"
+  class="fixed inset-0 z-50 flex flex-col overflow-y-auto text-paper [background:radial-gradient(120%_70%_at_50%_40%,#2a2f6e_0%,#12164A_60%,#080A2D_100%)]"
+>
+  <video id="pas-esc-video" class="pointer-events-none absolute inset-0 size-full object-cover opacity-45" muted playsinline aria-hidden="true"></video>
+  <div class="pointer-events-none absolute inset-0 bg-[#12164A]/45" aria-hidden="true"></div>
+
+  <div class="relative mx-auto flex w-full max-w-[480px] flex-1 flex-col">
+    <div class="flex items-center justify-between px-4 pt-5 pb-2">
+      <button id="pas-esc-cerrar" type="button" aria-label="Cerrar escáner" class="grid size-12 place-items-center rounded-full border-2 border-paper/50 bg-paper/15">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="#FDFEFC" stroke-width="2.8" stroke-linecap="round" /></svg>
+      </button>
+      <span id="pas-esc-contador" class="rounded-full border border-paper/25 bg-ink/60 px-3.5 py-2 font-mono text-xs font-semibold tracking-[.14em]"></span>
+      <span class="w-12" aria-hidden="true"></span>
+    </div>
+
+    <div class="flex flex-col items-center gap-1.5 px-6 pt-7 text-center">
+      <h1 id="pas-esc-titulo" class="m-0 font-display text-4xl leading-none font-normal [text-shadow:0_3px_0_rgb(0_0_0/0.3)]">Escanea el QR de la puerta</h1>
+      <p class="m-0 text-[15.5px] leading-[1.35] font-bold text-paper/92">Está en la mesa del stand.</p>
+    </div>
+
+    <div id="pas-esc-visor" class="mt-[34px] grid place-items-center">
+      <div class="relative size-[268px]">
+        <div class={`${esquina} top-0 left-0 rounded-tl-[18px] border-t-[6px] border-l-[6px]`}></div>
+        <div class={`${esquina} top-0 right-0 rounded-tr-[18px] border-t-[6px] border-r-[6px]`}></div>
+        <div class={`${esquina} bottom-0 left-0 rounded-bl-[18px] border-b-[6px] border-l-[6px]`}></div>
+        <div class={`${esquina} right-0 bottom-0 rounded-br-[18px] border-r-[6px] border-b-[6px]`}></div>
+        <div class="absolute inset-4 rounded-[10px] bg-paper/7"></div>
+        <div class="pas-barrido absolute inset-x-3.5 top-3.5 h-[3px] rounded-[3px] bg-[linear-gradient(90deg,transparent,#FFE36B,transparent)] shadow-[0_0_14px_2px_rgb(255_227_107/0.7)]"></div>
+      </div>
+    </div>
+
+    <div id="pas-esc-sin-camara" hidden class="mx-6 mt-[34px] flex flex-col gap-2 rounded-[20px] border-2 border-paper/30 bg-[rgb(18_22_74/0.7)] p-4 text-center">
+      <b id="pas-esc-motivo" class="text-base"></b>
+      <span class="text-[14.5px] leading-[1.4] font-bold">Escanea el QR con la cámara de tu celular. Se abrirá en este mismo pasaporte.</span>
+    </div>
+
+    <p id="pas-esc-invalido" role="alert" hidden class="mx-6 mt-4 rounded-2xl bg-paper px-4 py-3 text-center text-sm font-extrabold text-ink">
+      No encontramos este destino. Verifica el QR e inténtalo nuevamente.
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-2 px-6 pt-[30px]" id="pas-esc-chips">
+      {gates.map((g) => (
+        <span data-esc-chip={g.standId} data-color={COLOR[g.standId]} class="inline-flex items-center gap-1.5 rounded-full border-2 border-dashed border-paper/70 px-3 py-1.5 text-[13px] font-extrabold text-paper/90">{CORTO[g.standId] ?? g.name}</span>
+      ))}
+    </div>
+
+    <p class="mx-auto mt-auto max-w-[32ch] px-6 pt-6 pb-7 text-center text-[13.5px] leading-[1.4] font-bold text-paper/85">¿No abre la cámara? Escanea el QR con la cámara del celular. Se abrirá en este mismo pasaporte.</p>
+  </div>
+</section>

@@ -31,13 +31,17 @@ const FooterColumnSchema = z.object({
 /** Ruta del generador de badge para asistentes. */
 export const badgeHref = "/badge";
 
+/** Ruta del pasaporte digital para asistentes. */
+export const pasaporteHref = "/pasaporte";
+
 export const navLinks = z.array(NavLinkSchema).parse([
   { href: "#cronograma", label: "Cronograma" },
   { href: "#ponentes", label: "Ponentes" },
   { href: "#stands", label: "Stands" },
   { href: "#calendario", label: "Calendario de becas" },
   { href: "#llegar", label: "Cómo llegar" },
-  { href: badgeHref, label: "Mi badge", tag: "NUEVO" },
+  { href: pasaporteHref, label: "Mi pasaporte" },
+  { href: badgeHref, label: "Mi badge" },
 ]);
 
 export const socialLinks = z.array(SocialSchema).parse([
@@ -58,6 +62,7 @@ export const footerColumns = z.array(FooterColumnSchema).parse([
       { label: "Ponentes", href: "#ponentes" },
       { label: "Stands", href: "#stands" },
       { label: "Calendario de becas", href: "#calendario" },
+      { label: "Mi pasaporte", href: pasaporteHref },
       { label: "Mi badge", href: badgeHref },
     ],
   },
@@ -81,7 +86,7 @@ export const passportSteps = z
   .array(z.object({ title: z.string(), text: z.string() }))
   .length(3)
   .parse([
-    { title: "Recoge tu pasaporte", text: "Al ingresar al evento." },
-    { title: "Junta los 4 sellos", text: "Uno por cada puerta." },
-    { title: "Canjea tu código", text: "Y descarga tu calendario." },
+    { title: "Abre tu pasaporte", text: "Digital, con el código de tu pase." },
+    { title: "Junta los 4 sellos", text: "Escanea el QR de cada puerta." },
+    { title: "Canjea tu código", text: "En la mesa, y descarga tu calendario." },
   ]);

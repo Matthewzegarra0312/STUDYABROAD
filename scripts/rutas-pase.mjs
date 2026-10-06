@@ -43,6 +43,19 @@ export const REGLAS_PASE = [
     },
     continue: true,
   },
+  // Pasaporte digital: páginas estáticas sin analítica. Sin Cache-Control privado
+  // a propósito: el service worker las guarda para usarlas sin conexión.
+  {
+    src: "^/(?:pasaporte|stamp/[a-z0-9-]+)/?$",
+    headers: { "X-Robots-Tag": "noindex, nofollow", "Referrer-Policy": "no-referrer" },
+    continue: true,
+  },
+  // El service worker se revalida siempre, para que una versión nueva se aplique.
+  {
+    src: "^/sw\\.js$",
+    headers: { "Cache-Control": "public, max-age=0, must-revalidate" },
+    continue: true,
+  },
   // Fuentes del correo (@font-face en templates/correo.html de saf-pases):
   // los clientes de correo web las piden desde otro origen.
   {

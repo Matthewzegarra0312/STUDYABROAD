@@ -356,3 +356,80 @@ li:has(> .v-card:focus-within) > div:first-child { transform: scale(1.08) rotate
     transition-duration: .01ms !important;
   }
 }
+
+/* Pasaporte digital (design/pasaporte): portada flotante, franja de verificación
+   en vivo y sello APROBADO. Solo CSS; sin movimiento con prefers-reduced-motion. */
+@keyframes pas-flotar {
+  0%, 100% { transform: rotate(-3deg) translateY(0); }
+  50% { transform: rotate(-2deg) translateY(-8px); }
+}
+.pas-flotar { animation: pas-flotar 6s ease-in-out infinite; }
+
+@keyframes pas-cae {
+  0% { opacity: 0.001; transform: rotate(-30deg) scale(2.2); }
+  60% { opacity: 1; transform: rotate(-10deg) scale(0.92); }
+  100% { opacity: 1; transform: rotate(-12deg) scale(1); }
+}
+.pas-cae { animation: pas-cae 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+@keyframes pas-corre {
+  from { background-position: 0 0; }
+  to { background-position: 48px 0; }
+}
+.pas-corre {
+  background: repeating-linear-gradient(115deg, #ffe36b 0 12px, #1d2152 12px 24px);
+  background-size: 48px 100%;
+  animation: pas-corre 1.2s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pas-flotar, .pas-corre { animation: none; }
+  .pas-cae { animation: none; transform: rotate(-12deg); }
+}
+
+/* /stamp/[id] · animación del estampado, 1.1 s (design/pasaporte/Animacion.dc.html):
+   0.00 a 0.25 entrada girando, 0.25 a 0.45 golpe y rebote, 0.25 a 0.80 onda de tinta,
+   0.80 a 1.00 "Sello registrado", 0.95 a 1.10 cambio del contador. Solo CSS.
+   Con prefers-reduced-motion el sello aparece ya estampado, sin giro ni onda. */
+@keyframes stamp-estampa {
+  0% { opacity: 0.001; transform: rotate(26deg) scale(2.4); }
+  23% { opacity: 1; transform: rotate(-4deg) scale(0.9); }
+  41% { transform: rotate(-9deg) scale(1.05); }
+  64%, 100% { opacity: 1; transform: rotate(-9deg) scale(1); }
+}
+@keyframes stamp-onda {
+  0%, 23% { opacity: 0; transform: scale(0.7); }
+  36% { opacity: 0.8; }
+  100% { opacity: 0; transform: scale(1.55); }
+}
+@keyframes stamp-chip {
+  0%, 72% { opacity: 0; transform: translateY(10px) scale(0.9); }
+  88% { opacity: 1; transform: translateY(-2px) scale(1.03); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes stamp-num {
+  0%, 86% { opacity: 1; transform: none; }
+  90% { opacity: 0; transform: translateY(-8px); }
+  91% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: none; }
+}
+.stamp-estampa { animation: stamp-estampa 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.stamp-onda { animation: stamp-onda 1.1s ease-out both; }
+.stamp-chip { animation: stamp-chip 1.1s ease-out both; }
+.stamp-num { animation: stamp-num 1.1s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp-estampa, .stamp-onda, .stamp-chip, .stamp-num { animation: none; }
+  .stamp-estampa { transform: rotate(-9deg); }
+  .stamp-onda { opacity: 0; }
+}
+
+/* Escáner del pasaporte: línea de barrido (design/pasaporte/Escaner.dc.html). */
+@keyframes pas-barrido {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(228px); }
+}
+.pas-barrido { animation: pas-barrido 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .pas-barrido { animation: none; transform: translateY(114px); }
+}
