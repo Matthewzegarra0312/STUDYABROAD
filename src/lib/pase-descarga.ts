@@ -21,34 +21,17 @@ export const slugNombre = (nombre: string): string =>
     .replace(/^-+|-+$/g, "")
     .slice(0, 60) || "pasajero";
 
-/**
- * El pase en pantalla va sobre el cielo de la página; la imagen lleva su propio
- * cielo (.saf-captura, en pase.astro). Se captura una copia fuera de pantalla
- * para que la página no parpadee. En WebKit la copia omite sombras y muescas
- * (.saf-captura-simple): sus filtros y máscaras dentro de foreignObject pueden
- * dejar la imagen en blanco.
- */
 export async function pasePng(nodo: HTMLElement): Promise<Blob> {
-  const copia = document.createElement("div");
-  copia.className = esWebKit() ? "saf-captura saf-captura-simple" : "saf-captura";
-  copia.style.cssText = "position:fixed;left:-10000px;top:0;pointer-events:none;";
-  copia.append(nodo.cloneNode(true));
-  document.body.append(copia);
-  try {
-    await document.fonts.ready;
-    await Promise.all(
-      Array.from(copia.querySelectorAll("img"), (img) => (img.complete ? Promise.resolve() : img.decode().catch(() => undefined))),
-    );
-    // La copia vive fuera de pantalla: su posición no debe pasar a la imagen.
-    const opciones = { pixelRatio: ESCALA, backgroundColor: "#3B99D8", cacheBust: false, style: { position: "static", left: "0", top: "0" } };
-    // WebKit a veces pinta la primera pasada sin imágenes ni fuentes: se descarta.
-    if (esWebKit()) await toBlob(copia, opciones).catch(() => undefined);
-    const blob = await toBlob(copia, opciones);
-    if (!blob) throw new Error("No se pudo generar la imagen del pase.");
-    return blob;
-  } finally {
-    copia.remove();
-  }
+  await document.fonts.ready;
+  await Promise.all(
+    Array.from(nodo.querySelectorAll("img"), (img) => (img.complete ? Promise.resolve() : img.decode().catch(() => undefined))),
+  );
+  const opciones = { pixelRatio: ESCALA, backgroundColor: "#3B99D8", cacheBust: false };
+  // WebKit a veces pinta la primera pasada sin imágenes ni fuentes: se descarta.
+  if (esWebKit()) await toBlob(nodo, opciones).catch(() => undefined);
+  const blob = await toBlob(nodo, opciones);
+  if (!blob) throw new Error("No se pudo generar la imagen del pase.");
+  return blob;
 }
 
 /** Imagen en pantalla para mantener presionada y guardar (respaldo de iOS). */

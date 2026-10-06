@@ -12,6 +12,7 @@ import SelloStand from "../components/pasaporte/SelloStand.astro";
 import evento from "../data/evento";
 import { gates } from "../data/schedule";
 import cielo from "../assets/marca/hero-cielo-mobile.jpg";
+import cieloDesktop from "../assets/marca/hero-cielo-desktop.jpg";
 
 const mono = "font-mono font-semibold";
 const flecha = (c: string) => `<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="${c}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -26,16 +27,17 @@ const sombraBoleto = "[filter:drop-shadow(0_8px_0_rgb(8_10_45/0.28))_drop-shadow
   analytics={false}
 >
   <meta slot="head" name="referrer" content="no-referrer" />
-  <div class="pase-cielo min-h-screen overflow-hidden text-paper" style={`--cielo:url(${cielo.src})`}>
+  <div class="pase-cielo min-h-screen overflow-hidden text-paper" style={`--cielo:url(${cielo.src});--cielo-d:url(${cieloDesktop.src})`}>
     <CanjeNav current="pase" />
     <main id="pase-raiz" class="relative mx-auto flex w-full max-w-[560px] flex-col gap-5 px-4 pt-3 pb-8 lg:max-w-[1120px] lg:gap-[30px] lg:px-6 lg:pt-11 lg:pb-14">
       <header class="flex flex-col gap-2 px-1 lg:gap-2.5 lg:px-0">
         <span class={`${mono} inline-flex w-fit items-center gap-2 rounded-full bg-ink/40 px-3.5 py-[7px] text-xs tracking-[.14em] uppercase`}>
-          <span id="pase-chip-punto" class="pase-pulso hidden size-[9px] rounded-full bg-yellow"></span><span id="pase-chip">CHECK-IN · SAF 2026</span>
+          <span class="pase-solo-pase pase-pulso size-[9px] rounded-full bg-yellow"></span><span class="pase-solo-form">CHECK-IN · SAF 2026</span><span class="pase-solo-pase">CHECK-IN LISTO</span>
         </span>
         <h1 class="m-0 font-display text-[46px] leading-[.94] font-normal [text-shadow:0_4px_0_rgb(29_33_82/0.25)] lg:text-[72px] lg:[text-shadow:0_5px_0_rgb(29_33_82/0.25)]">Tu pase de abordaje</h1>
-        <p id="pase-bajada" class="m-0 text-[17px] leading-[1.35] font-bold [text-shadow:0_1px_8px_rgb(29_33_82/0.35)] lg:max-w-[40ch] lg:text-[21px]">
-          Escribe el código que llegó a tu correo para ver tu pase y descargarlo.
+        <p class="m-0 text-[17px] leading-[1.35] font-bold [text-shadow:0_1px_8px_rgb(29_33_82/0.35)] lg:max-w-[40ch] lg:text-[21px]">
+          <span class="pase-solo-form">Escribe el código que llegó a tu correo para ver tu pase y descargarlo.</span>
+          <span class="pase-solo-pase">Muéstralo en el ingreso. Es el mismo QR de tu inscripción en Luma.</span>
         </p>
       </header>
 
@@ -113,9 +115,9 @@ const sombraBoleto = "[filter:drop-shadow(0_8px_0_rgb(8_10_45/0.28))_drop-shadow
             <div class="grid grid-cols-4 justify-items-center gap-1.5 rounded-2xl bg-paper-2 px-1 py-2.5">
               {gates.map((g) => <SelloStand stand={g.standId} estado="pendiente" size={64} />)}
             </div>
-            <button id="pase-abrir-pasaporte" type="button" class="btn-lift flex min-h-14 items-center justify-center gap-2.5 rounded-full border-4 border-paper bg-brand-gradient font-display text-[21px] text-paper shadow-[0_5px_0_rgb(29_33_82/0.2)]">
+            <a href="/pasaporte" class="btn-lift flex min-h-14 items-center justify-center gap-2.5 rounded-full border-4 border-paper bg-brand-gradient font-display text-[21px] text-paper shadow-[0_5px_0_rgb(29_33_82/0.2)]">
               Abrir mi pasaporte <Fragment set:html={flecha("#FDFEFC")} />
-            </button>
+            </a>
           </aside>
 
           <a
@@ -161,12 +163,9 @@ const sombraBoleto = "[filter:drop-shadow(0_8px_0_rgb(8_10_45/0.28))_drop-shadow
   @media (min-width: 1024px) {
     .pase-cielo {
       background:
-        var(--cielo) center top / cover no-repeat,
+        var(--cielo-d) center top / cover no-repeat,
         linear-gradient(180deg, #3b99d8 0%, #66b3ea 40%, #6258bb 100%);
     }
-  }
-  .pase-ticket {
-    filter: drop-shadow(0 8px 0 rgb(8 10 45 / 0.28)) drop-shadow(0 22px 22px rgb(8 10 45 / 0.35));
   }
   /* Muescas de boleto: círculos recortados en el borde entre el cuerpo y el talón. */
   .ticket-top {
@@ -194,25 +193,10 @@ const sombraBoleto = "[filter:drop-shadow(0_8px_0_rgb(8_10_45/0.28))_drop-shadow
     .pase-pulso { animation: none; }
   }
 
-  /* Imagen que se descarga (src/lib/pase-descarga.ts): el pase sobre el cielo, con
-     el mismo fondo que tenía el pase del correo. Vive fuera de pantalla. */
-  .saf-captura {
-    box-sizing: border-box;
-    width: 375px;
-    padding: 22px 14px;
-    border-radius: 18px;
-    background: #3f8fcb url("/pase-assets/fondo.jpg") center top / cover no-repeat;
-  }
-  /* WebKit no pinta bien filtros ni máscaras dentro de foreignObject: en la
-     imagen se omiten (sin sombra ni muescas) para que nunca salga en blanco. */
-  .saf-captura-simple .pase-ticket {
-    filter: none;
-  }
-  .saf-captura-simple .ticket-top,
-  .saf-captura-simple .ticket-stub {
-    -webkit-mask: none;
-    mask: none;
-  }
+  /* Chip y bajada cambian según se vea el formulario o el pase (sin JS). */
+  .pase-solo-pase { display: none; }
+  #pase-raiz:has(#pase-vista:not([hidden])) .pase-solo-pase { display: inline-block; }
+  #pase-raiz:has(#pase-vista:not([hidden])) .pase-solo-form { display: none; }
 </style>
 
 <script>
