@@ -120,7 +120,7 @@ const speakersRaw: Speaker[] = [
   { id: "giancarlo-carmelino", initials: "GC", code: "JP", name: "Giancarlo Carmelino", institution: "Study in Japan", mode: "zoom", time: "16:10", estado: "confirmado", imagen: "giancarlo-carmelino.png", url: "https://www.linkedin.com/in/giancarlo-carmelino-76406716/" },
   { id: "guillermo-gonzalo", initials: "GG", code: "EU", name: "Guillermo Gonzalo", institution: "Erasmus+", mode: "vlog-zoom", time: "17:00", estado: "confirmado", imagen: "guillermo-gonzalo.png", url: "https://www.instagram.com/gonzalfarooo/" },
   { id: "raquel-sanchez", initials: "RS", code: "EU", name: "Raquel Sánchez", institution: "Erasmus Mundus", mode: "zoom", time: "17:05", estado: "confirmado", imagen: "raquel-sanchez.png", url: "https://www.instagram.com/raquel.powerade/" },
-  { id: "lizbeth-davila", initials: "LD", code: "CN", name: "Lizbeth Dávila", institution: "Beca ELAP", mode: "experiencia", time: "17:30", estado: "confirmado", imagen: "lizbeth-davila.png", url: "https://www.linkedin.com/in/lizbethd%C3%A1vilad%C3%A1vila/" },
+  { id: "lizbeth-davila", initials: "LD", code: "CA", name: "Lizbeth Dávila", institution: "Beca ELAP", mode: "experiencia", time: "17:30", estado: "confirmado", imagen: "lizbeth-davila.png", url: "https://www.linkedin.com/in/lizbethd%C3%A1vilad%C3%A1vila/" },
   { id: "raul-jauregui", initials: "RJ", code: "PE", name: "Raúl Jáuregui", institution: "Migajeando Becas", mode: "experiencia", time: "17:45", estado: "confirmado", imagen: "Raúl-Jauregui.png", url: "https://www.instagram.com/rauenciencia/" },
 ];
 
