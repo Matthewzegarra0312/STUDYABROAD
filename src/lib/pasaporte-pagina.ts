@@ -8,6 +8,7 @@ import { registrarFallo, segundosDeBloqueo, sinBloqueo, verificarPin, type Estad
 import { sellosHash } from "../data/sellos";
 import { crearEscaner, type ErrorCamara } from "./escaner";
 import { interpretarQr } from "./qr-sello";
+import { registrarSinConexion } from "./sw-registro";
 import { formatoHoraLima, formatoHoraLimaSegundos } from "./fechas";
 import { lineasMrz } from "./mrz";
 import {
@@ -78,6 +79,7 @@ function pintarLibro(p: Pasaporte): void {
 export function armarPasaporte(): void {
   const raiz = $("pas-raiz");
   if (!raiz) return;
+  registrarSinConexion();
   const almacen: AlmacenSeguro = almacenDelNavegador();
   const quiereEscanear = location.hash === "#escanear";
   let pasaporte: Pasaporte | null = leer(almacen);

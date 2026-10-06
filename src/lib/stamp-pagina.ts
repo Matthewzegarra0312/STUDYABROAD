@@ -3,6 +3,7 @@
 // y muestra la respuesta que toca. Una clave falsa o ausente no guarda nada.
 import { gates } from "../data/schedule";
 import { formatoHoraLima } from "./fechas";
+import { registrarSinConexion } from "./sw-registro";
 import { abrirConCodigo, almacenDelNavegador, IDS_STANDS } from "./pasaporte-cliente";
 import {
   aplicarSello, claveValida, contarSellos, guardar, guardarPendiente, leer, type AlmacenSeguro, type Pasaporte, type ResultadoSello,
@@ -23,6 +24,7 @@ const ESPERA_CUARTO_SELLO_MS = 1800;
 export function armarStamp(): void {
   const raiz = $("stamp-raiz");
   if (!raiz) return;
+  registrarSinConexion();
   const standId = raiz.dataset.stand ?? "";
   const hash = raiz.dataset.hash;
   const almacen: AlmacenSeguro = almacenDelNavegador();
