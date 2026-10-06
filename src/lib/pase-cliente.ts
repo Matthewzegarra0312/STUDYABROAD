@@ -48,12 +48,23 @@ export function armarPagina(): void {
   const otro = document.getElementById("pase-otro");
   if (!raiz || !form || !input || !error || !estado || !vista || !contenedor || !boton || !otro) return;
 
+  const chip = document.getElementById("pase-chip");
+  const chipPunto = document.getElementById("pase-chip-punto");
+  const bajada = document.getElementById("pase-bajada");
+  const abrirPasaporte = document.getElementById("pase-abrir-pasaporte");
+  const BAJADA_FORM = bajada?.textContent ?? "";
+
   let nombreActual = "";
+  // Solo en memoria: sirve para pasarle el código a /pasaporte. No se guarda.
+  let codigoActual = "";
 
   const mostrar = (cual: "form" | "cargando" | "pase") => {
     form.hidden = cual === "pase";
     estado.hidden = cual !== "cargando";
     vista.hidden = cual !== "pase";
+    if (chip) chip.textContent = cual === "pase" ? "CHECK-IN LISTO" : "CHECK-IN · SAF 2026";
+    chipPunto?.classList.toggle("hidden", cual !== "pase");
+    if (bajada) bajada.textContent = cual === "pase" ? "Muéstralo en el ingreso. Es el mismo QR de tu inscripción en Luma." : BAJADA_FORM;
     form.querySelectorAll("input,button").forEach((el) => ((el as HTMLInputElement).disabled = cual === "cargando"));
   };
 
@@ -73,6 +84,7 @@ export function armarPagina(): void {
     if (!c) return fallar();
     contenedor!.innerHTML = await rellenarPase(c);
     nombreActual = c.n;
+    codigoActual = codigo;
     input!.value = "";
     mostrar("pase");
     vista!.scrollIntoView({ block: "start" });
@@ -95,7 +107,11 @@ export function armarPagina(): void {
   input.addEventListener("input", () => {
     error.hidden = true;
   });
+  abrirPasaporte?.addEventListener("click", () => {
+    if (codigoActual) location.assign(`/pasaporte#c=${encodeURIComponent(codigoActual)}`);
+  });
   otro.addEventListener("click", () => {
+    codigoActual = "";
     contenedor.innerHTML = "";
     mostrar("form");
     input.focus();
