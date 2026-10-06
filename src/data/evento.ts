@@ -7,7 +7,7 @@ const evento: Evento = EventoSchema.parse({
   horaFin: "18:00",
   lugar: "Centro de convenciones UTP",
   direccion: "Av. Petit Thouars 116, Lima",
-  mapaUrl: "https://maps.app.goo.gl/beFD7b68JxAsPEMX9",
+  mapaUrl: "https://maps.app.goo.gl/3AqFumREKmqrjo4q7",
   zonaHoraria: "America/Lima",
   gratuito: true,
   inscripcionPrevia: true,
