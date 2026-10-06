@@ -60,32 +60,31 @@ const groupsRaw: ScheduleGroup[] = [
     n: 4,
     title: "Japón: Study in Japan y Beca MEXT",
     from: "16:05",
-    to: "16:50",
+    to: "17:00",
     rows: [
       { start: "16:05", end: "16:10", title: "Cápsula: estudiar en Japón", who: "Milagros Virhuez, Mila en Japón", mode: "vlog-zoom" },
       { start: "16:10", end: "16:30", title: "Study in Japan", who: "Giancarlo Carmelino", mode: "zoom" },
-      { start: "16:30", end: "16:50", title: "Beca MEXT: experiencia de un exbecario", who: "APEBEMO", mode: "presencial" },
+      { start: "16:30", end: "17:00", title: "Beca MEXT: experiencia de un exbecario", who: "APEBEMO", mode: "presencial" },
     ],
   },
   {
     n: 5,
     title: "Erasmus+, Erasmus Mundus y ELAP",
-    from: "17:00",
-    to: "17:45",
+    from: "17:10",
+    to: "17:55",
     rows: [
-      { start: "17:00", end: "17:05", title: "Cápsula Erasmus+", who: "Guillermo Gonzalo", mode: "vlog-zoom" },
-      { start: "17:05", end: "17:30", title: "Experiencia Erasmus Mundus", who: "Raquel Sánchez, exbecaria Erasmus Mundus", mode: "zoom" },
-      { start: "17:30", end: "17:45", title: "Emerging Leaders in the Americas Program (ELAP)", who: "Lizbeth Dávila", mode: "presencial" },
+      { start: "17:10", end: "17:15", title: "Cápsula Erasmus+", who: "Guillermo Gonzalo", mode: "vlog-zoom" },
+      { start: "17:15", end: "17:40", title: "Experiencia Erasmus Mundus", who: "Raquel Sánchez, exbecaria Erasmus Mundus", mode: "zoom" },
+      { start: "17:40", end: "17:55", title: "Emerging Leaders in the Americas Program (ELAP)", who: "Lizbeth Dávila", mode: "presencial" },
     ],
   },
   {
     n: 6,
-    title: "Migajeando Oportunidades y cierre",
-    from: "17:45",
+    title: "Migajeando Oportunidades",
+    from: "17:55",
     to: "18:00",
     rows: [
-      { start: "17:45", end: "17:55", title: "Migajeando Oportunidades", who: "Raúl Jáuregui", mode: "presencial" },
-      { start: "17:55", end: "18:00", title: "Palabras de cierre", who: "LEAD UTP", mode: "presencial" },
+      { start: "17:55", end: "18:00", title: "Migajeando Oportunidades", who: "Raúl Jáuregui", mode: "presencial" },
     ],
   },
 ];
@@ -93,8 +92,8 @@ const groupsRaw: ScheduleGroup[] = [
 export const groups = groupsRaw.map((group) => ScheduleGroupSchema.parse(group));
 
 export const intermission: ScheduleBreak = ScheduleBreakSchema.parse({
-  start: "16:50",
-  end: "17:00",
+  start: "17:00",
+  end: "17:10",
   title: "Intermedio y networking",
 });
 
@@ -118,10 +117,10 @@ const speakersRaw: Speaker[] = [
   { id: "joshua-galvez", initials: "JG", code: "MX", name: "Joshua Galvez", institution: "Tecnológico de Monterrey", mode: "experiencia", time: "15:45", estado: "confirmado", imagen: "joshua-galvez.png", url: "https://www.linkedin.com/in/joshua-eduardo-valentino-galvez-pe%C3%B1a-93b149233/" },
   { id: "mila", initials: "MV", code: "JP", name: "Milagros Virhuez", institution: "Mila en Japón", mode: "vlog-zoom", time: "16:05", estado: "confirmado", imagen: "milagros-virhuez.png", url: "https://www.instagram.com/milaenjapon/" },
   { id: "giancarlo-carmelino", initials: "GC", code: "JP", name: "Giancarlo Carmelino", institution: "Study in Japan", mode: "zoom", time: "16:10", estado: "confirmado", imagen: "giancarlo-carmelino.png", url: "https://www.linkedin.com/in/giancarlo-carmelino-76406716/" },
-  { id: "guillermo-gonzalo", initials: "GG", code: "EU", name: "Guillermo Gonzalo", institution: "Erasmus+", mode: "vlog-zoom", time: "17:00", estado: "confirmado", imagen: "guillermo-gonzalo.png", url: "https://www.instagram.com/gonzalfarooo/" },
-  { id: "raquel-sanchez", initials: "RS", code: "EU", name: "Raquel Sánchez", institution: "Erasmus Mundus", mode: "zoom", time: "17:05", estado: "confirmado", imagen: "raquel-sanchez.png", url: "https://www.instagram.com/raquel.powerade/" },
-  { id: "lizbeth-davila", initials: "LD", code: "CA", name: "Lizbeth Dávila", institution: "Beca ELAP", mode: "experiencia", time: "17:30", estado: "confirmado", imagen: "lizbeth-davila.png", url: "https://www.linkedin.com/in/lizbethd%C3%A1vilad%C3%A1vila/" },
-  { id: "raul-jauregui", initials: "RJ", code: "PE", name: "Raúl Jáuregui", institution: "Migajeando Oportunidades", mode: "experiencia", time: "17:45", estado: "confirmado", imagen: "Raúl-Jauregui.png", url: "https://www.instagram.com/rauenciencia/" },
+  { id: "guillermo-gonzalo", initials: "GG", code: "EU", name: "Guillermo Gonzalo", institution: "Erasmus+", mode: "vlog-zoom", time: "17:10", estado: "confirmado", imagen: "guillermo-gonzalo.png", url: "https://www.instagram.com/gonzalfarooo/" },
+  { id: "raquel-sanchez", initials: "RS", code: "EU", name: "Raquel Sánchez", institution: "Erasmus Mundus", mode: "zoom", time: "17:15", estado: "confirmado", imagen: "raquel-sanchez.png", url: "https://www.instagram.com/raquel.powerade/" },
+  { id: "lizbeth-davila", initials: "LD", code: "CA", name: "Lizbeth Dávila", institution: "Beca ELAP", mode: "experiencia", time: "17:40", estado: "confirmado", imagen: "lizbeth-davila.png", url: "https://www.linkedin.com/in/lizbethd%C3%A1vilad%C3%A1vila/" },
+  { id: "raul-jauregui", initials: "RJ", code: "PE", name: "Raúl Jáuregui", institution: "Migajeando Oportunidades", mode: "experiencia", time: "17:55", estado: "confirmado", imagen: "Raúl-Jauregui.png", url: "https://www.instagram.com/rauenciencia/" },
 ];
 
 export const speakers = speakersRaw.map((s) => SpeakerSchema.parse(s));
