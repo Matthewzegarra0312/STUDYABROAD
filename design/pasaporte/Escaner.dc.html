@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Escáner de sellos</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Lilita+One&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+@keyframes barrido{0%{transform:translateY(0)}50%{transform:translateY(228px)}100%{transform:translateY(0)}}
+.barrido{animation:barrido 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.barrido{animation:none;transform:translateY(114px)}}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;position:relative;overflow:hidden;font-family:Figtree,sans-serif;color:#FDFEFC;background:radial-gradient(120% 70% at 50% 40%,#2a2f6e 0%,#12164A 60%,#080A2D 100%);display:flex;flex-direction:column">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:url(/_blob/79ecc494887d7c55008bd6a00b0f31d4) center/cover;opacity:.2;filter:blur(6px)"></div>
+
+  <div style="position:relative;display:flex;align-items:center;justify-content:space-between;padding:20px 16px 8px">
+    <a href="Progreso.dc.html" aria-label="Cerrar escáner" style="display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:rgba(253,254,252,.16);border:2px solid rgba(253,254,252,.5);text-decoration:none">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" style="fill:none;stroke:#FDFEFC;stroke-width:2.8px;stroke-linecap:round"></path></svg>
+    </a>
+    <span style="border-radius:999px;background:rgba(29,33,82,.6);border:1px solid rgba(253,254,252,.25);padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.14em">2 / 4 SELLOS</span>
+    <span style="width:48px"></span>
+  </div>
+
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px 24px 0;text-align:center">
+    <h1 style="margin:0;font-family:'Lilita One',sans-serif;font-weight:400;font-size:36px;line-height:1;text-shadow:0 3px 0 rgba(0,0,0,.3)">Escanea el QR de la puerta</h1>
+    <p style="margin:0;font-size:15.5px;font-weight:700;line-height:1.35;color:rgba(253,254,252,.92)">Está en la mesa del stand.</p>
+  </div>
+
+  <div style="position:relative;display:grid;place-items:center;margin-top:34px">
+    <div style="position:relative;width:268px;height:268px">
+      <div style="position:absolute;top:0;left:0;width:56px;height:56px;border-top:6px solid #FFE36B;border-left:6px solid #FFE36B;border-radius:18px 0 0 0"></div>
+      <div style="position:absolute;top:0;right:0;width:56px;height:56px;border-top:6px solid #FFE36B;border-right:6px solid #FFE36B;border-radius:0 18px 0 0"></div>
+      <div style="position:absolute;bottom:0;left:0;width:56px;height:56px;border-bottom:6px solid #FFE36B;border-left:6px solid #FFE36B;border-radius:0 0 0 18px"></div>
+      <div style="position:absolute;bottom:0;right:0;width:56px;height:56px;border-bottom:6px solid #FFE36B;border-right:6px solid #FFE36B;border-radius:0 0 18px 0"></div>
+      <div style="position:absolute;inset:16px;border-radius:10px;background:rgba(253,254,252,.07)"></div>
+      <div class="barrido" style="position:absolute;left:14px;right:14px;top:14px;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,#FFE36B,transparent);box-shadow:0 0 14px 2px rgba(255,227,107,.7)"></div>
+    </div>
+  </div>
+
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;padding:30px 24px 0">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+      <span style="display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:#6258BB;padding:6px 12px 6px 8px;font-size:13px;font-weight:800;border:2px solid #FDFEFC"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" style="fill:none;stroke:#FDFEFC;stroke-width:3.6px;stroke-linecap:round;stroke-linejoin:round"></path></svg>UTP</span>
+      <span style="display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:#AC0BAD;padding:6px 12px 6px 8px;font-size:13px;font-weight:800;border:2px solid #FDFEFC"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" style="fill:none;stroke:#FDFEFC;stroke-width:3.6px;stroke-linecap:round;stroke-linejoin:round"></path></svg>EducationUSA</span>
+      <span style="display:inline-flex;align-items:center;gap:6px;border-radius:999px;border:2px dashed rgba(253,254,252,.7);padding:6px 12px;font-size:13px;font-weight:800;color:rgba(253,254,252,.9)">Japón</span>
+      <span style="display:inline-flex;align-items:center;gap:6px;border-radius:999px;border:2px dashed rgba(253,254,252,.7);padding:6px 12px;font-size:13px;font-weight:800;color:rgba(253,254,252,.9)">Erasmus</span>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 24px 28px;text-align:center">
+    <p style="margin:0;max-width:32ch;font-size:13.5px;font-weight:700;line-height:1.4;color:rgba(253,254,252,.85)">¿No abre la cámara? Escanea el QR con la cámara del celular. Se abrirá en este mismo pasaporte.</p>
+    <a href="Nuevo.dc.html" style="display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:800;color:#FFE36B;text-underline-offset:3px">Simular: QR leído · Study in Japan</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

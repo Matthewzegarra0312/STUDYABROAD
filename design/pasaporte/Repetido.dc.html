@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ya tienes este sello</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Lilita+One&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+@keyframes brillo{0%{transform:translateX(-140%) skewX(-18deg)}60%,100%{transform:translateX(320%) skewX(-18deg)}}
+.btn{position:relative;overflow:hidden}
+.btn::before{content:"";position:absolute;top:0;bottom:0;left:0;width:36%;background:rgba(255,255,255,.28);animation:brillo 4.5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.btn::before{animation:none}}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;position:relative;overflow:hidden;font-family:Figtree,sans-serif;color:#FDFEFC;display:flex;flex-direction:column;align-items:center;background:#12164A">
+  <div aria-hidden="true" style="position:absolute;inset:0;background:url(/_blob/79ecc494887d7c55008bd6a00b0f31d4) 30% center/cover"></div>
+  <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,22,74,.6) 0%,rgba(18,22,74,.4) 38%,rgba(42,36,104,.94) 100%)"></div>
+
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:64px 24px 0;text-align:center">
+    <span style="display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:rgba(29,33,82,.6);border:1px solid rgba(253,254,252,.3);padding:7px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.16em">
+      <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" style="fill:none;stroke:#FFE36B;stroke-width:3.4px;stroke-linecap:round;stroke-linejoin:round"></path></svg>
+      SELLO YA REGISTRADO
+    </span>
+    <h1 style="margin:10px 0 0;font-family:'Lilita One',sans-serif;font-weight:400;font-size:44px;line-height:.94;text-shadow:0 4px 0 rgba(0,0,0,.35)">Ya tienes este sello</h1>
+  </div>
+
+  <div style="position:relative;display:grid;place-items:center;margin-top:28px;width:100%">
+    <div style="width:320px;border-radius:28px;background:#FDFEFC;color:#1D2152;padding:22px 20px 20px;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 10px 0 rgba(8,10,45,.35),0 26px 40px -16px rgba(0,0,0,.7)">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.18em;color:#6258BB">PUERTA 01 · LIMA</span>
+      <div style="display:grid;place-items:center;width:200px;height:200px;margin:2px 0;border-radius:50%;background:repeating-linear-gradient(135deg,rgba(171,174,200,.18) 0 1px,transparent 1px 9px),#F1F3FA">
+        <dc-import name="Sello" stand="utp-internacional" estado="sellado" size="180" rot="-9" hint-size="180px,180px"></dc-import>
+      </div>
+      <h2 style="margin:0;font-family:'Lilita One',sans-serif;font-weight:400;font-size:28px;line-height:1">UTP Internacional</h2>
+      <span style="font-size:14.5px;font-weight:700;color:#4A507C;text-align:center;line-height:1.35">Visitaste este stand a las 2:31 p.m.</span>
+    </div>
+  </div>
+
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:22px">
+    <span style="font-family:'Lilita One',sans-serif;font-size:40px;line-height:1;color:#FFE36B;text-shadow:0 4px 0 rgba(0,0,0,.35)">2 / 4 SELLOS</span>
+    <span style="font-size:15px;font-weight:800">Te faltan Study in Japan y Erasmus Mundus.</span>
+  </div>
+
+  <div style="position:absolute;left:0;right:0;bottom:0;padding:0 16px 22px;display:flex;flex-direction:column;align-items:center">
+    <a href="Progreso.dc.html" class="btn" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;box-sizing:border-box;min-height:58px;border-radius:999px;border:4px solid #FDFEFC;background:linear-gradient(100deg,#AC0BAD,#6258BB);color:#FDFEFC;text-decoration:none;font-family:'Lilita One',sans-serif;font-size:21px;box-shadow:0 6px 0 rgba(8,10,45,.35)">
+      Ver mi pasaporte
+      <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" style="fill:none;stroke:#FDFEFC;stroke-width:2.6px;stroke-linecap:round;stroke-linejoin:round"></path></svg>
+    </a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

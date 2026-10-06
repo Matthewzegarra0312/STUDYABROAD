@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Sello del pasaporte</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700;800;900&amp;family=IBM+Plex+Mono:wght@500;600&amp;family=Lilita+One&amp;display=swap" rel="stylesheet">
+<style>body{margin:0}</style>
+</helmet>
+<div class="{{clase}}" role="img" aria-label="{{aria}}" style="width:{{px}};height:{{px}};transform:{{tf}};flex-shrink:0;font-family:Figtree,sans-serif;color:#1D2152">
+
+  <sc-if value="{{utpS}}" hint-placeholder-val="{{ true }}">
+    <svg viewBox="0 0 200 200" width="100%" height="100%" aria-hidden="true" style="display:block;overflow:visible">
+      <defs>
+        <filter id="tinta" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n"></feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" result="d"></feDisplacementMap>
+          <feTurbulence type="fractalNoise" baseFrequency="0.32" numOctaves="1" seed="11" result="n2"></feTurbulence>
+          <feColorMatrix in="n2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 1.85" result="m"></feColorMatrix>
+          <feComposite in="d" in2="m" operator="in"></feComposite>
+        </filter>
+        <path id="anillo-utp" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"></path>
+      </defs>
+      <g style="filter:url(#tinta)">
+        <circle cx="100" cy="100" r="92" style="fill:none;stroke:#6258BB;stroke-width:6px"></circle>
+        <circle cx="100" cy="100" r="64" style="fill:none;stroke:#6258BB;stroke-width:2.5px"></circle>
+        <text style="fill:#6258BB;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;letter-spacing:2.3px"><textPath href="#anillo-utp" startOffset="1%">UTP INTERNACIONAL · LIMA · PERÚ · PUERTA 01 ·</textPath></text>
+        <path transform="translate(88 50)" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" style="fill:#6258BB"></path>
+        <text x="100" y="121" style="fill:#6258BB;font-family:'Lilita One',sans-serif;font-size:42px;text-anchor:middle">UTP</text>
+        <text x="100" y="145" style="fill:#6258BB;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;letter-spacing:1.5px;text-anchor:middle">10.10.26</text>
+      </g>
+    </svg>
+  </sc-if>
+
+  <sc-if value="{{usaS}}" hint-placeholder-val="{{ false }}">
+    <svg viewBox="0 0 200 200" width="100%" height="100%" aria-hidden="true" style="display:block;overflow:visible">
+      <defs>
+        <filter id="tinta-b" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="n"></feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" result="d"></feDisplacementMap>
+          <feTurbulence type="fractalNoise" baseFrequency="0.3" numOctaves="1" seed="21" result="n2"></feTurbulence>
+          <feColorMatrix in="n2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 1.85" result="m"></feColorMatrix>
+          <feComposite in="d" in2="m" operator="in"></feComposite>
+        </filter>
+      </defs>
+      <g style="filter:url(#tinta-b)">
+        <path d="M26 36H174A12 12 0 0 0 186 48V152A12 12 0 0 0 174 164H26A12 12 0 0 0 14 152V48A12 12 0 0 0 26 36Z" style="fill:none;stroke:#AC0BAD;stroke-width:6px"></path>
+        <rect x="25" y="47" width="150" height="106" rx="5" style="fill:none;stroke:#AC0BAD;stroke-width:2px"></rect>
+        <polygon points="100,57 102.59,64.44 110.46,64.6 104.18,69.36 106.47,76.9 100,72.4 93.53,76.9 95.82,69.36 89.54,64.6 97.41,64.44" style="fill:#AC0BAD"></polygon>
+        <path d="M46 68H82M118 68H154" style="stroke:#AC0BAD;stroke-width:2px"></path>
+        <text x="100" y="95" style="fill:#AC0BAD;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:2px;text-anchor:middle">ESTADOS UNIDOS</text>
+        <text x="100" y="121" style="fill:#AC0BAD;font-family:'Lilita One',sans-serif;font-size:23px;text-anchor:middle">EducationUSA</text>
+        <path d="M40 131H160" style="stroke:#AC0BAD;stroke-width:1.5px"></path>
+        <text x="100" y="146" style="fill:#AC0BAD;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.6px;text-anchor:middle">PUERTA 02 · 10.10.26</text>
+      </g>
+    </svg>
+  </sc-if>
+
+  <sc-if value="{{jpS}}" hint-placeholder-val="{{ false }}">
+    <svg viewBox="0 0 200 200" width="100%" height="100%" aria-hidden="true" style="display:block;overflow:visible">
+      <defs>
+        <filter id="tinta-c" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="5" result="n"></feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" result="d"></feDisplacementMap>
+          <feTurbulence type="fractalNoise" baseFrequency="0.34" numOctaves="1" seed="31" result="n2"></feTurbulence>
+          <feColorMatrix in="n2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 1.85" result="m"></feColorMatrix>
+          <feComposite in="d" in2="m" operator="in"></feComposite>
+        </filter>
+      </defs>
+      <g style="filter:url(#tinta-c)">
+        <polygon points="185,64.8 135.2,15 64.8,15 15,64.8 15,135.2 64.8,185 135.2,185 185,135.2" style="fill:none;stroke:#525F97;stroke-width:6px;stroke-linejoin:round"></polygon>
+        <polygon points="174,69.4 130.6,26 69.4,26 26,69.4 26,130.6 69.4,174 130.6,174 174,130.6" style="fill:none;stroke:#525F97;stroke-width:2px;stroke-linejoin:round"></polygon>
+        <text x="100" y="44" style="fill:#525F97;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:3px;text-anchor:middle">JAPÓN</text>
+        <circle cx="128" cy="58" r="9" style="fill:#525F97"></circle>
+        <path d="M56 86L94 56L132 86" style="fill:none;stroke:#525F97;stroke-width:3px;stroke-linejoin:round;stroke-linecap:round"></path>
+        <path d="M80 67L86 72L94 65L102 72L108 67" style="fill:none;stroke:#525F97;stroke-width:2.4px;stroke-linejoin:round;stroke-linecap:round"></path>
+        <text x="100" y="106" style="fill:#525F97;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:3px;text-anchor:middle">STUDY IN</text>
+        <text x="100" y="138" style="fill:#525F97;font-family:'Lilita One',sans-serif;font-size:36px;text-anchor:middle">Japan</text>
+        <text x="100" y="160" style="fill:#525F97;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.4px;text-anchor:middle">03 · 10.10.26</text>
+      </g>
+    </svg>
+  </sc-if>
+
+  <sc-if value="{{euS}}" hint-placeholder-val="{{ false }}">
+    <svg viewBox="0 0 200 200" width="100%" height="100%" aria-hidden="true" style="display:block;overflow:visible">
+      <defs>
+        <filter id="tinta-d" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="9" result="n"></feTurbulence>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" result="d"></feDisplacementMap>
+          <feTurbulence type="fractalNoise" baseFrequency="0.3" numOctaves="1" seed="41" result="n2"></feTurbulence>
+          <feColorMatrix in="n2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 1.85" result="m"></feColorMatrix>
+          <feComposite in="d" in2="m" operator="in"></feComposite>
+        </filter>
+      </defs>
+      <g style="filter:url(#tinta-d)">
+        <ellipse cx="100" cy="100" rx="94" ry="74" style="fill:none;stroke:#22709F;stroke-width:6px"></ellipse>
+        <ellipse cx="100" cy="100" rx="82" ry="62" style="fill:none;stroke:#22709F;stroke-width:2px"></ellipse>
+        <circle cx="116" cy="62" r="2.8" style="fill:#22709F"></circle><circle cx="113.86" cy="70" r="2.8" style="fill:#22709F"></circle><circle cx="108" cy="75.86" r="2.8" style="fill:#22709F"></circle><circle cx="100" cy="78" r="2.8" style="fill:#22709F"></circle><circle cx="92" cy="75.86" r="2.8" style="fill:#22709F"></circle><circle cx="86.14" cy="70" r="2.8" style="fill:#22709F"></circle><circle cx="84" cy="62" r="2.8" style="fill:#22709F"></circle><circle cx="86.14" cy="54" r="2.8" style="fill:#22709F"></circle><circle cx="92" cy="48.14" r="2.8" style="fill:#22709F"></circle><circle cx="100" cy="46" r="2.8" style="fill:#22709F"></circle><circle cx="108" cy="48.14" r="2.8" style="fill:#22709F"></circle><circle cx="113.86" cy="54" r="2.8" style="fill:#22709F"></circle>
+        <text x="100" y="104" style="fill:#22709F;font-family:'Lilita One',sans-serif;font-size:23px;text-anchor:middle">Erasmus</text>
+        <text x="100" y="126" style="fill:#22709F;font-family:'Lilita One',sans-serif;font-size:23px;text-anchor:middle">Mundus</text>
+        <text x="100" y="143" style="fill:#22709F;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1.6px;text-anchor:middle">EUROPA · 04</text>
+        <text x="100" y="156" style="fill:#22709F;font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:.6px;text-anchor:middle">10.10.26</text>
+      </g>
+    </svg>
+  </sc-if>
+
+  <sc-if value="{{pUtp}}" hint-placeholder-val="{{ false }}">
+    <svg viewBox="0 0 200 200" width="100%" height="100%" aria-hidden="true" style="display:block;overflow:visible">
+      <circle cx="100" cy="100" r="90" style="fill:rgba(98,88,187,.06);stroke:rgba(98,88,187,.55);stroke-width:3.5px;stroke-dasharray:9 9"></circle>
+      <text x="100" y="82" style="fill:#6258BB;opacity:.75;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:3px;text-anchor:middle">PUERTA</text>
+      <text x="100" y="134" style="fill:#6258BB;opacity:.45;font-family:'Lilita One',sans-serif;font-size:56px;text-anchor:middle">01</text>
+    </svg>
+  </sc-if>
+  <sc-if value="{{pUsa}}" hint-placeholder-val="{{ false }}">
+    <svg viewBox="0 0 200 200" width="100%" height="100%" aria-hidden="true" style="display:block;overflow:visible">
+      <path d="M26 38H174A12 12 0 0 0 186 50V150A12 12 0 0 0 174 162H26A12 12 0 0 0 14 150V50A12 12 0 0 0 26 38Z" style="fill:rgba(172,11,173,.05);stroke:rgba(172,11,173,.5);stroke-width:3.5px;stroke-dasharray:9 9"></path>
+      <text x="100" y="82" style="fill:#AC0BAD;opacity:.75;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:3px;text-anchor:middle">PUERTA</text>
+      <text x="100" y="134" style="fill:#AC0BAD;opacity:.45;font-family:'Lilita One',sans-serif;font-size:56px;text-anchor:middle">02</text>
+    </svg>
+  </sc-if>
+  <sc-if value="{{pJp}}" hint-placeholder-val="{{ false }}">
+    <svg viewBox="0 0 200 200" width="100%" height="100%" aria-hidden="true" style="display:block;overflow:visible">
+      <polygon points="183,65.6 134.4,17 65.6,17 17,65.6 17,134.4 65.6,183 134.4,183 183,134.4" style="fill:rgba(82,95,151,.06);stroke:rgba(82,95,151,.55);stroke-width:3.5px;stroke-dasharray:9 9;stroke-linejoin:round"></polygon>
+      <text x="100" y="82" style="fill:#525F97;opacity:.75;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:3px;text-anchor:middle">PUERTA</text>
+      <text x="100" y="134" style="fill:#525F97;opacity:.45;font-family:'Lilita One',sans-serif;font-size:56px;text-anchor:middle">03</text>
+    </svg>
+  </sc-if>
+  <sc-if value="{{pEu}}" hint-placeholder-val="{{ false }}">
+    <svg viewBox="0 0 200 200" width="100%" height="100%" aria-hidden="true" style="display:block;overflow:visible">
+      <ellipse cx="100" cy="100" rx="92" ry="72" style="fill:rgba(34,112,159,.06);stroke:rgba(34,112,159,.55);stroke-width:3.5px;stroke-dasharray:9 9"></ellipse>
+      <text x="100" y="82" style="fill:#22709F;opacity:.75;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:3px;text-anchor:middle">PUERTA</text>
+      <text x="100" y="134" style="fill:#22709F;opacity:.45;font-family:'Lilita One',sans-serif;font-size:56px;text-anchor:middle">04</text>
+    </svg>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"stand":{"editor":"enum","options":["utp-internacional","educationusa","study-in-japan","erasmus-mundus"],"default":"utp-internacional"},"estado":{"editor":"enum","options":["sellado","pendiente"],"default":"sellado"},"size":{"editor":"int","default":200,"min":40,"max":400},"rot":{"editor":"int","default":-8,"min":-30,"max":30,"unit":"°"},"clase":{"editor":null},"$preview":{"width":200,"height":200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const stand = this.props.stand ?? 'utp-internacional';
+    const sellado = (this.props.estado ?? 'sellado') !== 'pendiente';
+    const size = Number(this.props.size ?? 200);
+    const rot = Number(this.props.rot ?? -8);
+    const info = {
+      'utp-internacional': { n: 'UTP Internacional', num: '01', c: '#6258BB' },
+      'educationusa': { n: 'EducationUSA', num: '02', c: '#AC0BAD' },
+      'study-in-japan': { n: 'Study in Japan', num: '03', c: '#525F97' },
+      'erasmus-mundus': { n: 'Erasmus Mundus', num: '04', c: '#22709F' }
+    }[stand] || { n: stand, num: '00', c: '#525F97' };
+    return {
+      px: size + 'px',
+      tf: sellado ? 'rotate(' + rot + 'deg)' : 'none',
+      clase: this.props.clase ?? '',
+      aria: sellado ? 'Sello de ' + info.n : 'Sello pendiente de ' + info.n,
+      c: info.c,
+      num: info.num,
+      utpS: sellado && stand === 'utp-internacional',
+      usaS: sellado && stand === 'educationusa',
+      jpS: sellado && stand === 'study-in-japan',
+      euS: sellado && stand === 'erasmus-mundus',
+      pUtp: !sellado && stand === 'utp-internacional',
+      pUsa: !sellado && stand === 'educationusa',
+      pJp: !sellado && stand === 'study-in-japan',
+      pEu: !sellado && stand === 'erasmus-mundus'
+    };
+  }
+}
+</script>
+</body>
+</html>
