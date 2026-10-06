@@ -4,6 +4,7 @@
 // avisa en consola una sola vez.
 import { Redis } from "@upstash/redis";
 import { MAX_DISPOSITIVOS, MAX_INTENTOS_FALLIDOS, VENTANA_INTENTOS_SEGUNDOS } from "./canje";
+import type { Entrega } from "./entregas";
 
 const url = process.env.UPSTASH_REDIS_REST_URL;
 const token = process.env.UPSTASH_REDIS_REST_TOKEN;
@@ -111,4 +112,52 @@ export async function devolverSubidaBadge(ip: string): Promise<void> {
   } catch {
     // si Redis falla aquí, solo se pierde una subida del límite
   }
+}
+
+// ---------------------------------------------------------------------------
+// Entregas de la mesa de canje (src/server/entregas.ts). Un HASH `mesa:entregas`
+// con un campo por número de pasaporte. Sin Redis: en desarrollo se guarda en
+// memoria (se pierde al reiniciar); en producción se rechaza para que el celular
+// reintente en vez de dar por registrado algo que no se guardó.
+// ---------------------------------------------------------------------------
+const CLAVE_ENTREGAS = "mesa:entregas";
+const entregasEnMemoria = new Map<string, string>();
+
+export type ResultadoEntrega = "nueva" | "ya-registrada" | "sin-almacen";
+
+export async function guardarEntrega(entrega: Entrega): Promise<ResultadoEntrega> {
+  const valor = JSON.stringify(entrega);
+  if (!redis) {
+    if (import.meta.env.PROD) return "sin-almacen";
+    console.warn("[mesa] Sin Redis: la entrega se guarda solo en memoria (desarrollo).");
+    if (entregasEnMemoria.has(entrega.numero)) return "ya-registrada";
+    entregasEnMemoria.set(entrega.numero, valor);
+    return "nueva";
+  }
+  // HSETNX: idempotente. Si el pasaporte ya estaba, no se pisa la primera entrega.
+  const creada = await redis.hsetnx(CLAVE_ENTREGAS, entrega.numero, valor);
+  return creada === 1 ? "nueva" : "ya-registrada";
+}
+
+export async function listarEntregas(): Promise<Entrega[] | null> {
+  if (!redis) return null;
+  const todo = (await redis.hgetall<Record<string, unknown>>(CLAVE_ENTREGAS)) ?? {};
+  return Object.values(todo).map((v) => (typeof v === "string" ? (JSON.parse(v) as Entrega) : (v as Entrega)));
+}
+
+export async function borrarEntregas(): Promise<void> {
+  if (redis) await redis.del(CLAVE_ENTREGAS);
+}
+
+/** PIN de mesa: máximo 10 fallos por IP cada 10 minutos. Solo cuentan los fallos. */
+export async function pinMesaBloqueado(ip: string): Promise<boolean> {
+  if (!redis) return false;
+  return Number((await redis.get<number>(`mesa-pin-fallos:${ip}`)) ?? 0) >= MAX_INTENTOS_FALLIDOS;
+}
+
+export async function registrarFalloPinMesa(ip: string): Promise<void> {
+  if (!redis) return;
+  const clave = `mesa-pin-fallos:${ip}`;
+  const total = await redis.incr(clave);
+  if (total === 1) await redis.expire(clave, VENTANA_INTENTOS_SEGUNDOS);
 }

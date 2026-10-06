@@ -30,3 +30,4 @@ codigos-imprimir.csv
 
 # QR y claves de los sellos del pasaporte (nunca se suben)
 /qr-stands/
+/entregas*.csv

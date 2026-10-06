@@ -4,6 +4,7 @@
 // src/pages/pasaporte.astro y src/components/pasaporte/LibroPasaporte.astro.
 import { gates } from "../data/schedule";
 import mesaDatos from "../data/mesa.json";
+import { CLAVE_ENTREGA_PENDIENTE, enviarEntrega } from "./entrega";
 import { registrarFallo, segundosDeBloqueo, sinBloqueo, verificarPin, type EstadoBloqueo } from "./mesa";
 import { sellosHash } from "../data/sellos";
 import { crearEscaner, type ErrorCamara } from "./escaner";
@@ -130,6 +131,7 @@ export function armarPasaporte(): void {
     $("pas-escanear")!.hidden = !(est === "vacio" || est === "progreso" || est === "casi");
     $("pas-canjear")!.hidden = !completo;
     $("pas-ir-canje")!.hidden = est !== "canjeado";
+    $("pas-reenviar")!.hidden = !(est === "canjeado" && almacen.getItem(CLAVE_ENTREGA_PENDIENTE) === "1");
     $("pas-vivo")!.hidden = !completo;
     $("pas-aprobado")!.hidden = !completo;
     $("pas-nota-canjeado")!.hidden = est !== "canjeado";
@@ -255,8 +257,12 @@ export function armarPasaporte(): void {
     pintarPin();
   };
 
+  let reenvio = false;
   function abrirMesa(): void {
-    if (!pasaporte || estadoPasaporte(pasaporte, IDS_STANDS) !== "completo") return;
+    const est = pasaporte ? estadoPasaporte(pasaporte, IDS_STANDS) : "sin-pasaporte";
+    reenvio = est === "canjeado";
+    if (!pasaporte || (est !== "completo" && !reenvio)) return;
+    $("pas-mesa-entregar")!.textContent = reenvio ? "Registrar entrega" : "Marcar código entregado";
     pin = "";
     avisoPin("");
     $("pas-mesa-titular")!.textContent = pasaporte.nombre;
@@ -266,6 +272,7 @@ export function armarPasaporte(): void {
   }
 
   $("pas-canjear")?.addEventListener("click", abrirMesa);
+  $("pas-reenviar")?.addEventListener("click", abrirMesa);
   $("pas-mesa-volver")?.addEventListener("click", () => {
     pin = "";
     irAlLibro();
@@ -280,16 +287,32 @@ export function armarPasaporte(): void {
       pintarPin();
     }),
   );
+  /** Envía el registro al servidor y deja la marca de pendiente según el resultado. */
+  async function registrarEntrega(p: Pasaporte, pinUsado: string): Promise<void> {
+    const res = await enviarEntrega(p, pinUsado);
+    if (res === "ok") {
+      almacen.removeItem(CLAVE_ENTREGA_PENDIENTE);
+      aviso("Entrega registrada.");
+    } else {
+      almacen.setItem(CLAVE_ENTREGA_PENDIENTE, "1");
+      aviso("Sin conexión: la entrega aún no quedó registrada. Con señal, toca \"Registrar entrega\" y escribe el PIN.");
+    }
+    irAlLibro();
+  }
+
   $("pas-mesa-entregar")?.addEventListener("click", async () => {
     if (!pasaporte || pin.length !== 4 || segundosDeBloqueo(bloqueo, Date.now()) > 0) return;
     if (await verificarPin(pin, mesaDatos)) {
       bloqueo = sinBloqueo();
       almacen.removeItem(CLAVE_BLOQUEO);
-      pasaporte = marcarCanjeado(pasaporte);
-      guardar(almacen, pasaporte);
-      revisarAlmacen();
+      const pinUsado = pin;
       pin = "";
-      irAlLibro();
+      if (!reenvio) {
+        pasaporte = marcarCanjeado(pasaporte);
+        guardar(almacen, pasaporte);
+        revisarAlmacen();
+      }
+      await registrarEntrega(pasaporte, pinUsado);
       return;
     }
     bloqueo = registrarFallo(bloqueo, Date.now());
