@@ -1,14 +1,12 @@
-// Compartir el badge. "Compartir en LinkedIn" sube SOLO el badge final y su
-// vista previa (nunca la foto original) a /api/badge-upload, y abre el
-// borrador de LinkedIn con el texto y el enlace /b/<id>. LinkedIn no deja
-// adjuntar imágenes por URL, así que el badge viaja aparte: en celulares por el
-// menú de compartir del sistema y en escritorio por el portapapeles (se pega con
-// Ctrl+V en el borrador). "Descargar imagen" y "Copiar texto" no hacen ninguna petición.
-import { badgeABlob, previewABlob, type BadgeState } from "./badge-canvas";
+// Compartir el badge. "Compartir en LinkedIn" no sube nada a ningún servidor: el
+// post lleva solo el enlace de inscripción. LinkedIn no deja adjuntar imágenes
+// por URL, así que el badge viaja aparte: en celulares por el menú de compartir
+// del sistema, y en escritorio se descarga y se copia al portapapeles (se pega
+// con Ctrl+V en el borrador). Nada de esto hace peticiones.
+import { badgeABlob, type BadgeState } from "./badge-canvas";
 
 export const MENSAJES = {
   respaldo: "No pudimos preparar tu borrador. Descarga tu imagen y copia el texto para publicarla tú.",
-  limite: "Llegaste al límite de subidas por ahora. Descarga tu imagen y copia el texto para publicarla tú.",
 } as const;
 
 /** Error con un mensaje listo para mostrar a la persona. */
@@ -51,25 +49,6 @@ function guardarBlob(blob: Blob): void {
   a.click();
   a.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 10_000);
-}
-
-/** Sube el badge (PNG 1080x1350) y la vista previa (JPG 1200x627). Devuelve el id. */
-async function subirBadge(badge: Blob, estado: BadgeState): Promise<string> {
-  const preview = await previewABlob(estado);
-  const form = new FormData();
-  form.set("badge", badge, "badge.png");
-  form.set("preview", preview, "preview.jpg");
-
-  let res: Response;
-  try {
-    res = await fetch("/api/badge-upload", { method: "POST", body: form, signal: AbortSignal.timeout(30_000) });
-  } catch {
-    throw new ErrorCompartir(MENSAJES.respaldo);
-  }
-  if (res.status === 429) throw new ErrorCompartir(MENSAJES.limite);
-  const datos = (await res.json().catch(() => null)) as { id?: unknown } | null;
-  if (!res.ok || typeof datos?.id !== "string") throw new ErrorCompartir(MENSAJES.respaldo);
-  return datos.id;
 }
 
 export interface ResultadoCompartir {
@@ -139,26 +118,18 @@ function irA(ventana: Window | null, destino: string): void {
 }
 
 /**
- * Sube el badge y abre el borrador de LinkedIn. Debe llamarse directamente
- * desde el clic: en escritorio abre la pestaña antes de subir para que el
- * navegador no la bloquee. Lanza ErrorCompartir con el mensaje a mostrar.
+ * Abre el borrador de LinkedIn con el texto y el enlace de inscripción. Debe
+ * llamarse directamente desde el clic para que el navegador no bloquee la
+ * pestaña. Lanza ErrorCompartir con el mensaje a mostrar.
  */
-export async function compartirEnLinkedIn(estado: BadgeState, plantilla: string): Promise<ResultadoCompartir> {
+export async function compartirEnLinkedIn(estado: BadgeState, plantilla: string, enlace: string): Promise<ResultadoCompartir> {
   const movil = esMovil();
   const ventana = movil ? null : abrirPestanaEspera();
   const badge = badgeABlob(estado);
   // En escritorio se copia ya, dentro del clic. En celular el menú del sistema adjunta el archivo.
   const imagenCopiada = movil ? Promise.resolve(false) : copiarImagen(badge);
 
-  let id: string;
-  try {
-    id = await subirBadge(await badge, estado);
-  } catch (e) {
-    ventana?.close();
-    throw e instanceof ErrorCompartir ? e : new ErrorCompartir(MENSAJES.respaldo);
-  }
-
-  const texto = textoPost(plantilla, new URL(`/b/${id}`, window.location.origin).toString());
+  const texto = textoPost(plantilla, enlace);
   if (movil) {
     const resultado = await compartirConImagen(await badge, texto);
     if (resultado !== "no") return { copiado: false, imagen: "compartida" };

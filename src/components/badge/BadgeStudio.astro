@@ -407,7 +407,7 @@ const chipBase =
       actualizarBotones();
       decir("Preparando tu borrador...");
       try {
-        const { copiado, imagen } = await compartirEnLinkedIn(estado, plantilla);
+        const { copiado, imagen } = await compartirEnLinkedIn(estado, plantilla, inscripcionUrl);
         if (imagen === "compartida") decir("Listo. Elige LinkedIn y publica tu badge.");
         else if (imagen === "pegar") decir("Abriendo LinkedIn. Pega tu badge con Ctrl+V o sube la imagen que se descargó.");
         else {
