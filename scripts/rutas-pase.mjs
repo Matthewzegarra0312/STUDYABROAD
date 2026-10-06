@@ -8,7 +8,8 @@
 // "handle: filesystem":
 //   1. cabeceras de privacidad para /pase y /pases (noindex, sin referrer,
 //      sin caché compartida del HTML);
-//   2. la reescritura estática /pase/<codigo> → /pase/index.html.
+//   2. CORS para las fuentes que usa el correo (/pase-assets/fuentes);
+//   3. la reescritura estática /pase/<codigo> → /pase/index.html.
 // Mismo mecanismo que scripts/bloquear-imprimir-en-vercel.mjs. A diferencia
 // de ese, corre siempre que exista el config.json (también en local).
 import { existsSync } from "node:fs";
@@ -40,6 +41,13 @@ export const REGLAS_PASE = [
       "Referrer-Policy": "no-referrer",
       "Cache-Control": "public, max-age=300",
     },
+    continue: true,
+  },
+  // Fuentes del correo (@font-face en templates/correo.html de saf-pases):
+  // los clientes de correo web las piden desde otro origen.
+  {
+    src: "^/pase-assets/fuentes/[a-z0-9-]+\.woff2$",
+    headers: { "Access-Control-Allow-Origin": "*", "Cache-Control": "public, max-age=604800" },
     continue: true,
   },
   { src: "^/pase/[^/]+/?$", dest: "/pase/index.html" },
