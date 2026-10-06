@@ -2,7 +2,7 @@
 // de canje (PROMPT-PASAPORTE.md, 3.7). El PIN en claro nunca se guarda.
 //
 // Uso:
-//   npm run pin-mesa -- 4821
+//   npm run pin-mesa -- XXXX
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { crearDatosMesa, pinValido } from "../src/lib/mesa";

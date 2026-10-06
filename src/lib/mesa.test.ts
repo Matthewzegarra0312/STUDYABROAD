@@ -3,10 +3,10 @@ import { BLOQUEO_PIN_MS, crearDatosMesa, MAX_FALLOS_PIN, pinValido, registrarFal
 
 describe("PIN de la mesa", () => {
   it("acepta el PIN correcto y rechaza otros", async () => {
-    const mesa = await crearDatosMesa("4821", 1000);
-    expect(await verificarPin("4821", mesa)).toBe(true);
-    expect(await verificarPin("4822", mesa)).toBe(false);
-    expect(await verificarPin("48211", mesa)).toBe(false);
+    const mesa = await crearDatosMesa("7305", 1000);
+    expect(await verificarPin("7305", mesa)).toBe(true);
+    expect(await verificarPin("7306", mesa)).toBe(false);
+    expect(await verificarPin("73051", mesa)).toBe(false);
   });
 
   it("solo 4 dígitos", () => {
