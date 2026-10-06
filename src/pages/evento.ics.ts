@@ -32,7 +32,8 @@ export const GET: APIRoute = () => {
     `DTSTART:${aFechaICS(inicio)}`,
     `DTEND:${aFechaICS(fin)}`,
     `SUMMARY:${escaparTexto(evento.nombre)}`,
-    `LOCATION:${escaparTexto(`${evento.lugar}, ${evento.direccion}`)}`,
+    // Solo el lugar: con la dirección escrita, Maps marca un punto a una cuadra.
+    `LOCATION:${escaparTexto(evento.lugar)}`,
     `DESCRIPTION:${escaparTexto(
       `Organiza ${evento.organizadores.join(" y ")}. Inscripción previa: ${evento.lumaUrl}`,
     )}`,

@@ -17,7 +17,8 @@ export function googleCalendarUrl(): string {
   url.searchParams.set("text", evento.nombre);
   url.searchParams.set("dates", `${aFechaGoogle(inicio)}/${aFechaGoogle(fin)}`);
   url.searchParams.set("ctz", "America/Lima");
-  url.searchParams.set("location", `${evento.lugar}, ${evento.direccion}`);
+  // Solo el lugar: con la dirección escrita, Maps marca un punto a una cuadra.
+  url.searchParams.set("location", evento.lugar);
   url.searchParams.set(
     "details",
     `Organiza ${evento.organizadores.join(" y ")}. Inscripción previa: ${evento.lumaUrl}`,
