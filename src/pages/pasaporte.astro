@@ -8,6 +8,7 @@ import CanjeNav from "../components/canje/CanjeNav.astro";
 import LibroPasaporte from "../components/pasaporte/LibroPasaporte.astro";
 import RutaProgreso from "../components/pasaporte/RutaProgreso.astro";
 import Escaner from "../components/pasaporte/Escaner.astro";
+import SelloStand from "../components/pasaporte/SelloStand.astro";
 import { gates } from "../data/schedule";
 import cielo from "../assets/marca/hero-cielo-mobile.jpg";
 import logo from "../assets/marca/logo study.png";
@@ -164,6 +165,53 @@ const mono = "font-mono font-semibold";
         </div>
       </div>
     </main>
+  
+    <!-- Mesa de canje: validación del equipo con PIN -->
+    <main id="pas-mesa" hidden class="mx-auto flex min-h-screen w-full max-w-[480px] flex-col gap-3.5 px-4 py-5">
+      <div class="flex items-center justify-between">
+        <button id="pas-mesa-volver" type="button" aria-label="Volver" class="grid size-12 place-items-center rounded-full border-2 border-paper/40 bg-paper/15">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="#FDFEFC" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </button>
+        <span class={`${mono} rounded-full bg-yellow px-3.5 py-[7px] text-[11.5px] tracking-[.16em] text-ink`}>SOLO EQUIPO · MESA DE CANJE</span>
+      </div>
+      <section aria-label="Pasaporte a validar" class="flex flex-col gap-2.5 rounded-[22px] bg-paper px-4 pt-4 pb-3.5 text-ink shadow-[0_8px_0_rgb(0_0_0/0.3)]">
+        <div class="flex items-end justify-between gap-2.5">
+          <div class="flex min-w-0 flex-col gap-0.5">
+            <span class={`${mono} text-[10px] tracking-[.14em] text-ink-2`}>TITULAR</span>
+            <span id="pas-mesa-titular" class="font-display text-2xl leading-none uppercase [overflow-wrap:anywhere]"></span>
+          </div>
+          <span id="pas-mesa-numero" class={`${mono} text-[15px] tracking-[.06em] text-violet`}></span>
+        </div>
+        <div class="grid grid-cols-4 justify-items-center gap-1.5 rounded-[14px] bg-paper-2 px-1 py-2">
+          {gates.map((g, i) => <SelloStand stand={g.standId} size={64} rot={[-6, 5, -4, 7][i] ?? 0} />)}
+        </div>
+        <div class="flex items-center justify-between gap-2">
+          <span class="inline-flex shrink-0 items-center gap-1.5 text-sm font-extrabold whitespace-nowrap">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#22709F" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" /></svg>{total} / {total} sellos
+          </span>
+          <span class={`${mono} text-[13px] text-ink-2`}><span id="pas-mesa-reloj"></span> · franja en movimiento</span>
+        </div>
+        <div class="pas-corre h-2 rounded-md" aria-hidden="true"></div>
+      </section>
+      <section aria-label="PIN del equipo" class="mt-0.5 flex flex-col items-center gap-2.5">
+        <span class="text-center text-[15px] font-extrabold">Entrega el código SAF. Luego ingresa el PIN del equipo.</span>
+        <div id="pas-pin-puntos" class="flex gap-3" role="img" aria-label="PIN de 4 dígitos, 0 ingresados">
+          {[0, 1, 2, 3].map(() => <span class="size-[18px] rounded-full border-[2.5px] border-paper/70"></span>)}
+        </div>
+        <div class="grid grid-cols-[repeat(3,76px)] gap-2.5">
+          {["1", "2", "3", "4", "5", "6", "7", "8", "9"].map((n) => (
+            <button type="button" data-tecla={n} class="h-14 rounded-2xl bg-paper/15 font-display text-[26px] text-paper active:bg-paper/30">{n}</button>
+          ))}
+          <span></span>
+          <button type="button" data-tecla="0" class="h-14 rounded-2xl bg-paper/15 font-display text-[26px] text-paper active:bg-paper/30">0</button>
+          <button type="button" data-tecla="borrar" aria-label="Borrar" class="grid h-14 place-items-center rounded-2xl bg-paper/10 text-paper active:bg-paper/30">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h10a1.5 1.5 0 0 1 1.5 1.5v9A1.5 1.5 0 0 1 19 18H9l-5-6 5-6zM12 9.5l5 5M17 9.5l-5 5" fill="none" stroke="#FDFEFC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </button>
+        </div>
+        <p id="pas-pin-error" role="alert" hidden class="m-0 rounded-2xl bg-paper px-4 py-2.5 text-center text-sm font-extrabold text-ink"></p>
+      </section>
+      <button id="pas-mesa-entregar" type="button" disabled class={`${boton} mt-auto`}>Marcar código entregado</button>
+    </main>
   </div>
   <Escaner />
 </Base>
@@ -183,6 +231,13 @@ const mono = "font-mono font-semibold";
   .pas-cielo[data-estado="completo"] #pas-subtitulo,
   .pas-cielo[data-estado="canjeado"] #pas-subtitulo {
     display: block;
+  }
+  .pas-cielo[data-vista="mesa"] {
+    background: linear-gradient(180deg, #1d2152 0%, #2a2468 100%);
+  }
+  .pas-cielo[data-vista="mesa"] > header,
+  .pas-cielo[data-vista="mesa"] #pas-barra {
+    display: none;
   }
   .pas-barra {
     background: linear-gradient(180deg, rgb(74 63 150 / 0), rgb(74 63 150 / 0.92) 38%);

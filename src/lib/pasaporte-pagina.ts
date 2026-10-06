@@ -3,6 +3,8 @@
 // prerenderizado. Las vistas y los ganchos `data-libro-*` viven en
 // src/pages/pasaporte.astro y src/components/pasaporte/LibroPasaporte.astro.
 import { gates } from "../data/schedule";
+import mesaDatos from "../data/mesa.json";
+import { registrarFallo, segundosDeBloqueo, sinBloqueo, verificarPin, type EstadoBloqueo } from "./mesa";
 import { sellosHash } from "../data/sellos";
 import { crearEscaner, type ErrorCamara } from "./escaner";
 import { interpretarQr } from "./qr-sello";
@@ -11,9 +13,11 @@ import { lineasMrz } from "./mrz";
 import {
   AVISO_SIN_ALMACEN, abrirConCodigo, almacenDelNavegador, IDS_STANDS, tomarCodigoDelFragmento,
 } from "./pasaporte-cliente";
-import { contarSellos, estadoPasaporte, leer, type AlmacenSeguro, type EstadoPasaporte, type Pasaporte } from "./pasaporte";
+import { contarSellos, estadoPasaporte, guardar, leer, marcarCanjeado, type AlmacenSeguro, type EstadoPasaporte, type Pasaporte } from "./pasaporte";
 
-type Vista = "cargando" | "codigo" | "bienvenida" | "libro";
+type Vista = "cargando" | "codigo" | "bienvenida" | "libro" | "mesa";
+
+const CLAVE_BLOQUEO = "study_abroad_mesa_lock";
 
 const NOMBRE_STAND = new Map(gates.map((g) => [g.standId, g.name]));
 const nombres = (ids: string[]): string => {
@@ -84,8 +88,10 @@ export function armarPasaporte(): void {
     codigo: $("pas-codigo"),
     bienvenida: $("pas-bienvenida"),
     libro: $("pas-libro"),
+    mesa: $("pas-mesa"),
   };
   const mostrar = (cual: Vista) => {
+    raiz.dataset.vista = cual;
     for (const [k, el] of Object.entries(vistas)) if (el) el.hidden = k !== cual;
     window.scrollTo({ top: 0 });
   };
@@ -133,7 +139,12 @@ export function armarPasaporte(): void {
 
     detenerReloj();
     if (completo) {
-      const tick = () => ($("pas-reloj")!.textContent = formatoHoraLimaSegundos(new Date()));
+      const tick = () => {
+        const hora = formatoHoraLimaSegundos(new Date());
+        $("pas-reloj")!.textContent = hora;
+        const mesa = $("pas-mesa-reloj");
+        if (mesa) mesa.textContent = hora;
+      };
       tick();
       reloj = window.setInterval(tick, 1000);
     }
@@ -202,7 +213,92 @@ export function armarPasaporte(): void {
     window.setTimeout(() => (b.textContent = "Copiar enlace"), 2000);
   });
 
-  // Escáner: lee el QR de un stand y navega a su /stamp, que aplica el sello.
+  // Mesa de canje: el equipo valida el pasaporte con un PIN de 4 dígitos.
+  let pin = "";
+  const leerBloqueo = (): EstadoBloqueo => {
+    try {
+      const b = JSON.parse(almacen.getItem(CLAVE_BLOQUEO) ?? "null") as Partial<EstadoBloqueo> | null;
+      return { fallos: Number(b?.fallos) || 0, bloqueadoHasta: Number(b?.bloqueadoHasta) || 0 };
+    } catch {
+      return sinBloqueo();
+    }
+  };
+  let bloqueo = leerBloqueo();
+  let relojBloqueo: number | undefined;
+
+  const pintarPin = () => {
+    document.querySelectorAll<HTMLElement>("#pas-pin-puntos > span").forEach((punto, i) => {
+      const lleno = i < pin.length;
+      punto.style.background = lleno ? "#FFE36B" : "";
+      punto.style.borderColor = lleno ? "#FFE36B" : "";
+    });
+    $("pas-pin-puntos")!.setAttribute("aria-label", `PIN de 4 dígitos, ${pin.length} ingresados`);
+    const bloqueado = segundosDeBloqueo(bloqueo, Date.now()) > 0;
+    $<HTMLButtonElement>("pas-mesa-entregar")!.disabled = pin.length !== 4 || bloqueado;
+  };
+  const avisoPin = (mensaje: string) => {
+    const el = $("pas-pin-error")!;
+    el.textContent = mensaje;
+    el.hidden = !mensaje;
+  };
+  const revisarBloqueo = () => {
+    const s = segundosDeBloqueo(bloqueo, Date.now());
+    if (s > 0) {
+      avisoPin(`Demasiados intentos. Espera ${s} s e inténtalo de nuevo.`);
+      if (relojBloqueo === undefined) relojBloqueo = window.setInterval(revisarBloqueo, 500);
+    } else {
+      if (relojBloqueo !== undefined) window.clearInterval(relojBloqueo);
+      relojBloqueo = undefined;
+      if ($("pas-pin-error")!.textContent?.startsWith("Demasiados")) avisoPin("");
+    }
+    pintarPin();
+  };
+
+  function abrirMesa(): void {
+    if (!pasaporte || estadoPasaporte(pasaporte, IDS_STANDS) !== "completo") return;
+    pin = "";
+    avisoPin("");
+    $("pas-mesa-titular")!.textContent = pasaporte.nombre;
+    $("pas-mesa-numero")!.textContent = pasaporte.numero;
+    mostrar("mesa");
+    revisarBloqueo();
+  }
+
+  $("pas-canjear")?.addEventListener("click", abrirMesa);
+  $("pas-mesa-volver")?.addEventListener("click", () => {
+    pin = "";
+    irAlLibro();
+  });
+  document.querySelectorAll<HTMLButtonElement>("[data-tecla]").forEach((tecla) =>
+    tecla.addEventListener("click", () => {
+      if (segundosDeBloqueo(bloqueo, Date.now()) > 0) return;
+      avisoPin("");
+      const t = tecla.dataset.tecla;
+      if (t === "borrar") pin = pin.slice(0, -1);
+      else if (t && pin.length < 4) pin += t;
+      pintarPin();
+    }),
+  );
+  $("pas-mesa-entregar")?.addEventListener("click", async () => {
+    if (!pasaporte || pin.length !== 4 || segundosDeBloqueo(bloqueo, Date.now()) > 0) return;
+    if (await verificarPin(pin, mesaDatos)) {
+      bloqueo = sinBloqueo();
+      almacen.removeItem(CLAVE_BLOQUEO);
+      pasaporte = marcarCanjeado(pasaporte);
+      guardar(almacen, pasaporte);
+      revisarAlmacen();
+      pin = "";
+      irAlLibro();
+      return;
+    }
+    bloqueo = registrarFallo(bloqueo, Date.now());
+    almacen.setItem(CLAVE_BLOQUEO, JSON.stringify(bloqueo));
+    pin = "";
+    avisoPin("PIN incorrecto.");
+    revisarBloqueo();
+  });
+
+  // Escáner: lee el QR  // Escáner: lee el QR de un stand y navega a su /stamp, que aplica el sello.
   let abrirEscanerAlInicio = (): void => {};
   const panel = $("pas-escaner");
   const video = $<HTMLVideoElement>("pas-esc-video");
