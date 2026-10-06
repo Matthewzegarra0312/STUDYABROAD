@@ -1,7 +1,9 @@
 // Compartir el badge. "Compartir en LinkedIn" sube SOLO el badge final y su
 // vista previa (nunca la foto original) a /api/badge-upload, y abre el
-// borrador de LinkedIn con el texto y el enlace /b/<id>. "Descargar imagen" y
-// "Copiar texto" no hacen ninguna petición.
+// borrador de LinkedIn con el texto y el enlace /b/<id>. LinkedIn no deja
+// adjuntar imágenes por URL, así que el badge viaja aparte: en celulares por el
+// menú de compartir del sistema y en escritorio por el portapapeles (se pega con
+// Ctrl+V en el borrador). "Descargar imagen" y "Copiar texto" no hacen ninguna petición.
 import { badgeABlob, previewABlob, type BadgeState } from "./badge-canvas";
 
 export const MENSAJES = {
@@ -37,7 +39,10 @@ export async function copiarTexto(texto: string): Promise<boolean> {
 
 /** Guarda el PNG en el dispositivo. No hace ninguna petición. */
 export async function descargarBadge(estado: BadgeState): Promise<void> {
-  const blob = await badgeABlob(estado);
+  guardarBlob(await badgeABlob(estado));
+}
+
+function guardarBlob(blob: Blob): void {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -49,8 +54,8 @@ export async function descargarBadge(estado: BadgeState): Promise<void> {
 }
 
 /** Sube el badge (PNG 1080x1350) y la vista previa (JPG 1200x627). Devuelve el id. */
-async function subirBadge(estado: BadgeState): Promise<string> {
-  const [badge, preview] = await Promise.all([badgeABlob(estado), previewABlob(estado)]);
+async function subirBadge(badge: Blob, estado: BadgeState): Promise<string> {
+  const preview = await previewABlob(estado);
   const form = new FormData();
   form.set("badge", badge, "badge.png");
   form.set("preview", preview, "preview.jpg");
@@ -70,6 +75,38 @@ async function subirBadge(estado: BadgeState): Promise<string> {
 export interface ResultadoCompartir {
   /** El texto quedó en el portapapeles (respaldo por si LinkedIn no lo escribe solo). */
   copiado: boolean;
+  /**
+   * Cómo viaja la imagen del badge: "compartida" (menú del sistema, ya no se
+   * abre el borrador), "pegar" (copiada al portapapeles para pegarla en el
+   * borrador) o "ninguna" (hay que descargarla).
+   */
+  imagen: "compartida" | "pegar" | "ninguna";
+}
+
+/**
+ * Copia el PNG al portapapeles. El blob se entrega como promesa para escribirlo
+ * dentro del gesto del clic, antes de esperar la subida.
+ */
+async function copiarImagen(blob: Promise<Blob>): Promise<boolean> {
+  try {
+    if (typeof ClipboardItem === "undefined" || !navigator.clipboard?.write) return false;
+    await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** Abre el menú de compartir con la imagen y el texto. false si no se pudo usar. */
+async function compartirConImagen(blob: Blob, texto: string): Promise<"hecho" | "cancelado" | "no"> {
+  const archivo = new File([blob], "mi-badge-study-abroad-fest-2026.png", { type: "image/png" });
+  try {
+    if (!navigator.share || !navigator.canShare?.({ files: [archivo] })) return "no";
+    await navigator.share({ files: [archivo], text: texto });
+    return "hecho";
+  } catch (e) {
+    return e instanceof DOMException && e.name === "AbortError" ? "cancelado" : "no";
+  }
 }
 
 /** Pestaña de espera mientras se sube el badge, para que no quede en blanco. */
@@ -107,24 +144,37 @@ function irA(ventana: Window | null, destino: string): void {
  * navegador no la bloquee. Lanza ErrorCompartir con el mensaje a mostrar.
  */
 export async function compartirEnLinkedIn(estado: BadgeState, plantilla: string): Promise<ResultadoCompartir> {
-  const ventana = esMovil() ? null : abrirPestanaEspera();
+  const movil = esMovil();
+  const ventana = movil ? null : abrirPestanaEspera();
+  const badge = badgeABlob(estado);
+  // En escritorio se copia ya, dentro del clic. En celular el menú del sistema adjunta el archivo.
+  const imagenCopiada = movil ? Promise.resolve(false) : copiarImagen(badge);
 
   let id: string;
   try {
-    id = await subirBadge(estado);
+    id = await subirBadge(await badge, estado);
   } catch (e) {
     ventana?.close();
     throw e instanceof ErrorCompartir ? e : new ErrorCompartir(MENSAJES.respaldo);
   }
 
   const texto = textoPost(plantilla, new URL(`/b/${id}`, window.location.origin).toString());
+  if (movil) {
+    const resultado = await compartirConImagen(await badge, texto);
+    if (resultado !== "no") return { copiado: false, imagen: "compartida" };
+  }
+
   // Con la pestaña nueva enfocada, el portapapeles de esta página puede quedarse
   // esperando a recuperar el foco y la redirección nunca llegaba (about:blank).
-  // Se le da un tope corto y se redirige igual.
-  const copiado = await Promise.race([
-    copiarTexto(texto),
-    new Promise<boolean>((resolver) => window.setTimeout(() => resolver(false), 1500)),
-  ]);
+  // Se le da un tope corto y se redirige igual. Si la imagen ya está en el
+  // portapapeles no se pisa con el texto: el texto va en la URL del borrador.
+  const conTope = <T,>(p: Promise<T>, vacio: T) =>
+    Promise.race([p, new Promise<T>((resolver) => window.setTimeout(() => resolver(vacio), 1500))]);
+  const pegar = await conTope(imagenCopiada, false);
+  // Como en el resto de los casos LinkedIn no adjunta la imagen sola, el badge
+  // también se descarga: la persona lo sube al borrador si el pegado no funciona.
+  guardarBlob(await badge);
+  const copiado = pegar ? false : await conTope(copiarTexto(texto), false);
   irA(ventana, enlaceLinkedIn(texto));
-  return { copiado };
+  return { copiado, imagen: pegar ? "pegar" : "ninguna" };
 }

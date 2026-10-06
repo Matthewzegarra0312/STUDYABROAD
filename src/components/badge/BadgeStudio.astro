@@ -407,8 +407,12 @@ const chipBase =
       actualizarBotones();
       decir("Preparando tu borrador...");
       try {
-        const { copiado } = await compartirEnLinkedIn(estado, plantilla);
-        decir(copiado ? "Abriendo LinkedIn. También copiamos el texto por si no aparece escrito." : "Abriendo LinkedIn con tu badge.");
+        const { copiado, imagen } = await compartirEnLinkedIn(estado, plantilla);
+        if (imagen === "compartida") decir("Listo. Elige LinkedIn y publica tu badge.");
+        else if (imagen === "pegar") decir("Abriendo LinkedIn. Pega tu badge con Ctrl+V o sube la imagen que se descargó.");
+        else {
+          decir(copiado ? "Abriendo LinkedIn. Copiamos el texto y descargamos tu badge: súbelo al borrador." : "Abriendo LinkedIn. Descargamos tu badge: súbelo al borrador.");
+        }
       } catch (e) {
         decir(e instanceof ErrorCompartir ? e.message : MENSAJES.respaldo, "error");
         downloadBtn.dataset.resaltar = "true";
