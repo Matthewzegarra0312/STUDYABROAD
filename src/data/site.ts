@@ -40,8 +40,8 @@ export const navLinks = z.array(NavLinkSchema).parse([
   { href: "#stands", label: "Stands" },
   { href: "#calendario", label: "Calendario de becas" },
   { href: "#llegar", label: "Cómo llegar" },
-  { href: pasaporteHref, label: "Mi pasaporte", tag: "NUEVO" },
-  { href: badgeHref, label: "Mi badge", tag: "NUEVO" },
+  { href: pasaporteHref, label: "Mi pasaporte" },
+  { href: badgeHref, label: "Mi badge" },
 ]);
 
 export const socialLinks = z.array(SocialSchema).parse([
