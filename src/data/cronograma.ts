@@ -12,23 +12,13 @@ import {
 // la fuente no da un nombre de persona.
 const bloquesRaw: CronogramaBloque[] = [
   {
-    orden: 1,
-    titulo: "Bienvenida",
-    quien: "Shay Guzman y Carlos Gamonal, LEAD UTP",
-    espacio: null,
-    modalidad: "presencial",
-    horaInicio: "14:00",
-    horaFin: "14:10",
-    estado: "confirmado",
-  },
-  {
     orden: 2,
     titulo: "Cápsula internacional",
     quien: "Fernando Injoque, Purdue University",
     espacio: null,
     modalidad: "vlog-zoom",
-    horaInicio: "14:10",
-    horaFin: "14:15",
+    horaInicio: "14:00",
+    horaFin: "14:05",
     estado: "confirmado",
   },
   {
@@ -37,8 +27,8 @@ const bloquesRaw: CronogramaBloque[] = [
     quien: "Ivanna Yllahuaman",
     espacio: null,
     modalidad: "presencial",
-    horaInicio: "14:15",
-    horaFin: "14:35",
+    horaInicio: "14:05",
+    horaFin: "14:25",
     estado: "confirmado",
   },
   {
@@ -47,7 +37,7 @@ const bloquesRaw: CronogramaBloque[] = [
     quien: "UTP Internacional",
     espacio: null,
     modalidad: "presencial",
-    horaInicio: "14:35",
+    horaInicio: "14:25",
     horaFin: "14:55",
     estado: "confirmado",
   },

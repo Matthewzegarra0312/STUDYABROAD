@@ -21,22 +21,21 @@ import stands from "./stands";
 const groupsRaw: ScheduleGroup[] = [
   {
     n: 1,
-    title: "Bienvenida y voces internacionales",
+    title: "Voces internacionales",
     from: "14:00",
-    to: "14:35",
+    to: "14:25",
     rows: [
-      { start: "14:00", end: "14:10", title: "Bienvenida", who: "Shay Guzman y Carlos Gamonal, LEAD UTP", mode: "presencial" },
-      { start: "14:10", end: "14:15", title: "Cápsula internacional", who: "Fernando Injoque, Purdue University", mode: "vlog-zoom" },
-      { start: "14:15", end: "14:35", title: "Experiencia de intercambio en Purdue University", who: "Ivanna Yllahuaman", mode: "presencial" },
+      { start: "14:00", end: "14:05", title: "Cápsula internacional", who: "Fernando Injoque, Purdue University", mode: "vlog-zoom" },
+      { start: "14:05", end: "14:25", title: "Experiencia de intercambio en Purdue University", who: "Ivanna Yllahuaman", mode: "presencial" },
     ],
   },
   {
     n: 2,
     title: "Oportunidades internacionales y becas",
-    from: "14:35",
+    from: "14:25",
     to: "15:45",
     rows: [
-      { start: "14:35", end: "14:55", title: "Convenios, requisitos y movilidad internacional", who: "UTP Internacional", mode: "presencial" },
+      { start: "14:25", end: "14:55", title: "Convenios, requisitos y movilidad internacional", who: "UTP Internacional", mode: "presencial" },
       { start: "14:55", end: "15:25", title: "Berkeley Haas Global Access Program", who: "Leslie Sánchez y Diego Mendoza, UC Berkeley · conexión internacional", mode: "presencial" },
       { start: "15:25", end: "15:45", title: "Beca Fulbright", who: "EducationUSA", mode: "presencial" },
     ],
@@ -108,8 +107,8 @@ export const notaCronograma =
 // (CLAUDE.md, regla 5): eso queda en los stands.
 // ---------------------------------------------------------------------------
 const speakersRaw: Speaker[] = [
-  { id: "fernando-injoque", initials: "FI", code: "US", name: "Fernando Injoque", institution: "Purdue University", mode: "vlog-zoom", time: "14:10", estado: "confirmado", imagen: "fernando-injoque.jpg", url: "https://www.linkedin.com/in/ferinjoque/" },
-  { id: "ivanna", initials: "IY", code: "US", name: "Ivanna Yllahuaman", institution: "Purdue University", mode: "experiencia", time: "14:15", estado: "confirmado", imagen: "ivanna.png", url: "https://www.linkedin.com/in/ivanna-yllahuaman/" },
+  { id: "fernando-injoque", initials: "FI", code: "US", name: "Fernando Injoque", institution: "Purdue University", mode: "vlog-zoom", time: "14:00", estado: "confirmado", imagen: "fernando-injoque.jpg", url: "https://www.linkedin.com/in/ferinjoque/" },
+  { id: "ivanna", initials: "IY", code: "US", name: "Ivanna Yllahuaman", institution: "Purdue University", mode: "experiencia", time: "14:05", estado: "confirmado", imagen: "ivanna.png", url: "https://www.linkedin.com/in/ivanna-yllahuaman/" },
   { id: "leslie-sanchez", initials: "LS", code: "US", name: "Leslie Sánchez", institution: "UC Berkeley", mode: "experiencia", time: "14:55", estado: "confirmado", imagen: "leslie-sanchez.png", url: "https://www.instagram.com/leslie_sanchezm14/" },
   { id: "diego-mendoza", initials: "DM", code: "US", name: "Diego Mendoza", institution: "UC Berkeley", mode: "experiencia", time: "14:55", estado: "confirmado", imagen: "Diego-Mendoza.png", url: "https://www.linkedin.com/in/diegomendozaflores/" },
   { id: "marlon-ugaz", initials: "MU", code: "CA", name: "Marlon Ugaz", institution: "Beca ELAP", mode: "experiencia", time: "15:45", estado: "confirmado", imagen: "marlon-ugaz.png", url: "https://www.linkedin.com/in/marlon-ugaz-079519258/" },
