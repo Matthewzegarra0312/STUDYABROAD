@@ -9,7 +9,7 @@ Lee `PLAN.md` antes de empezar cualquier fase. **El diseño final está en `desi
 - **Nombre:** Study Abroad Fest
 - **Organiza:** LEAD UTP · Pilar de Excelencia Académica, en alianza con UTP Internacional
 - **Fecha:** sábado 10 de octubre de 2026, 2:00 a 6:00 p.m. (hora de Lima, UTC-5)
-- **Lugar:** Convention Center UTP, Jr. Hernán Velarde 260, Lima
+- **Lugar:** Convention Center UTP, Av. Petit Thouars 116, Lima
 - **Ingreso:** gratuito con inscripción previa en Luma: https://luma.com/txyuybq9?tk=pwCvrY
 - **Público:** estudiantes UTP, principalmente desde 5.º ciclo
 - **Principio:** convertir el interés de un estudiante por estudiar en el extranjero en un camino concreto hacia una oportunidad real

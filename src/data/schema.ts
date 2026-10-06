@@ -27,6 +27,8 @@ export const EventoSchema = z.object({
   horaFin: HoraSchema,
   lugar: z.string(),
   direccion: z.string(),
+  /** Enlace de Google Maps del lugar. Lo usan "Cómo llegar" y los pases por correo (saf-pases). */
+  mapaUrl: z.url().optional(),
   zonaHoraria: z.string(),
   gratuito: z.boolean(),
   inscripcionPrevia: z.boolean(),

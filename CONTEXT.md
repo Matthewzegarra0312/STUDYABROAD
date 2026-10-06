@@ -9,7 +9,7 @@ Web oficial del evento **Study Abroad Fest**, organizado por **LEAD UTP · Pilar
 | Dato | Valor |
 |---|---|
 | Fecha y hora | Sábado 10 de octubre de 2026, 2:00 a 6:00 p.m. (Lima, UTC-5) |
-| Lugar | Centro de convenciones UTP, Jr. Hernán Velarde 260, Lima |
+| Lugar | Centro de convenciones UTP, Av. Petit Thouars 116, Lima |
 | Ingreso | Gratuito con inscripción previa en Luma (`https://luma.com/txyuybq9?tk=pwCvrY`) |
 | Público | Estudiantes UTP, principalmente desde 5.º ciclo |
 | Principio | Convertir el interés por estudiar fuera en un camino concreto hacia una oportunidad real |
