@@ -124,7 +124,9 @@
   transform: translateY(18px) rotate(-2deg) scale(0.96);
 }
 .motion-armed.motion-visible {
-  animation: motion-pop 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  opacity: 1;
+  transform: none;
+  animation: motion-pop 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
 }
 @keyframes motion-pop {
   0% { opacity: 0.001; transform: translateY(18px) rotate(-2deg) scale(0.96); }
@@ -263,8 +265,6 @@
 
 /* Detalles al pasar el cursor. Solo transform, para no repintar la página. */
 .v-gate > div:first-child > svg,
-.v-gate > div:first-child > img,
-.v-gate a img,
 .v-gate .v-seal,
 .v-tag .v-sello,
 .v-stop > span:last-child,
@@ -273,12 +273,8 @@ li:has(> .v-card) > div:first-child {
 }
 .v-gate:hover > div:first-child > svg,
 .v-gate:focus-within > div:first-child > svg { transform: translateX(6px); }
-.v-gate:hover > div:first-child > img,
-.v-gate:focus-within > div:first-child > img { transform: scale(1.06); }
-.v-gate:hover a img,
-.v-gate:focus-within a img { transform: scale(1.05); }
 .v-gate:hover .v-seal,
-.v-gate:focus-within .v-seal { transform: rotate(-8deg) scale(1.05); }
+.v-gate:focus-within .v-seal { transform: rotate(-8deg); }
 .v-tag:hover .v-sello,
 .v-tag:focus-within .v-sello { transform: rotate(-14deg) scale(1.06); }
 .v-stop:hover > span:last-child { transform: scale(1.06); }
