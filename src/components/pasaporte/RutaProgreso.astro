@@ -1,0 +1,79 @@
+---
+// Progreso del pasaporte, 0 a 4 sellos, con el avión sobre el último tramo
+// recorrido (design/pasaporte/Ruta.dc.html). Sin lógica de estado: dibuja el
+// `n` que recibe. /pasaporte renderiza una por cada n y muestra la que toca.
+import { gates } from "../../data/schedule";
+
+interface Props {
+  n: number;
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const total = gates.length;
+const n = Math.max(0, Math.min(total, Math.trunc(Astro.props.n)));
+
+const COLOR: Record<string, string> = {
+  "utp-internacional": "#6258BB",
+  educationusa: "#AC0BAD",
+  "study-in-japan": "#525F97",
+  "erasmus-mundus": "#22709F",
+};
+const CORTO: Record<string, string> = {
+  "utp-internacional": "UTP",
+  educationusa: "EDUCATIONUSA",
+  "study-in-japan": "JAPÓN",
+  "erasmus-mundus": "ERASMUS",
+};
+
+const nodos = gates.map((g, i) => ({
+  num: g.n,
+  corto: CORTO[g.standId] ?? g.name.toUpperCase(),
+  c: COLOR[g.standId] ?? "#525F97",
+  hecho: i < n,
+  tramo: i < total - 1,
+  avion: n > 0 && n < total && i === n - 1,
+  recorrido: i < n - 1,
+}));
+const siguiente = n >= total ? "Pasaporte completo" : n === 0 ? "Empieza por cualquier puerta" : `Te faltan ${total - n}`;
+---
+
+<section
+  aria-label="Progreso del pasaporte"
+  data-ruta-n={n}
+  class:list={["flex w-full max-w-[358px] flex-col gap-2.5 rounded-[20px] border-2 border-paper/35 bg-[rgb(18_22_74/0.46)] px-3.5 pt-3 pb-2.5 text-paper", className]}
+>
+  <div class="flex items-baseline justify-between gap-2.5">
+    <div class="flex items-baseline gap-[7px]">
+      <span class="font-display text-[32px] leading-none text-yellow">{n} / {total}</span>
+      <span class="font-mono text-xs font-semibold tracking-[.16em]">SELLOS</span>
+    </div>
+    <span class="text-right font-mono text-[11px] font-semibold tracking-[.06em] text-paper/85">{siguiente}</span>
+  </div>
+  <ol class="m-0 flex list-none items-start p-0">
+    {nodos.map((nd) => (
+      <li class:list={["flex items-start", nd.tramo && "grow"]}>
+        <div class="flex w-[52px] flex-col items-center gap-1">
+          {nd.hecho ? (
+            <span class="grid size-7 place-items-center rounded-full border-[2.5px] border-paper" style={`background:${nd.c}`}>
+              <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#FDFEFC" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </span>
+          ) : (
+            <span class="grid size-7 place-items-center rounded-full border-[2.5px] border-dashed border-paper/70 font-display text-[13px] text-paper/85">{nd.num}</span>
+          )}
+          <span class="text-center font-mono text-[9.5px] leading-[1.1] font-semibold tracking-[.04em] whitespace-nowrap">{nd.corto}</span>
+        </div>
+        {nd.tramo && (
+          <div class="relative -mx-3 flex h-7 grow items-center">
+            <div class:list={["w-full border-t-[3px]", nd.recorrido ? "border-solid border-paper" : "border-dashed border-paper/55"]} />
+            {nd.avion && (
+              <span class="absolute top-1/2 left-1/2 grid size-6 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-yellow shadow-[0_2px_0_rgb(8_10_45/0.3)]">
+                <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" style="transform:rotate(90deg)"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="#1D2152" /></svg>
+              </span>
+            )}
+          </div>
+        )}
+      </li>
+    ))}
+  </ol>
+</section>

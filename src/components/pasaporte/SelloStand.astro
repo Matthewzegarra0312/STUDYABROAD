@@ -1,0 +1,144 @@
+---
+// Sello de un stand del pasaporte (design/pasaporte/Sello.dc.html): cuatro SVG
+// con filtro de tinta, y su estado pendiente (silueta punteada con el número de
+// puerta). Sin lógica: recibe todo por props. Cada instancia genera ids propios
+// para el filtro y el anillo, así varias en la misma página no chocan.
+import evento from "../../data/evento";
+import { gates } from "../../data/schedule";
+
+interface Props {
+  /** `standId` de una puerta de gates. */
+  stand: string;
+  estado?: "sellado" | "pendiente";
+  size?: number;
+  /** Giro en grados del sello estampado. */
+  rot?: number;
+  class?: string;
+}
+
+const { stand, estado = "sellado", size = 200, rot = -8, class: className } = Astro.props;
+
+const gate = gates.find((g) => g.standId === stand);
+if (!gate) throw new Error(`SelloStand: "${stand}" no es una puerta de gates`);
+
+const COLOR: Record<string, string> = {
+  "utp-internacional": "#6258BB",
+  educationusa: "#AC0BAD",
+  "study-in-japan": "#525F97",
+  "erasmus-mundus": "#22709F",
+};
+const c = COLOR[stand] ?? "#525F97";
+const sellado = estado === "sellado";
+const num = String(gate.n).padStart(2, "0");
+const [y = "", m = "", d = ""] = evento.fecha.split("-");
+const fecha = `${d}.${m}.${y.slice(2)}`;
+
+// Semilla distinta por stand, igual que en el diseño (ruido de la tinta).
+const SEMILLAS: Record<string, [number, number, number]> = {
+  "utp-internacional": [7, 11, 0.32],
+  educationusa: [3, 21, 0.3],
+  "study-in-japan": [5, 31, 0.34],
+  "erasmus-mundus": [9, 41, 0.3],
+};
+const [s1, s2, f2] = SEMILLAS[stand] ?? [1, 2, 0.3];
+
+const globalRef = globalThis as { __sellosSvgContador?: number };
+const uid = `sello${(globalRef.__sellosSvgContador = (globalRef.__sellosSvgContador ?? 0) + 1)}`;
+
+const NOMBRES: Record<string, string> = {
+  "utp-internacional": "UTP Internacional",
+  educationusa: "EducationUSA",
+  "study-in-japan": "Study in Japan",
+  "erasmus-mundus": "Erasmus Mundus",
+};
+const aria = sellado ? `Sello de ${NOMBRES[stand] ?? stand}` : `Sello pendiente de ${NOMBRES[stand] ?? stand}`;
+
+const mono = "font-family:'IBM Plex Mono',monospace;font-weight:600";
+const lilita = "font-family:'Lilita One',sans-serif";
+const puntosEu = [[116, 62], [113.86, 70], [108, 75.86], [100, 78], [92, 75.86], [86.14, 70], [84, 62], [86.14, 54], [92, 48.14], [100, 46], [108, 48.14], [113.86, 54]];
+---
+
+<div
+  class:list={["sello-stand shrink-0", className]}
+  role="img"
+  aria-label={aria}
+  data-sello-stand={stand}
+  style={`width:${size}px;height:${size}px;transform:${sellado ? `rotate(${rot}deg)` : "none"}`}
+>
+  <svg viewBox="0 0 200 200" width="100%" height="100%" aria-hidden="true" style="display:block;overflow:visible">
+    {sellado && (
+      <>
+        <defs>
+          <filter id={`tinta-${uid}`} x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed={s1} result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" result="d" />
+            <feTurbulence type="fractalNoise" baseFrequency={f2} numOctaves="1" seed={s2} result="n2" />
+            <feColorMatrix in="n2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 1.85" result="m" />
+            <feComposite in="d" in2="m" operator="in" />
+          </filter>
+          {stand === "utp-internacional" && <path id={`anillo-${uid}`} d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />}
+        </defs>
+        <g style={`filter:url(#tinta-${uid})`}>
+          {stand === "utp-internacional" && (
+            <>
+              <circle cx="100" cy="100" r="92" style={`fill:none;stroke:${c};stroke-width:6px`} />
+              <circle cx="100" cy="100" r="64" style={`fill:none;stroke:${c};stroke-width:2.5px`} />
+              <text style={`fill:${c};${mono};font-size:12.5px;letter-spacing:2.3px`}>
+                <textPath href={`#anillo-${uid}`} startOffset="1%">{`UTP INTERNACIONAL · LIMA · PERÚ · PUERTA ${num} ·`}</textPath>
+              </text>
+              <path transform="translate(88 50)" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" style={`fill:${c}`} />
+              <text x="100" y="121" style={`fill:${c};${lilita};font-size:42px;text-anchor:middle`}>UTP</text>
+              <text x="100" y="145" style={`fill:${c};${mono};font-size:13px;letter-spacing:1.5px;text-anchor:middle`}>{fecha}</text>
+            </>
+          )}
+          {stand === "educationusa" && (
+            <>
+              <path d="M26 36H174A12 12 0 0 0 186 48V152A12 12 0 0 0 174 164H26A12 12 0 0 0 14 152V48A12 12 0 0 0 26 36Z" style={`fill:none;stroke:${c};stroke-width:6px`} />
+              <rect x="25" y="47" width="150" height="106" rx="5" style={`fill:none;stroke:${c};stroke-width:2px`} />
+              <polygon points="100,57 102.59,64.44 110.46,64.6 104.18,69.36 106.47,76.9 100,72.4 93.53,76.9 95.82,69.36 89.54,64.6 97.41,64.44" style={`fill:${c}`} />
+              <path d="M46 68H82M118 68H154" style={`stroke:${c};stroke-width:2px`} />
+              <text x="100" y="95" style={`fill:${c};${mono};font-size:11px;letter-spacing:2px;text-anchor:middle`}>ESTADOS UNIDOS</text>
+              <text x="100" y="121" style={`fill:${c};${lilita};font-size:23px;text-anchor:middle`}>EducationUSA</text>
+              <path d="M40 131H160" style={`stroke:${c};stroke-width:1.5px`} />
+              <text x="100" y="146" style={`fill:${c};${mono};font-size:10.5px;letter-spacing:.6px;text-anchor:middle`}>{`PUERTA ${num} · ${fecha}`}</text>
+            </>
+          )}
+          {stand === "study-in-japan" && (
+            <>
+              <polygon points="185,64.8 135.2,15 64.8,15 15,64.8 15,135.2 64.8,185 135.2,185 185,135.2" style={`fill:none;stroke:${c};stroke-width:6px;stroke-linejoin:round`} />
+              <polygon points="174,69.4 130.6,26 69.4,26 26,69.4 26,130.6 69.4,174 130.6,174 174,130.6" style={`fill:none;stroke:${c};stroke-width:2px;stroke-linejoin:round`} />
+              <text x="100" y="44" style={`fill:${c};${mono};font-size:11px;letter-spacing:3px;text-anchor:middle`}>JAPÓN</text>
+              <circle cx="128" cy="58" r="9" style={`fill:${c}`} />
+              <path d="M56 86L94 56L132 86" style={`fill:none;stroke:${c};stroke-width:3px;stroke-linejoin:round;stroke-linecap:round`} />
+              <path d="M80 67L86 72L94 65L102 72L108 67" style={`fill:none;stroke:${c};stroke-width:2.4px;stroke-linejoin:round;stroke-linecap:round`} />
+              <text x="100" y="106" style={`fill:${c};${mono};font-size:12px;letter-spacing:3px;text-anchor:middle`}>STUDY IN</text>
+              <text x="100" y="138" style={`fill:${c};${lilita};font-size:36px;text-anchor:middle`}>Japan</text>
+              <text x="100" y="160" style={`fill:${c};${mono};font-size:10px;letter-spacing:.4px;text-anchor:middle`}>{`${num} · ${fecha}`}</text>
+            </>
+          )}
+          {stand === "erasmus-mundus" && (
+            <>
+              <ellipse cx="100" cy="100" rx="94" ry="74" style={`fill:none;stroke:${c};stroke-width:6px`} />
+              <ellipse cx="100" cy="100" rx="82" ry="62" style={`fill:none;stroke:${c};stroke-width:2px`} />
+              {puntosEu.map(([cx, cy]) => <circle cx={cx} cy={cy} r="2.8" style={`fill:${c}`} />)}
+              <text x="100" y="104" style={`fill:${c};${lilita};font-size:23px;text-anchor:middle`}>Erasmus</text>
+              <text x="100" y="126" style={`fill:${c};${lilita};font-size:23px;text-anchor:middle`}>Mundus</text>
+              <text x="100" y="143" style={`fill:${c};${mono};font-size:10px;letter-spacing:1.6px;text-anchor:middle`}>{`EUROPA · ${num}`}</text>
+              <text x="100" y="156" style={`fill:${c};${mono};font-size:9.5px;letter-spacing:.6px;text-anchor:middle`}>{fecha}</text>
+            </>
+          )}
+        </g>
+      </>
+    )}
+    {!sellado && (
+      <>
+        {stand === "utp-internacional" && <circle cx="100" cy="100" r="90" style={`fill:rgba(98,88,187,.06);stroke:rgba(98,88,187,.55);stroke-width:3.5px;stroke-dasharray:9 9`} />}
+        {stand === "educationusa" && <path d="M26 38H174A12 12 0 0 0 186 50V150A12 12 0 0 0 174 162H26A12 12 0 0 0 14 150V50A12 12 0 0 0 26 38Z" style={`fill:rgba(172,11,173,.05);stroke:rgba(172,11,173,.5);stroke-width:3.5px;stroke-dasharray:9 9`} />}
+        {stand === "study-in-japan" && <polygon points="183,65.6 134.4,17 65.6,17 17,65.6 17,134.4 65.6,183 134.4,183 183,134.4" style={`fill:rgba(82,95,151,.06);stroke:rgba(82,95,151,.55);stroke-width:3.5px;stroke-dasharray:9 9;stroke-linejoin:round`} />}
+        {stand === "erasmus-mundus" && <ellipse cx="100" cy="100" rx="92" ry="72" style={`fill:rgba(34,112,159,.06);stroke:rgba(34,112,159,.55);stroke-width:3.5px;stroke-dasharray:9 9`} />}
+        <text x="100" y="82" style={`fill:${c};opacity:.75;${mono};font-size:12px;letter-spacing:3px;text-anchor:middle`}>PUERTA</text>
+        <text x="100" y="134" style={`fill:${c};opacity:.45;${lilita};font-size:56px;text-anchor:middle`}>{num}</text>
+      </>
+    )}
+  </svg>
+</div>

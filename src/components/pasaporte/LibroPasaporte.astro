@@ -1,0 +1,110 @@
+---
+// Página del pasaporte (design/pasaporte/Libro.dc.html): titular, número, las
+// casillas de visas y la franja de lectura. Sin lógica de estado: renderiza lo
+// que recibe y deja ganchos `data-libro-*` para que /pasaporte lo actualice en
+// el navegador sin volver a generar el HTML.
+import { gates } from "../../data/schedule";
+import stands from "../../data/stands";
+import { lineasMrz } from "../../lib/mrz";
+import SelloStand from "./SelloStand.astro";
+
+interface Props {
+  titular?: string;
+  numero?: string;
+  /** standId -> hora ya formateada ("2:31 p. m."). Los que no estén se muestran pendientes. */
+  sellos?: Record<string, string>;
+  canjeado?: boolean;
+  class?: string;
+}
+
+const { titular = "Nombre Apellido", numero = "P-·····", sellos = {}, canjeado = false, class: className } = Astro.props;
+
+const COLOR: Record<string, string> = {
+  "utp-internacional": "#6258BB",
+  educationusa: "#AC0BAD",
+  "study-in-japan": "#525F97",
+  "erasmus-mundus": "#22709F",
+};
+const ROT = [-9, 6, -5, 8];
+
+const slots = gates.map((g, i) => ({
+  id: g.standId,
+  nombre: stands.find((s) => s.id === g.standId)?.nombre ?? g.name,
+  c: COLOR[g.standId] ?? "#525F97",
+  rot: ROT[i] ?? 0,
+  hora: sellos[g.standId],
+}));
+const n = slots.filter((s) => s.hora).length;
+const [mrz1, mrz2] = lineasMrz(titular, numero, n, gates.length);
+const mono = "font-mono font-semibold";
+---
+
+<article
+  aria-label="Tu pasaporte SAF 2026"
+  data-libro
+  class:list={[
+    "relative flex w-full max-w-[358px] flex-col gap-3 overflow-hidden rounded-[22px] bg-paper px-4 pt-[18px] pb-3.5 text-ink shadow-[0_8px_0_rgb(8_10_45/0.3),0_24px_36px_-14px_rgb(8_10_45/0.6)]",
+    "[background-image:repeating-linear-gradient(135deg,rgb(171_174_200/0.13)_0_1px,transparent_1px_10px),repeating-linear-gradient(45deg,rgb(171_174_200/0.08)_0_1px,transparent_1px_14px)]",
+    className,
+  ]}
+>
+  <div class="flex items-center justify-between">
+    <span class={`${mono} text-[11px] tracking-[.16em] text-violet`}>PASAPORTE · PASSPORT</span>
+    <span class={`${mono} text-[10px] tracking-[.12em] text-ink-2`}>PÁG. 02</span>
+  </div>
+
+  <div class="flex items-end justify-between gap-3">
+    <div class="flex min-w-0 flex-col gap-0.5">
+      <span class={`${mono} text-[10px] tracking-[.14em] text-ink-2`}>TITULAR</span>
+      <span data-libro-titular class="font-display text-[23px] leading-none uppercase [overflow-wrap:anywhere]">{titular}</span>
+    </div>
+    <div class="flex shrink-0 flex-col items-end gap-0.5">
+      <span class={`${mono} text-[10px] tracking-[.14em] text-ink-2`}>Nº</span>
+      <span data-libro-numero class={`${mono} text-sm tracking-[.06em]`}>{numero}</span>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <span class="grow border-t-2 border-dashed border-lav"></span>
+    <span class={`${mono} text-[10px] tracking-[.16em] text-ink-2`}>VISAS · SELLOS DE ENTRADA</span>
+    <span class="grow border-t-2 border-dashed border-lav"></span>
+  </div>
+
+  <div class="grid grow grid-cols-2 gap-2.5">
+    {slots.map((s) => (
+      <div data-libro-slot={s.id} class="flex flex-col items-center justify-between gap-1 rounded-2xl border-[1.5px] border-lav bg-paper-2/85 px-2 py-2.5 data-[sellado]:border-lav/55 data-[sellado]:bg-paper/60" data-sellado={s.hora ? "" : undefined}>
+        <div class="grid grow place-items-center">
+          <div data-libro-pendiente hidden={!!s.hora}><SelloStand stand={s.id} estado="pendiente" size={104} /></div>
+          <div data-libro-sellado hidden={!s.hora}><SelloStand stand={s.id} estado="sellado" size={124} rot={s.rot} /></div>
+        </div>
+        <div data-libro-sellado hidden={!s.hora} class="flex flex-col items-center gap-px text-center">
+          <span class="inline-flex items-center gap-1 text-[13px] leading-[1.15] font-extrabold">
+            <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke={s.c} stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" /></svg>{s.nombre}
+          </span>
+          <span class={`${mono} text-[10px] text-ink-2`}>Sellado · <span data-libro-hora>{s.hora ?? ""}</span></span>
+        </div>
+        <div data-libro-pendiente hidden={!!s.hora} class="flex flex-col items-center gap-px text-center">
+          <span class="text-[13px] leading-[1.15] font-extrabold text-ink-2">{s.nombre}</span>
+          <span class={`${mono} text-[10px]`} style={`color:${s.c}`}>Visita esta puerta</span>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div aria-hidden="true" class="overflow-hidden font-mono text-[10.5px] leading-[1.45] font-medium tracking-[.14em] whitespace-nowrap text-ink-2">
+    <div data-libro-mrz1>{mrz1}</div>
+    <div data-libro-mrz2>{mrz2}</div>
+  </div>
+
+  <div
+    data-libro-canjeado
+    hidden={!canjeado}
+    class="absolute top-[52%] left-1/2 grid size-[236px] -translate-x-1/2 -translate-y-1/2 -rotate-[14deg] place-items-center rounded-full border-[6px] border-ink bg-yellow/80 shadow-[0_0_0_5px_rgb(253_254_252/0.9)]"
+  >
+    <div class="flex size-[198px] flex-col items-center justify-center gap-1 rounded-full border-2 border-ink text-center">
+      <span class={`${mono} text-[10.5px] tracking-[.2em]`}>MESA DE CANJE</span>
+      <span class="font-display text-[31px] leading-[.95]">CÓDIGO<br />ENTREGADO</span>
+      <span data-libro-canjeado-hora class={`${mono} text-[11px] tracking-[.12em]`}></span>
+    </div>
+  </div>
+</article>
