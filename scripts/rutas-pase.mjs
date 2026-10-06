@@ -46,7 +46,7 @@ export const REGLAS_PASE = [
   // Fuentes del correo (@font-face en templates/correo.html de saf-pases):
   // los clientes de correo web las piden desde otro origen.
   {
-    src: "^/pase-assets/fuentes/[a-z0-9-]+\.woff2$",
+    src: "^/pase-assets/fuentes/[a-z0-9-]+\\.woff2$",
     headers: { "Access-Control-Allow-Origin": "*", "Cache-Control": "public, max-age=604800" },
     continue: true,
   },
