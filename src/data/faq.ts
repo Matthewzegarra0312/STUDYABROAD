@@ -27,7 +27,7 @@ const faqRaw: FaqItem[] = [
   {
     pregunta: "¿Cómo consigo el Calendario de becas?",
     respuesta:
-      "Recorre los stands del evento, junta un sello en cada uno y canjéalos por un código en la mesa de canje. Con ese código desbloqueas el calendario en /canje.",
+      "Abre tu pasaporte digital con el código de tu pase de abordaje y junta un sello en cada stand escaneando su QR. Con el pasaporte completo, la mesa de canje te entrega un código con el que desbloqueas el calendario en /canje.",
     estado: "confirmado",
   },
 ];

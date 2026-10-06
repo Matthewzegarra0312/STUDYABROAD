@@ -4,8 +4,7 @@
 // pública (CLAUDE.md, regla 10). "Ya tengo mi código" va a la ruta de canje.
 import evento from "../../data/evento";
 import { gates } from "../../data/schedule";
-import { canjeHref, passportSteps } from "../../data/site";
-import { lumaUrl } from "../../lib/luma";
+import { canjeHref, passportSteps, pasaporteHref } from "../../data/site";
 import Cta from "./Cta.astro";
 
 // Fecha del sello como "10.10.26".
@@ -32,7 +31,7 @@ const sellos = gates.map((g) => g.standId);
         ))}
       </ol>
       <div class="mt-1 flex flex-col gap-3 lg:mt-1.5 lg:flex-row lg:items-center lg:gap-3.5">
-        <Cta href={lumaUrl("calendario")} class="min-h-[54px] text-xl shadow-[0_5px_0_rgb(8_10_45/0.3)] lg:min-h-0 lg:px-7 lg:pt-[15px] lg:pb-[13px] lg:text-[21px]">Inscríbete para ir</Cta>
+        <Cta href={pasaporteHref} class="min-h-[54px] text-xl shadow-[0_5px_0_rgb(8_10_45/0.3)] lg:min-h-0 lg:px-7 lg:pt-[15px] lg:pb-[13px] lg:text-[21px]">Mi pasaporte</Cta>
         <Cta href={canjeHref} variant="outline" class="min-h-[50px] text-base lg:min-h-0 lg:px-[22px] lg:py-3.5 lg:text-[17px]">Ya tengo mi código</Cta>
       </div>
     </div>

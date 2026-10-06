@@ -157,7 +157,7 @@ const faqRaw: FaqItem[] = [
   { pregunta: "¿Tiene costo?", respuesta: "No. Es gratis, con inscripción previa en Luma.", estado: "confirmado" },
   { pregunta: "¿Los ponentes internacionales van en persona?", respuesta: "Depende del bloque. El cronograma marca si es presencial, un video o una conexión por Zoom.", estado: "confirmado" },
   { pregunta: "¿Dónde pregunto por requisitos de una beca?", respuesta: "En los stands. Los ponentes cuentan su experiencia personal, no los requisitos oficiales.", estado: "confirmado" },
-  { pregunta: "¿Cómo consigo el Calendario de becas?", respuesta: "Recorre los stands, junta un sello en cada uno y canjéalos por un código en la mesa de canje. Con ese código lo desbloqueas en la web.", estado: "confirmado" },
+  { pregunta: "¿Cómo consigo el Calendario de becas?", respuesta: "Abre tu pasaporte digital con el código de tu pase de abordaje y junta un sello en cada stand escaneando su QR. Con el pasaporte completo, la mesa de canje te entrega un código con el que desbloqueas el calendario en la web.", estado: "confirmado" },
 ];
 
 export const faq = faqRaw.map((f) => FaqItemSchema.parse(f));
