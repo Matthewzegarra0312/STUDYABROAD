@@ -5,6 +5,7 @@
 import evento from "../../data/evento";
 import { gates } from "../../data/schedule";
 import { canjeHref, passportSteps, pasaporteHref } from "../../data/site";
+import LibroPasaporte from "../pasaporte/LibroPasaporte.astro";
 import Cta from "./Cta.astro";
 
 // Fecha del sello como "10.10.26".
@@ -37,7 +38,10 @@ const sellos = gates.map((g) => g.standId);
     </div>
 
     <div class="v-pass relative mx-auto h-[430px] w-full max-w-[580px] lg:h-[600px]" aria-hidden="true" data-motion-stop data-motion-delay="180">
-      <div class="absolute top-0 left-1 flex h-[350px] w-[min(342px,calc(100vw-40px))] -rotate-3 flex-col gap-2.5 rounded-[20px] bg-paper p-[18px] text-ink shadow-[0_8px_0_rgb(8_10_45/0.3),0_24px_36px_-14px_rgb(8_10_45/0.6)] lg:top-5 lg:left-5 lg:h-[420px] lg:w-[520px] lg:-rotate-4 lg:gap-3.5 lg:rounded-[22px] lg:p-[26px] lg:shadow-[0_10px_0_rgb(8_10_45/0.3),0_30px_48px_-16px_rgb(8_10_45/0.6)]">
+      <div class="absolute top-2.5 left-0 hidden w-[358px] -rotate-3 lg:block">
+        <LibroPasaporte titular="Nombre Apellido" numero="P-·····" sellos={{ "utp-internacional": "2:30 p. m.", educationusa: "2:50 p. m." }} />
+      </div>
+      <div class="absolute top-0 left-1 flex h-[350px] w-[min(342px,calc(100vw-40px))] -rotate-3 flex-col gap-2.5 rounded-[20px] bg-paper p-[18px] lg:hidden text-ink shadow-[0_8px_0_rgb(8_10_45/0.3),0_24px_36px_-14px_rgb(8_10_45/0.6)] lg:top-5 lg:left-5 lg:h-[420px] lg:w-[520px] lg:-rotate-4 lg:gap-3.5 lg:rounded-[22px] lg:p-[26px] lg:shadow-[0_10px_0_rgb(8_10_45/0.3),0_30px_48px_-16px_rgb(8_10_45/0.6)]">
         <div class="flex items-end justify-between"><span class="font-display text-2xl lg:text-[30px]">Pasaporte</span><span class="font-mono text-[10px] text-ink-2 lg:text-[11px]">SAF 2026 · {gates.length} SELLOS</span></div>
         <div class="grid grow grid-cols-2 grid-rows-2 gap-2.5 lg:gap-3.5">
           {sellos.includes("utp-internacional") && (
