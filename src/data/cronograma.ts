@@ -153,7 +153,7 @@ const bloquesRaw: CronogramaBloque[] = [
   },
   {
     orden: 15,
-    titulo: "Migajeando Becas",
+    titulo: "Migajeando Oportunidades",
     quien: "Raúl Jáuregui",
     espacio: null,
     modalidad: "presencial",

@@ -160,10 +160,10 @@ Cada dato lleva `estado`: `confirmado` o `por-confirmar`. Solo lo confirmado se 
 | 17:00 a 17:05 | Cápsula Erasmus+ | Guillermo Gonzalo | Vlog + Zoom |
 | 17:05 a 17:30 | Erasmus Mundus | Erasmus Mundus Association Perú | Presencial |
 | 17:30 a 17:45 | Experiencia Erasmus Mundus | Raquel Sánchez | Zoom |
-| 17:45 a 17:55 | Migajeando Becas | Raúl Jáuregui | Presencial |
+| 17:45 a 17:55 | Migajeando Oportunidades | Raúl Jáuregui | Presencial |
 | 17:55 a 18:00 | Palabras de cierre | LEAD UTP | Presencial |
 
-Seis grupos: Bienvenida y voces internacionales · Oportunidades internacionales y becas · Panel de exbecarios · Japón: Study in Japan y Beca MEXT · Europa: Erasmus+ y Erasmus Mundus · Migajeando Becas y cierre. Nota visible: los horarios y participantes pueden ajustarse a último momento.
+Seis grupos: Bienvenida y voces internacionales · Oportunidades internacionales y becas · Panel de exbecarios · Japón: Study in Japan y Beca MEXT · Europa: Erasmus+ y Erasmus Mundus · Migajeando Oportunidades y cierre. Nota visible: los horarios y participantes pueden ajustarse a último momento.
 
 ### Stands (las 4 "puertas" que sellan el pasaporte, `stands.ts`)
 
@@ -172,7 +172,7 @@ Seis grupos: Bienvenida y voces internacionales · Oportunidades internacionales
 3. Study in Japan
 4. Erasmus Mundus
 
-**Ojo:** `CLAUDE.md`, `PLAN.md` y `PROMPT-VIAJE.md` aún mencionan a APEBEMO y Migajeando Becas como stands que sellan. Los datos vigentes en `stands.ts` son los cuatro de arriba. APEBEMO y Migajeando Becas siguen en el cronograma como bloques, no como stands. Erasmus+ aparece como aliado (`allies` en `schedule.ts`).
+**Ojo:** `CLAUDE.md`, `PLAN.md` y `PROMPT-VIAJE.md` aún mencionan a APEBEMO y Migajeando Oportunidades como stands que sellan. Los datos vigentes en `stands.ts` son los cuatro de arriba. APEBEMO y Migajeando Oportunidades siguen en el cronograma como bloques, no como stands. Erasmus+ aparece como aliado (`allies` en `schedule.ts`).
 
 ### Ponentes
 

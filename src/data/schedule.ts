@@ -80,11 +80,11 @@ const groupsRaw: ScheduleGroup[] = [
   },
   {
     n: 6,
-    title: "Migajeando Becas y cierre",
+    title: "Migajeando Oportunidades y cierre",
     from: "17:45",
     to: "18:00",
     rows: [
-      { start: "17:45", end: "17:55", title: "Migajeando Becas", who: "Raúl Jáuregui", mode: "presencial" },
+      { start: "17:45", end: "17:55", title: "Migajeando Oportunidades", who: "Raúl Jáuregui", mode: "presencial" },
       { start: "17:55", end: "18:00", title: "Palabras de cierre", who: "LEAD UTP", mode: "presencial" },
     ],
   },
@@ -121,7 +121,7 @@ const speakersRaw: Speaker[] = [
   { id: "guillermo-gonzalo", initials: "GG", code: "EU", name: "Guillermo Gonzalo", institution: "Erasmus+", mode: "vlog-zoom", time: "17:00", estado: "confirmado", imagen: "guillermo-gonzalo.png", url: "https://www.instagram.com/gonzalfarooo/" },
   { id: "raquel-sanchez", initials: "RS", code: "EU", name: "Raquel Sánchez", institution: "Erasmus Mundus", mode: "zoom", time: "17:05", estado: "confirmado", imagen: "raquel-sanchez.png", url: "https://www.instagram.com/raquel.powerade/" },
   { id: "lizbeth-davila", initials: "LD", code: "CA", name: "Lizbeth Dávila", institution: "Beca ELAP", mode: "experiencia", time: "17:30", estado: "confirmado", imagen: "lizbeth-davila.png", url: "https://www.linkedin.com/in/lizbethd%C3%A1vilad%C3%A1vila/" },
-  { id: "raul-jauregui", initials: "RJ", code: "PE", name: "Raúl Jáuregui", institution: "Migajeando Becas", mode: "experiencia", time: "17:45", estado: "confirmado", imagen: "Raúl-Jauregui.png", url: "https://www.instagram.com/rauenciencia/" },
+  { id: "raul-jauregui", initials: "RJ", code: "PE", name: "Raúl Jáuregui", institution: "Migajeando Oportunidades", mode: "experiencia", time: "17:45", estado: "confirmado", imagen: "Raúl-Jauregui.png", url: "https://www.instagram.com/rauenciencia/" },
 ];
 
 export const speakers = speakersRaw.map((s) => SpeakerSchema.parse(s));
