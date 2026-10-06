@@ -31,9 +31,6 @@ const sombraBoleto = "[filter:drop-shadow(0_8px_0_rgb(8_10_45/0.28))_drop-shadow
     <CanjeNav current="pase" />
     <main id="pase-raiz" class="relative mx-auto flex w-full max-w-[560px] flex-col gap-5 px-4 pt-3 pb-8 lg:max-w-[1120px] lg:gap-[30px] lg:px-6 lg:pt-11 lg:pb-14">
       <header class="flex flex-col gap-2 px-1 lg:gap-2.5 lg:px-0">
-        <span class={`${mono} inline-flex w-fit items-center gap-2 rounded-full bg-ink/40 px-3.5 py-[7px] text-xs tracking-[.14em] uppercase`}>
-          <span class="pase-solo-pase pase-pulso size-[9px] rounded-full bg-yellow"></span><span class="pase-solo-form">CHECK-IN · SAF 2026</span><span class="pase-solo-pase">CHECK-IN LISTO</span>
-        </span>
         <h1 class="m-0 font-display text-[46px] leading-[.94] font-normal [text-shadow:0_4px_0_rgb(29_33_82/0.25)] lg:text-[72px] lg:[text-shadow:0_5px_0_rgb(29_33_82/0.25)]">Tu pase de abordaje</h1>
         <p class="m-0 text-[17px] leading-[1.35] font-bold [text-shadow:0_1px_8px_rgb(29_33_82/0.35)] lg:max-w-[40ch] lg:text-[21px]">
           <span class="pase-solo-form">Escribe el código que llegó a tu correo para ver tu pase y descargarlo.</span>
@@ -44,8 +41,7 @@ const sombraBoleto = "[filter:drop-shadow(0_8px_0_rgb(8_10_45/0.28))_drop-shadow
       <!-- Código: el mostrador de check-in -->
       <form id="pase-form" hidden class={`flex w-full max-w-[560px] flex-col ${sombraBoleto}`} novalidate>
         <div class="ticket-top flex flex-col gap-3 rounded-t-[22px] bg-paper px-[18px] pt-[18px] pb-[26px] text-ink">
-          <div class="flex items-center justify-between">
-            <span class={`${mono} text-[11px] tracking-[.14em] text-violet`}>MOSTRADOR DE CHECK-IN</span>
+          <div class="flex items-center justify-end">
             <Fragment set:html={avion("#AC0BAD")} />
           </div>
           <label for="pase-codigo" class={`${mono} text-[11px] tracking-[.14em] text-ink-2`}>TU CÓDIGO</label>
@@ -106,7 +102,6 @@ const sombraBoleto = "[filter:drop-shadow(0_8px_0_rgb(8_10_45/0.28))_drop-shadow
           <aside aria-labelledby="pase-pasaporte-titulo" class="relative mt-2 flex -rotate-1 flex-col gap-3 rounded-3xl border-[5px] border-paper bg-paper p-4 pt-[18px] text-ink shadow-[0_8px_0_rgb(8_10_45/0.25),0_20px_30px_-14px_rgb(8_10_45/0.55)] lg:rotate-[1.2deg] lg:gap-3.5 lg:p-5">
             <span class={`${mono} absolute -top-3.5 right-[18px] rotate-3 rounded-full bg-yellow px-3 py-[5px] text-[11px] tracking-[.16em] text-ink shadow-[0_3px_0_rgb(8_10_45/0.25)]`}>NUEVO</span>
             <div class="flex flex-col gap-1">
-              <span class={`${mono} text-[11px] tracking-[.16em] text-violet`}>PASAPORTE SAF 2026</span>
               <h2 id="pase-pasaporte-titulo" class="m-0 font-display text-[30px] leading-none font-normal lg:text-[32px]">Tu pasaporte digital</h2>
               <p class="m-0 text-[15px] leading-[1.4] font-semibold text-ink-2">
                 El sábado, escanea el QR de cada puerta y junta los {gates.length} sellos. Con tu pasaporte completo recibes el código del Calendario de becas.
@@ -195,7 +190,7 @@ const sombraBoleto = "[filter:drop-shadow(0_8px_0_rgb(8_10_45/0.28))_drop-shadow
 
   /* Chip y bajada cambian según se vea el formulario o el pase (sin JS). */
   .pase-solo-pase { display: none; }
-  #pase-raiz:has(#pase-vista:not([hidden])) .pase-solo-pase { display: inline-block; }
+  #pase-raiz:has(#pase-vista:not([hidden])) .pase-solo-pase { display: inline; }
   #pase-raiz:has(#pase-vista:not([hidden])) .pase-solo-form { display: none; }
 </style>
 

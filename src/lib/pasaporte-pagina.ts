@@ -120,7 +120,6 @@ export function armarPasaporte(): void {
     const n = contarSellos(p, IDS_STANDS);
     raiz!.dataset.estado = est;
     const t = textos(p, est);
-    $("pas-etiqueta")!.textContent = t.etiqueta;
     $("pas-titulo")!.textContent = t.titulo;
     $("pas-subtitulo")!.textContent = t.sub;
     $("pas-barra-nota")!.textContent = t.nota;
