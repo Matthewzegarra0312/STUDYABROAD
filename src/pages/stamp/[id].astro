@@ -5,6 +5,7 @@
 // el repo ni en el código fuente. Todas las respuestas viven en el HTML y
 // src/lib/stamp-pagina.ts muestra la que toca. Sin servidor, cookies ni analítica.
 import type { GetStaticPaths } from "astro";
+import { getImage } from "astro:assets";
 import Base from "../../layouts/Base.astro";
 import SelloStand from "../../components/pasaporte/SelloStand.astro";
 import { gates } from "../../data/schedule";
@@ -41,6 +42,7 @@ const COLOR: Record<string, string> = {
   "erasmus-mundus": "#22709F",
 };
 const fondo = FONDOS[gate.standId]!;
+const fondoWebp = await getImage({ src: fondo.img, format: "webp", quality: 90 });
 const color = COLOR[gate.standId] ?? "#525F97";
 const etiqueta = `PUERTA ${num} · ${LUGAR[gate.standId] ?? ""}`.trim();
 
@@ -63,7 +65,7 @@ const check = (c: string) => `<svg width="15" height="15" viewBox="0 0 24 24" ar
     data-hash={sellosHash[gate.standId]}
     data-total={gates.length}
     class="stamp-fondo relative isolate min-h-screen overflow-hidden bg-[#12164A] text-paper"
-    style={`--fondo:url(${fondo.img.src});--pos:${fondo.pos}`}
+    style={`--fondo:url(${fondoWebp.src});--pos:${fondo.pos}`}
   >
     <noscript>
       <p class="mx-4 mt-10 rounded-[20px] bg-ink/55 p-5 text-center font-bold">Para sellar tu pasaporte necesitas activar JavaScript.</p>
