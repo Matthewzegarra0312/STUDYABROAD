@@ -44,7 +44,7 @@ const bloquesRaw: CronogramaBloque[] = [
   {
     orden: 5,
     titulo: "Berkeley Haas Global Access Program",
-    quien: "Leslie Sánchez y Diego Mendoza, UC Berkeley · conexión internacional",
+    quien: "Leslie Sánchez (presencial) y Diego Mendoza (Zoom en vivo), UC Berkeley",
     espacio: null,
     modalidad: "presencial",
     horaInicio: "14:55",
@@ -114,7 +114,7 @@ const bloquesRaw: CronogramaBloque[] = [
   {
     orden: 12,
     titulo: "Cápsula Erasmus+",
-    quien: "Guillermo Gonzalo",
+    quien: "Gonzalo Alfaro",
     espacio: null,
     modalidad: "vlog-zoom",
     horaInicio: "17:10",
@@ -133,10 +133,10 @@ const bloquesRaw: CronogramaBloque[] = [
   },
   {
     orden: 14,
-    titulo: "Emerging Leaders in the Americas Program (ELAP)",
+    titulo: "Beca SIAS China",
     quien: "Lizbeth Dávila",
     espacio: null,
-    modalidad: "presencial",
+    modalidad: "zoom-vivo",
     horaInicio: "17:40",
     horaFin: "17:55",
     estado: "confirmado",

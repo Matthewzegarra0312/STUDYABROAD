@@ -36,7 +36,7 @@ const groupsRaw: ScheduleGroup[] = [
     to: "15:45",
     rows: [
       { start: "14:25", end: "14:55", title: "Convenios, requisitos y movilidad internacional", who: "UTP Internacional", mode: "presencial" },
-      { start: "14:55", end: "15:25", title: "Berkeley Haas Global Access Program", who: "Leslie Sánchez y Diego Mendoza, UC Berkeley · conexión internacional", mode: "presencial" },
+      { start: "14:55", end: "15:25", title: "Berkeley Haas Global Access Program", who: "Leslie Sánchez (presencial) y Diego Mendoza (Zoom en vivo), UC Berkeley", mode: "presencial" },
       { start: "15:25", end: "15:45", title: "Beca Fulbright", who: "EducationUSA", mode: "presencial" },
     ],
   },
@@ -68,13 +68,13 @@ const groupsRaw: ScheduleGroup[] = [
   },
   {
     n: 5,
-    title: "Erasmus+, Erasmus Mundus y ELAP",
+    title: "Erasmus+, Erasmus Mundus y beca SIAS China",
     from: "17:10",
     to: "17:55",
     rows: [
-      { start: "17:10", end: "17:15", title: "Cápsula Erasmus+", who: "Guillermo Gonzalo", mode: "vlog-zoom" },
+      { start: "17:10", end: "17:15", title: "Cápsula Erasmus+", who: "Gonzalo Alfaro", mode: "vlog-zoom" },
       { start: "17:15", end: "17:40", title: "Experiencia Erasmus Mundus", who: "Raquel Sánchez, exbecaria Erasmus Mundus", mode: "zoom" },
-      { start: "17:40", end: "17:55", title: "Emerging Leaders in the Americas Program (ELAP)", who: "Lizbeth Dávila", mode: "presencial" },
+      { start: "17:40", end: "17:55", title: "Beca SIAS China", who: "Lizbeth Dávila", mode: "zoom" },
     ],
   },
   {
@@ -110,15 +110,15 @@ const speakersRaw: Speaker[] = [
   { id: "fernando-injoque", initials: "FI", code: "US", name: "Fernando Injoque", institution: "Purdue University", mode: "vlog-zoom", time: "14:00", estado: "confirmado", imagen: "fernando-injoque.jpg", url: "https://www.linkedin.com/in/ferinjoque/" },
   { id: "ivanna", initials: "IY", code: "US", name: "Ivanna Yllahuaman", institution: "Purdue University", mode: "experiencia", time: "14:05", estado: "confirmado", imagen: "ivanna.png", url: "https://www.linkedin.com/in/ivanna-yllahuaman/" },
   { id: "leslie-sanchez", initials: "LS", code: "US", name: "Leslie Sánchez", institution: "UC Berkeley", mode: "experiencia", time: "14:55", estado: "confirmado", imagen: "leslie-sanchez.png", url: "https://www.instagram.com/leslie_sanchezm14/" },
-  { id: "diego-mendoza", initials: "DM", code: "US", name: "Diego Mendoza", institution: "UC Berkeley", mode: "experiencia", time: "14:55", estado: "confirmado", imagen: "Diego-Mendoza.png", url: "https://www.linkedin.com/in/diegomendozaflores/" },
+  { id: "diego-mendoza", initials: "DM", code: "US", name: "Diego Mendoza", institution: "UC Berkeley", mode: "zoom", time: "14:55", estado: "confirmado", imagen: "Diego-Mendoza.png", url: "https://www.linkedin.com/in/diegomendozaflores/" },
   { id: "marlon-ugaz", initials: "MU", code: "CA", name: "Marlon Ugaz", institution: "Beca ELAP", mode: "experiencia", time: "15:45", estado: "confirmado", imagen: "marlon-ugaz.png", url: "https://www.linkedin.com/in/marlon-ugaz-079519258/" },
   { id: "diego-river", initials: "DR", code: "US", name: "Diego Rivera", institution: "Harvard", mode: "experiencia", time: "15:45", estado: "confirmado", imagen: "diego-rivera.png", url: "https://www.linkedin.com/in/diego-rivera-balarezo-4635b5124/" },
   { id: "joshua-galvez", initials: "JG", code: "MX", name: "Joshua Galvez", institution: "Tecnológico de Monterrey", mode: "experiencia", time: "15:45", estado: "confirmado", imagen: "joshua-galvez.png", url: "https://www.linkedin.com/in/joshua-eduardo-valentino-galvez-pe%C3%B1a-93b149233/" },
   { id: "mila", initials: "MV", code: "JP", name: "Milagros Virhuez", institution: "Mila en Japón", mode: "vlog-zoom", time: "16:05", estado: "confirmado", imagen: "milagros-virhuez.png", url: "https://www.instagram.com/milaenjapon/" },
   { id: "giancarlo-carmelino", initials: "GC", code: "JP", name: "Giancarlo Carmelino", institution: "Study in Japan", mode: "zoom", time: "16:10", estado: "confirmado", imagen: "giancarlo-carmelino.png", url: "https://www.linkedin.com/in/giancarlo-carmelino-76406716/" },
-  { id: "guillermo-gonzalo", initials: "GG", code: "EU", name: "Guillermo Gonzalo", institution: "Erasmus+", mode: "vlog-zoom", time: "17:10", estado: "confirmado", imagen: "guillermo-gonzalo.png", url: "https://www.instagram.com/gonzalfarooo/" },
+  { id: "gonzalo-alfaro", initials: "GA", code: "EU", name: "Gonzalo Alfaro", institution: "Erasmus+", mode: "vlog-zoom", time: "17:10", estado: "confirmado", imagen: "guillermo-gonzalo.png", url: "https://www.instagram.com/gonzalfarooo/" },
   { id: "raquel-sanchez", initials: "RS", code: "EU", name: "Raquel Sánchez", institution: "Erasmus Mundus", mode: "zoom", time: "17:15", estado: "confirmado", imagen: "raquel-sanchez.png", url: "https://www.instagram.com/raquel.powerade/" },
-  { id: "lizbeth-davila", initials: "LD", code: "CA", name: "Lizbeth Dávila", institution: "Beca ELAP", mode: "experiencia", time: "17:40", estado: "confirmado", imagen: "lizbeth-davila.png", url: "https://www.linkedin.com/in/lizbethd%C3%A1vilad%C3%A1vila/" },
+  { id: "lizbeth-davila", initials: "LD", code: "CN", name: "Lizbeth Dávila", institution: "Beca SIAS China", mode: "zoom", time: "17:40", estado: "confirmado", imagen: "lizbeth-davila.png", url: "https://www.linkedin.com/in/lizbethd%C3%A1vilad%C3%A1vila/" },
   { id: "raul-jauregui", initials: "RJ", code: "PE", name: "Raúl Jáuregui", institution: "Migajeando Oportunidades", mode: "experiencia", time: "17:55", estado: "confirmado", imagen: "Raúl-Jauregui.png", url: "https://www.instagram.com/rauenciencia/" },
 ];
 
