@@ -124,7 +124,7 @@ const bloquesRaw: CronogramaBloque[] = [
   {
     orden: 13,
     titulo: "Experiencia Erasmus Mundus",
-    quien: "Raquel Sánchez, exbecaria Erasmus Mundus",
+    quien: "Raquel Sánchez, becaria Erasmus Mundus",
     espacio: null,
     modalidad: "zoom-vivo",
     horaInicio: "17:15",

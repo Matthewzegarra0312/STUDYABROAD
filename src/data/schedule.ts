@@ -73,7 +73,7 @@ const groupsRaw: ScheduleGroup[] = [
     to: "17:55",
     rows: [
       { start: "17:10", end: "17:15", title: "Cápsula Erasmus+", who: "Gonzalo Alfaro", mode: "vlog-zoom" },
-      { start: "17:15", end: "17:40", title: "Experiencia Erasmus Mundus", who: "Raquel Sánchez, exbecaria Erasmus Mundus", mode: "zoom" },
+      { start: "17:15", end: "17:40", title: "Experiencia Erasmus Mundus", who: "Raquel Sánchez, becaria Erasmus Mundus", mode: "zoom" },
       { start: "17:40", end: "17:55", title: "Beca SIAS China", who: "Lizbeth Dávila", mode: "zoom" },
     ],
   },
