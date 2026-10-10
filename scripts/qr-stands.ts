@@ -17,7 +17,7 @@ import { existsSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import QRCode from "qrcode";
-import { chromium } from "playwright";
+import sharp from "sharp";
 import { gates } from "../src/data/schedule";
 import stands from "../src/data/stands";
 import { ALFABETO_CODIGO } from "../src/server/alfabetoCodigo";
@@ -59,24 +59,17 @@ async function main(): Promise<void> {
   await mkdir(CARPETA, { recursive: true });
   const hashes: Record<string, string> = {};
   const lineas: string[] = [];
-  const navegador = await chromium.launch();
-  try {
-    const pagina = await navegador.newPage({ viewport: { width: 1200, height: 1500 } });
-    for (const g of gates) {
-      const nombre = stands.find((s) => s.id === g.standId)?.nombre ?? g.name;
-      const clave = generarClave();
-      const url = `${baseUrl}/stamp/${g.standId}?k=${clave}`;
-      hashes[g.standId] = await sha256Hex(clave);
-      lineas.push(`Puerta ${g.n} · ${nombre}\n${url}\n`);
+  for (const g of gates) {
+    const nombre = stands.find((s) => s.id === g.standId)?.nombre ?? g.name;
+    const clave = generarClave();
+    const url = `${baseUrl}/stamp/${g.standId}?k=${clave}`;
+    hashes[g.standId] = await sha256Hex(clave);
+    lineas.push(`Puerta ${g.n} · ${nombre}\n${url}\n`);
 
-      const qr = await QRCode.toString(url, { type: "svg", margin: 4, errorCorrectionLevel: "M", color: { dark: "#000000", light: "#FFFFFF" } });
-      const svg = lamina(qr, nombre, g.n);
-      await writeFile(path.join(CARPETA, `${g.n}-${g.standId}.svg`), svg);
-      await pagina.setContent(`<body style="margin:0">${svg}</body>`);
-      await pagina.screenshot({ path: path.join(CARPETA, `${g.n}-${g.standId}.png`), clip: { x: 0, y: 0, width: 1200, height: 1500 } });
-    }
-  } finally {
-    await navegador.close();
+    const qr = await QRCode.toString(url, { type: "svg", margin: 4, errorCorrectionLevel: "M", color: { dark: "#000000", light: "#FFFFFF" } });
+    const svg = lamina(qr, nombre, g.n);
+    await writeFile(path.join(CARPETA, `${g.n}-${g.standId}.svg`), svg);
+    await sharp(Buffer.from(svg)).png().toFile(path.join(CARPETA, `${g.n}-${g.standId}.png`));
   }
   await writeFile(path.join(CARPETA, "claves.txt"), lineas.join("\n"));
   await writeFile(SELLOS_JSON, `${JSON.stringify(hashes, null, 2)}\n`);
