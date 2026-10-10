@@ -2,6 +2,7 @@
 export const NOMBRES_PAIS: Record<string, string> = {
   US: "Estados Unidos",
   MX: "México",
+  CL: "Chile",
   JP: "Japón",
   EU: "Europa",
   CN: "China",

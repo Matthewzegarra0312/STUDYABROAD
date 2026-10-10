@@ -95,7 +95,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../assets/ponent
                 {p.code && <Bandera code={p.code} class="v-sello -rotate-6 shrink-0 rounded-[3px] shadow-[0_2px_0_rgb(29_33_82/0.18)] lg:h-[27px] lg:w-[40px]" />}
               </div>
               <h3 class="m-0 text-[19px] leading-[1.15] font-extrabold [overflow-wrap:anywhere] text-balance lg:text-[21px]">{p.name}</h3>
-              {p.institution && <p class="m-0 text-sm font-bold text-violet lg:text-base">{p.institution}</p>}
+              {p.institution && <p class="m-0 text-sm leading-snug font-bold break-words text-pretty text-violet lg:text-base">{p.institution}</p>}
               {p.url && (
                 <a href={p.url} target="_blank" rel="noopener noreferrer" class="v-enlace inline-flex min-h-11 items-center gap-2 self-start rounded-full border-2 border-lav px-3.5 text-sm font-extrabold text-violet">
                   <IconoRed url={p.url} class="shrink-0" />{etiquetaEnlace(p.url)}<span class="sr-only"> de {p.name} (se abre en una pestaña nueva)</span>

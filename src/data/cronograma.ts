@@ -64,7 +64,7 @@ const bloquesRaw: CronogramaBloque[] = [
   {
     orden: 7,
     titulo: "Panel de exbecarios",
-    quien: "Marlon Ugaz (ELAP), Leslie Sánchez (Berkeley), Diego Rivera (Harvard) y Joshua Galvez (Tecnológico de Monterrey)",
+    quien: "Marlon Ugaz (ELAP), Leslie Sánchez (Berkeley), Diego Rivera (Harvard) e Iván Boluarte (movilidad presencial a Chile)",
     espacio: null,
     modalidad: "presencial",
     horaInicio: "15:45",
