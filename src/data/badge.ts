@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Enlace de inscripción que va en el texto copiado (no en el borrador de LinkedIn).
-export const enlaceInscripcionPost = z.url().parse("https://studyabroad.leadutp.org/");
+export const enlaceInscripcionPost = z.url().parse("https://studyabroad-gilt.vercel.app/");
 
 // Texto del post de LinkedIn (PROMPT-BADGE.md, tarea 7). {enlace} se reemplaza
 // por el enlace del badge (/b/<id>) al compartir, o por enlaceInscripcionPost al

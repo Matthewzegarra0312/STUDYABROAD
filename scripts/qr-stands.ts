@@ -6,7 +6,7 @@
 //                            URLs completas. NUNCA se sube al repo (.gitignore).
 //
 // Uso:
-//   npm run qr-stands                       (usa https://studyabroad.leadutp.org)
+//   npm run qr-stands                       (usa https://studyabroad-gilt.vercel.app)
 //   npm run qr-stands -- --base-url https://otro.dominio
 //   npm run qr-stands -- --force            (regenera: invalida los QR ya impresos)
 //
@@ -23,7 +23,7 @@ import stands from "../src/data/stands";
 import { ALFABETO_CODIGO } from "../src/server/alfabetoCodigo";
 import { sha256Hex } from "../src/lib/hash";
 
-const BASE_URL_POR_DEFECTO = "https://studyabroad.leadutp.org";
+const BASE_URL_POR_DEFECTO = "https://studyabroad-gilt.vercel.app";
 const LARGO_CLAVE = 16;
 const SELLOS_JSON = path.resolve("src/data/sellos.json");
 const CARPETA = path.resolve("qr-stands");
