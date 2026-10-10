@@ -133,8 +133,8 @@ const bloquesRaw: CronogramaBloque[] = [
   },
   {
     orden: 14,
-    titulo: "Beca SIAS China",
-    quien: "Lizbeth Dávila",
+    titulo: "Becas SIAS China y ELAP",
+    quien: "Lizbeth Dávila y Leila Girón",
     espacio: null,
     modalidad: "zoom-vivo",
     horaInicio: "17:40",

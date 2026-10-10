@@ -74,7 +74,7 @@ const groupsRaw: ScheduleGroup[] = [
     rows: [
       { start: "17:10", end: "17:15", title: "Cápsula Erasmus+", who: "Gonzalo Alfaro", mode: "vlog-zoom" },
       { start: "17:15", end: "17:40", title: "Experiencia Erasmus Mundus", who: "Raquel Sánchez, becaria Erasmus Mundus", mode: "zoom" },
-      { start: "17:40", end: "17:55", title: "Beca SIAS China", who: "Lizbeth Dávila", mode: "zoom" },
+      { start: "17:40", end: "17:55", title: "Becas SIAS China y ELAP", who: "Lizbeth Dávila y Leila Girón", mode: "zoom" },
     ],
   },
   {
@@ -119,6 +119,7 @@ const speakersRaw: Speaker[] = [
   { id: "gonzalo-alfaro", initials: "GA", code: "EU", name: "Gonzalo Alfaro", institution: "Erasmus+", mode: "vlog-zoom", time: "17:10", estado: "confirmado", imagen: "guillermo-gonzalo.png", url: "https://www.instagram.com/gonzalfarooo/" },
   { id: "raquel-sanchez", initials: "RS", code: "EU", name: "Raquel Sánchez", institution: "Erasmus Mundus", mode: "zoom", time: "17:15", estado: "confirmado", imagen: "raquel-sanchez.png", url: "https://www.instagram.com/raquel.powerade/" },
   { id: "lizbeth-davila", initials: "LD", code: "CN", name: "Lizbeth Dávila", institution: "Beca SIAS China", mode: "zoom", time: "17:40", estado: "confirmado", imagen: "lizbeth-davila.png", url: "https://www.linkedin.com/in/lizbethd%C3%A1vilad%C3%A1vila/" },
+  { id: "leila-giron", initials: "LG", code: "CA", name: "Leila Girón", institution: "Beca ELAP", mode: "zoom", time: "17:40", estado: "confirmado", imagen: "leila-giron.jpeg" },
   { id: "raul-jauregui", initials: "RJ", code: "PE", name: "Raúl Jáuregui", institution: "Migajeando Oportunidades", mode: "experiencia", time: "17:55", estado: "confirmado", imagen: "Raúl-Jauregui.png", url: "https://www.instagram.com/rauenciencia/" },
 ];
 
